@@ -1,0 +1,36 @@
+{
+  "name": "vue3-island",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite --mode develop",
+    "dev:test": "vite --mode test",
+    "dev:product": "vite --mode product",
+    "build": "vite build --mode product",
+    "build:test": "vite build --mode test",
+    "preview": "vite preview --mode product",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "axios": "^1.13.1",
+    "gsap": "^3.13.0",
+    "motion-v": "^1.7.4",
+    "pinia": "^3.0.3",
+    "split-type": "^0.3.4",
+    "vue": "^3.5.22",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^6.0.1",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "prettier": "3.6.2",
+    "tailwindcss": "^3.4.18",
+    "vite": "^7.1.11",
+    "vite-plugin-vue-devtools": "^8.0.3"
+  }
+}
