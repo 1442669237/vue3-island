@@ -233,7 +233,7 @@ const filterIslands = () => {
 /* 设置大屏和小屏适配 */
 @media (min-width: 1200px) {
     .island-list {
-        width: 65%;
+        width: 60%;
     }
     .font-big{
         font-size: 28px;
