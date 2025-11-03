@@ -1,7 +1,32 @@
 <script setup></script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 text-gray-800 p-6"><RouterView />111</div>
+  <div class="app-container">
+    <RouterView />
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.router-view {
+  flex: 1;
+}
+
+
+.app-container {
+  background-color: #FFFFFF;
+  color: #333;
+}
+</style>

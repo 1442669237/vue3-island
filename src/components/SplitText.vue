@@ -1,137 +1,194 @@
+<template>
+  <p
+    ref="textRef"
+    :class="`split-parent overflow-hidden inline-block whitespace-normal ${className}`"
+    :style="{
+      textAlign,
+      wordWrap: 'break-word'
+    }"
+  >
+    {{ text }}
+  </p>
+</template>
+
 <script setup lang="ts">
-import { computed, ref, watchEffect, onUnmounted } from 'vue'
-import { Motion } from 'motion-v'
+import { ref, onMounted, onUnmounted, watch, nextTick, useTemplateRef } from 'vue';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText as GSAPSplitText } from 'gsap/SplitText';
 
-interface CircularTextProps {
-  text: string
-  spinDuration?: number
-  onHover?: 'slowDown' | 'speedUp' | 'pause' | 'goBonkers'
-  className?: string
+gsap.registerPlugin(ScrollTrigger, GSAPSplitText);
+
+export interface SplitTextProps {
+  text: string;
+  className?: string;
+  delay?: number;
+  duration?: number;
+  ease?: string | ((t: number) => number);
+  splitType?: 'chars' | 'words' | 'lines' | 'words, chars';
+  from?: gsap.TweenVars;
+  to?: gsap.TweenVars;
+  threshold?: number;
+  rootMargin?: string;
+  textAlign?: 'left' | 'center' | 'right' | 'justify';
+  onLetterAnimationComplete?: () => void;
 }
 
-const props = withDefaults(defineProps<CircularTextProps>(), {
-  text: '',
-  spinDuration: 20,
-  onHover: 'speedUp',
+const props = withDefaults(defineProps<SplitTextProps>(), {
   className: '',
-})
+  delay: 100,
+  duration: 0.6,
+  ease: 'power3.out',
+  splitType: 'chars',
+  from: () => ({ opacity: 0, y: 40 }),
+  to: () => ({ opacity: 1, y: 0 }),
+  threshold: 0.1,
+  rootMargin: '-100px',
+  textAlign: 'center'
+});
 
-const letters = computed(() => Array.from(props.text))
-const isHovered = ref(false)
+const emit = defineEmits<{
+  'animation-complete': [];
+}>();
 
-const currentRotation = ref(0)
-const animationId = ref<number | null>(null)
-const lastTime = ref<number>(Date.now())
-const rotationSpeed = ref<number>(0)
+const textRef = useTemplateRef<HTMLParagraphElement>('textRef');
+const animationCompletedRef = ref(false);
+const scrollTriggerRef = ref<ScrollTrigger | null>(null);
+const timelineRef = ref<gsap.core.Timeline | null>(null);
+const splitterRef = ref<GSAPSplitText | null>(null);
 
-const getCurrentSpeed = () => {
-  if (isHovered.value && props.onHover === 'pause') return 0
+const initializeAnimation = async () => {
+  if (typeof window === 'undefined' || !textRef.value || !props.text) return;
 
-  const baseDuration = props.spinDuration
-  const baseSpeed = 360 / baseDuration
+  await nextTick();
 
-  if (!isHovered.value) return baseSpeed
+  const el = textRef.value;
 
-  switch (props.onHover) {
-    case 'slowDown':
-      return baseSpeed / 2
-    case 'speedUp':
-      return baseSpeed * 4
-    case 'goBonkers':
-      return baseSpeed * 20
+  animationCompletedRef.value = false;
+
+  const absoluteLines = props.splitType === 'lines';
+  if (absoluteLines) el.style.position = 'relative';
+
+  let splitter: GSAPSplitText;
+  try {
+    splitter = new GSAPSplitText(el, {
+      type: props.splitType,
+      absolute: absoluteLines,
+      linesClass: 'split-line'
+    });
+    splitterRef.value = splitter;
+  } catch (error) {
+    console.error('Failed to create SplitText:', error);
+    return;
+  }
+
+  let targets: Element[];
+  switch (props.splitType) {
+    case 'lines':
+      targets = splitter.lines;
+      break;
+    case 'words':
+      targets = splitter.words;
+      break;
+    case 'chars':
+      targets = splitter.chars;
+      break;
     default:
-      return baseSpeed
+      targets = splitter.chars;
   }
-}
 
-const getCurrentScale = () => {
-  return isHovered.value && props.onHover === 'goBonkers' ? 0.8 : 1
-}
-
-const animate = () => {
-  const now = Date.now()
-  const deltaTime = (now - lastTime.value) / 1000
-  lastTime.value = now
-
-  const targetSpeed = getCurrentSpeed()
-
-  const speedDiff = targetSpeed - rotationSpeed.value
-  const smoothingFactor = Math.min(1, deltaTime * 5)
-  rotationSpeed.value += speedDiff * smoothingFactor
-
-  currentRotation.value = (currentRotation.value + rotationSpeed.value * deltaTime) % 360
-
-  animationId.value = requestAnimationFrame(animate)
-}
-
-const startAnimation = () => {
-  if (animationId.value) {
-    cancelAnimationFrame(animationId.value)
+  if (!targets || targets.length === 0) {
+    console.warn('No targets found for SplitText animation');
+    splitter.revert();
+    return;
   }
-  lastTime.value = Date.now()
-  rotationSpeed.value = getCurrentSpeed()
-  animate()
-}
 
-watchEffect(() => {
-  startAnimation()
-})
+  targets.forEach(t => {
+    (t as HTMLElement).style.willChange = 'transform, opacity';
+  });
 
-startAnimation()
+  const startPct = (1 - props.threshold) * 100;
+  const marginMatch = /^(-?\d+(?:\.\d+)?)(px|em|rem|%)?$/.exec(props.rootMargin);
+  const marginValue = marginMatch ? parseFloat(marginMatch[1]) : 0;
+  const marginUnit = marginMatch ? marginMatch[2] || 'px' : 'px';
+  const sign = marginValue < 0 ? `-=${Math.abs(marginValue)}${marginUnit}` : `+=${marginValue}${marginUnit}`;
+  const start = `top ${startPct}%${sign}`;
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: el,
+      start,
+      toggleActions: 'play none none none',
+      once: true,
+      onToggle: self => {
+        scrollTriggerRef.value = self;
+      }
+    },
+    smoothChildTiming: true,
+    onComplete: () => {
+      animationCompletedRef.value = true;
+      gsap.set(targets, {
+        ...props.to,
+        clearProps: 'willChange',
+        immediateRender: true
+      });
+      props.onLetterAnimationComplete?.();
+      emit('animation-complete');
+    }
+  });
+
+  timelineRef.value = tl;
+
+  tl.set(targets, { ...props.from, immediateRender: false, force3D: true });
+  tl.to(targets, {
+    ...props.to,
+    duration: props.duration,
+    ease: props.ease,
+    stagger: props.delay / 1000,
+    force3D: true
+  });
+};
+
+const cleanup = () => {
+  if (timelineRef.value) {
+    timelineRef.value.kill();
+    timelineRef.value = null;
+  }
+  if (scrollTriggerRef.value) {
+    scrollTriggerRef.value.kill();
+    scrollTriggerRef.value = null;
+  }
+  if (splitterRef.value) {
+    gsap.killTweensOf(textRef.value);
+    splitterRef.value.revert();
+    splitterRef.value = null;
+  }
+};
+
+onMounted(() => {
+  initializeAnimation();
+});
 
 onUnmounted(() => {
-  if (animationId.value) {
-    cancelAnimationFrame(animationId.value)
+  cleanup();
+});
+
+watch(
+  [
+    () => props.text,
+    () => props.delay,
+    () => props.duration,
+    () => props.ease,
+    () => props.splitType,
+    () => props.from,
+    () => props.to,
+    () => props.threshold,
+    () => props.rootMargin,
+    () => props.onLetterAnimationComplete
+  ],
+  () => {
+    cleanup();
+    initializeAnimation();
   }
-})
-
-const handleHoverStart = () => {
-  isHovered.value = true
-}
-
-const handleHoverEnd = () => {
-  isHovered.value = false
-}
-
-const getLetterTransform = (index: number) => {
-  const rotationDeg = (360 / letters.value.length) * index
-  const factor = Math.PI / letters.value.length
-  const x = factor * index
-  const y = factor * index
-  return `rotateZ(${rotationDeg}deg) translate3d(${x}px, ${y}px, 0)`
-}
+);
 </script>
-
-<template>
-  <Motion
-    :animate="{
-      rotate: currentRotation,
-      scale: getCurrentScale(),
-    }"
-    :transition="{
-      rotate: {
-        duration: 0,
-      },
-      scale: {
-        type: 'spring',
-        damping: 20,
-        stiffness: 300,
-      },
-    }"
-    :class="`m-0 mx-auto rounded-full w-[200px] h-[200px] relative font-black text-white text-center cursor-pointer origin-center ${props.className}`"
-    @mouseenter="handleHoverStart"
-    @mouseleave="handleHoverEnd"
-  >
-    <span
-      v-for="(letter, i) in letters"
-      :key="i"
-      class="absolute inline-block inset-0 text-2xl transition-all duration-500 ease-[cubic-bezier(0,0,0,1)]"
-      :style="{
-        transform: getLetterTransform(i),
-        WebkitTransform: getLetterTransform(i),
-      }"
-    >
-      {{ letter }}
-    </span>
-  </Motion>
-</template>
