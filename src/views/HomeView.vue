@@ -10,6 +10,11 @@
           :autoRampDuration="0.6" />
       </div>
       <!-- 导航 -->
+      <CardNav
+        :items="navItems"
+        baseColor="rgba(250, 250, 250, 0.6)"
+        menuColor="#000"
+      />
       <!-- 欢迎词 -->
       <div class="split-text">
         <SplitText :text="message" className="text-8xl font-bold text-center text-white" :delay="300" />
@@ -43,6 +48,7 @@
 import LiquidEther from '@/components/LiquidEther.vue'
 import SplitText from '@/components/SplitText.vue'
 import Masonry from '@/components/Masonry.vue'
+import CardNav from '@/components/CardNav.vue'
 
 import { ref, onMounted } from 'vue';
 
@@ -66,6 +72,27 @@ const items = ref([
   { id: '13', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 350 },
   { id: '14', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 450 },
   { id: '15', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 400 },
+])
+const navItems = ref([
+  {
+    label: "鸿途优选",
+    bgColor: "#0D0716",
+    textColor: "#fff",
+    links: [
+      { label: "优选岛屿", pageUrl: "/islandList" },
+      { label: "优选酒店", pageUrl: "About Careers" }
+    ]
+  },
+  {
+    label: "关于我们",
+    bgColor: "#271E37",
+    textColor: "#fff",
+    links: [
+      { label: "Email", pageUrl: "Email us" },
+      { label: "Twitter", pageUrl: "Twitter" },
+      { label: "LinkedIn", pageUrl: "LinkedIn" }
+    ]
+  }
 ])
 
 
