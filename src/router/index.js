@@ -16,8 +16,13 @@ const router = createRouter({
     },
     {
       path: '/islandList',
-      name: 'islandDlist',
-      component: () => import('../views/Islandlist.vue'),
+      name: 'islandList',
+      component: () => import('../views/IslandList.vue'),
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('../views/About.vue'),
     },
   ],
 })

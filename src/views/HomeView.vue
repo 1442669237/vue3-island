@@ -12,14 +12,16 @@
       <!-- 导航 -->
       <CardNav
         :items="navItems"
+        logo="https://ota-front-public.oss-cn-hangzhou.aliyuncs.com/wx-mini-ota/user/avatar_default.png"
+        logoAlt="鸿途智行选岛助手"
         baseColor="rgba(250, 250, 250, 0.6)"
         menuColor="#000"
       />
       <!-- 欢迎词 -->
-      <div class="split-text">
-        <SplitText :text="message" className="text-8xl font-bold text-center text-white" :delay="300" />
-      </div>
-      <!-- 动态箭头 -->
+      <!-- <div class="split-text">
+        <SplitText :text="message" className="text-7xl font-bold text-center text-white" :delay="300" />
+      </div> -->
+      <!-- 按钮 -->
       <div class="bottom-btm" @click="scrollToSecondPage">更多详情</div>
     </div>
     <div class="page-content bg-list" ref="page2">
@@ -188,7 +190,7 @@ const scrollToSecondPage = () => {
   bottom: 0;
   opacity: 0.9;
   transition: all 0.5s ease-in-out;
-  animation: floatUp 2s ease-out forwards;
+  animation: floatUp 1s ease-out forwards;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,38 +201,19 @@ const scrollToSecondPage = () => {
 
 @keyframes floatUp {
   0% {
-    transform: translateY(200px);
+    transform: translateY(100px);
     /* 起始位置*/
   }
 
   100% {
-    transform: translateY(-200px);
+    transform: translateY(-100px);
     /* 结束位置*/
   }
 }
 
 .bottom-btm:hover {
-  // background-color: #76d77e;
   border: 1px solid rgba(118, 215, 126, 1);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 </style>

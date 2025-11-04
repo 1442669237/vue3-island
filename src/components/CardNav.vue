@@ -172,7 +172,7 @@ const goUrl = (url:string) => {
 
 <template>
   <div
-    :class="`card-nav-container absolute left-1/2 -translate-x-1/2 w-[90%] max-w-[800px] z-[99] top-[1.2em] md:top-[2em] ${props.className}`"
+    :class="`card-nav-container absolute left-1/2 -translate-x-1/2 w-[30%] min-w-[500px] z-[99] top-[1.2em] md:top-[2em] ${props.className}`"
   >
     <nav
       ref="navRef"
@@ -213,9 +213,9 @@ const goUrl = (url:string) => {
         <div
           class="md:top-1/2 md:left-1/2 md:absolute flex items-center order-1 md:order-none md:-translate-x-1/2 md:-translate-y-1/2 logo-container"
         >
-          <img v-if="props.logo" :src="props.logo" class="h-[28px] logo" />
+          <img v-if="props.logo" :src="props.logo" class="h-[28px] logo mr-[10px]" />
+          <span class="text-[16px] leading-[16px] font-medium transition-colors">{{ props.logoAlt }}</span>
         </div>
-        <!-- <span>{{ props.logoAlt }}</span> -->
 
         <button
         v-show="props.showBtm"
