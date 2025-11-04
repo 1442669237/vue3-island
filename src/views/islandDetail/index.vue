@@ -6,37 +6,33 @@
       ref="mainNav"
       class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-4"
     >
-      <div class="container mx-auto px-4 flex items-center justify-between">
+      <div class="container mx-auto text-white px-4 flex items-center justify-between">
         <div class="flex items-center">
-          <a href="#" class="text-xl font-bold text-white">
+          <a href="#" class="text-2xl font-bold">
             <i class="iconfont icon-palm-tree mr-2"></i>海岛度假
           </a>
         </div>
 
         <!-- 桌面端导航 -->
         <div class="hidden md:flex items-center space-x-8">
-          <a href="#" class="text-white hover:text-light-sand transition-colors">首页</a>
-          <a href="#" class="text-white hover:text-light-sand transition-colors">目的地</a>
-          <a href="#" class="text-white hover:text-light-sand transition-colors">酒店</a>
-          <a href="#" class="text-white hover:text-light-sand transition-colors">特惠</a>
-          <a href="#" class="text-white hover:text-light-sand transition-colors">攻略</a>
+          <a href="#" class="hover:text-light-sand transition-colors">首页</a>
+          <a href="#" class="hover:text-light-sand transition-colors">目的地</a>
+          <a href="#" class="hover:text-light-sand transition-colors">酒店</a>
+          <a href="#" class="hover:text-light-sand transition-colors">特惠</a>
+          <a href="#" class="hover:text-light-sand transition-colors">攻略</a>
         </div>
 
         <div class="hidden md:flex items-center space-x-4">
-          <a href="#" class="text-white hover:text-light-sand transition-colors">
+          <a href="#" class="hover:text-light-sand transition-colors">
             <i class="iconfont icon-sousuo text-lg font-bold"></i>
           </a>
-          <a href="#" class="text-white hover:text-light-sand transition-colors">
+          <a href="#" class="hover:text-light-sand transition-colors">
             <i class="iconfont icon-user-circle text-lg"></i>
           </a>
         </div>
 
         <!-- 移动端菜单按钮 -->
-        <button
-          id="mobileMenuBtn"
-          class="md:hidden text-white text-2xl focus:outline-none"
-          @click="openMenu"
-        >
+        <button id="mobileMenuBtn" class="md:hidden text-2xl focus:outline-none" @click="openMenu">
           <i class="iconfont icon-bars"></i>
         </button>
       </div>
@@ -297,7 +293,7 @@
                       href="#"
                       class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
                     >
-                      查看详情 <i class="iconfont icon-arrow-right ml-1"></i>
+                      查看详情 <i class="iconfont icon-arrowright ml-1"></i>
                     </a>
                   </div>
                 </div>
@@ -331,7 +327,7 @@
                       href="#"
                       class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
                     >
-                      查看详情 <i class="iconfont icon-arrow-right ml-1"></i>
+                      查看详情 <i class="iconfont icon-arrowright ml-1"></i>
                     </a>
                   </div>
                 </div>
@@ -463,7 +459,7 @@
                     href="#"
                     class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
                   >
-                    查看全部评价 <i class="iconfont icon-arrow-right ml-1"></i>
+                    查看全部评价 <i class="iconfont icon-arrowright ml-1"></i>
                   </a>
                 </div>
               </div>
@@ -579,9 +575,6 @@
                     type="date"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
                   />
-                  <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <i class="far fa-calendar-alt"></i>
-                  </div>
                 </div>
               </div>
 
@@ -592,9 +585,6 @@
                     type="date"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
                   />
-                  <div class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                    <i class="far fa-calendar-alt"></i>
-                  </div>
                 </div>
               </div>
 
@@ -684,7 +674,9 @@
                   <span>booking@nautilus-maldives.com</span>
                 </div>
                 <div class="flex items-center text-gray-600">
-                  <i class="iconfont icon-weixin w-5 text-center mr-3 text-primary-blue"></i>
+                  <i
+                    class="iconfont icon-weixin w-5 text-center mr-3 text-primary-blue text-xl"
+                  ></i>
                   <span>nautilus_maldives</span>
                 </div>
               </div>
@@ -848,7 +840,7 @@
               href="#"
               class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
             >
-              查看更多常见问题 <i class="iconfont icon-arrow-right ml-1"></i>
+              查看更多常见问题 <i class="iconfont icon-arrowright ml-1"></i>
             </a>
           </div>
         </div>
@@ -856,25 +848,23 @@
     </main>
 
     <!-- 底部信息区 -->
-    <footer class="bg-dark-blue text-white py-12">
+    <footer class="bg-dark-blue bg-[#f8fafd] py-12 color-[#666]">
       <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div>
             <h3 class="text-xl font-bold mb-4">海岛度假</h3>
-            <p class="text-blue-200 mb-4">
-              为您提供全球顶级海岛度假体验，让每一次旅行都成为难忘的回忆。
-            </p>
+            <p class="mb-4">为您提供全球顶级海岛度假体验，让每一次旅行都成为难忘的回忆。</p>
             <div class="flex space-x-4">
-              <a href="#" class="text-blue-200 hover:text-white transition-colors">
+              <a href="#" class="hover:text-[#0ea5e9] transition-colors">
                 <i class="fab fa-weixin text-xl"></i>
               </a>
-              <a href="#" class="text-blue-200 hover:text-white transition-colors">
+              <a href="#" class="hover:text-[#0ea5e9] transition-colors">
                 <i class="fab fa-weibo text-xl"></i>
               </a>
-              <a href="#" class="text-blue-200 hover:text-white transition-colors">
+              <a href="#" class="hover:text-[#0ea5e9] transition-colors">
                 <i class="fab fa-instagram text-xl"></i>
               </a>
-              <a href="#" class="text-blue-200 hover:text-white transition-colors">
+              <a href="#" class="hover:text-[#0ea5e9] transition-colors">
                 <i class="fab fa-facebook text-xl"></i>
               </a>
             </div>
@@ -884,19 +874,19 @@
             <h3 class="text-lg font-semibold mb-4">热门目的地</h3>
             <ul class="space-y-2">
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">马尔代夫</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">马尔代夫</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">巴厘岛</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">巴厘岛</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">普吉岛</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">普吉岛</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">塞舌尔</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">塞舌尔</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">毛里求斯</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">毛里求斯</a>
               </li>
             </ul>
           </div>
@@ -905,19 +895,19 @@
             <h3 class="text-lg font-semibold mb-4">旅行服务</h3>
             <ul class="space-y-2">
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">酒店预订</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">酒店预订</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">机票预订</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">机票预订</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">度假套餐</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">度假套餐</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">签证服务</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">签证服务</a>
               </li>
               <li>
-                <a href="#" class="text-blue-200 hover:text-white transition-colors">旅行保险</a>
+                <a href="#" class="hover:text-[#0ea5e9] transition-colors">旅行保险</a>
               </li>
             </ul>
           </div>
