@@ -1,11 +1,15 @@
 <template>
   <div class="nautilus-page">
     <!-- 导航栏 -->
-    <nav id="mainNav" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-4">
+    <nav
+      id="mainNav"
+      ref="mainNav"
+      class="fixed top-0 left-0 right-0 z-40 transition-all duration-300 py-4"
+    >
       <div class="container mx-auto px-4 flex items-center justify-between">
         <div class="flex items-center">
           <a href="#" class="text-xl font-bold text-white">
-            <i class="fas fa-palm-tree mr-2"></i>海岛度假
+            <i class="iconfont icon-palm-tree mr-2"></i>海岛度假
           </a>
         </div>
 
@@ -20,26 +24,30 @@
 
         <div class="hidden md:flex items-center space-x-4">
           <a href="#" class="text-white hover:text-light-sand transition-colors">
-            <i class="fas fa-search text-lg"></i>
+            <i class="iconfont icon-sousuo text-lg font-bold"></i>
           </a>
           <a href="#" class="text-white hover:text-light-sand transition-colors">
-            <i class="fas fa-user-circle text-lg"></i>
+            <i class="iconfont icon-user-circle text-lg"></i>
           </a>
         </div>
 
         <!-- 移动端菜单按钮 -->
-        <button id="mobileMenuBtn" class="md:hidden text-white text-2xl focus:outline-none">
-          <i class="fas fa-bars"></i>
+        <button
+          id="mobileMenuBtn"
+          class="md:hidden text-white text-2xl focus:outline-none"
+          @click="openMenu"
+        >
+          <i class="iconfont icon-bars"></i>
         </button>
       </div>
     </nav>
 
     <!-- 移动端菜单 -->
-    <div id="mobileMenu" class="mobile-menu">
+    <div id="mobileMenu" class="mobile-menu" :class="{ active: isMenuActive }">
       <div class="flex justify-between items-center mb-8">
         <span class="text-xl font-bold text-primary-blue">海岛度假</span>
-        <button id="closeMobileMenu" class="text-gray-500 text-2xl">
-          <i class="fas fa-times"></i>
+        <button id="closeMobileMenu" class="text-gray-500 text-2xl" @click="closeMenu">
+          <i class="iconfont icon-times"></i>
         </button>
       </div>
       <div class="flex flex-col space-y-4">
@@ -72,27 +80,33 @@
     </div>
 
     <!-- 菜单遮罩层 -->
-    <div id="menuOverlay" class="menu-overlay"></div>
+    <div
+      id="menuOverlay"
+      class="menu-overlay"
+      :class="{ active: isMenuActive }"
+      @click="closeMenu"
+    ></div>
 
     <!-- 主视觉区 -->
     <header class="relative h-screen">
-      <div class="carousel h-full">
-        <div class="carousel-inner h-full">
-          <div class="carousel-item h-full">
+      <!-- Embla Carousel 主视觉区 -->
+      <div ref="emblaRoot" class="embla h-full">
+        <div class="embla__container h-full">
+          <div class="embla__slide h-full">
             <img
               src="https://s.coze.cn/image/mD4sQxNtL48/"
               alt="鹦鹉螺私人岛航拍图"
               class="w-full h-full object-cover"
             />
           </div>
-          <div class="carousel-item h-full">
+          <div class="embla__slide h-full">
             <img
               src="https://s.coze.cn/image/uVNLr5QBWy8/"
               alt="水上别墅"
               class="w-full h-full object-cover"
             />
           </div>
-          <div class="carousel-item h-full">
+          <div class="embla__slide h-full">
             <img
               src="https://s.coze.cn/image/xaBC6Ih1bQo/"
               alt="无人沙洲"
@@ -103,27 +117,41 @@
 
         <!-- 轮播指示器 -->
         <div class="carousel-indicators">
-          <button class="carousel-indicator active" data-index="0"></button>
-          <button class="carousel-indicator" data-index="1"></button>
-          <button class="carousel-indicator" data-index="2"></button>
+          <button
+            class="carousel-indicator"
+            :class="{ active: currentIndex === 0 }"
+            @click="goToSlide(0)"
+          ></button>
+          <button
+            class="carousel-indicator"
+            :class="{ active: currentIndex === 1 }"
+            @click="goToSlide(1)"
+          ></button>
+          <button
+            class="carousel-indicator"
+            :class="{ active: currentIndex === 2 }"
+            @click="goToSlide(2)"
+          ></button>
         </div>
       </div>
 
       <!-- 渐变遮罩 -->
-      <div
-        class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"
-      ></div>
+      <div class="absolute inset-0 hero-gradient"></div>
 
       <!-- 标题和信息 -->
       <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16">
         <div class="container mx-auto">
           <div class="max-w-4xl">
             <div class="flex flex-wrap items-center mb-4">
-              <div class="tag tag-blue mr-4 mb-2"><i class="fas fa-star mr-1"></i> 奢华私人岛</div>
-              <div class="tag tag-green mr-4 mb-2">
-                <i class="fas fa-map-marker-alt mr-1"></i> 马尔代夫
+              <div class="tag tag-blue mr-4 mb-2">
+                <i class="iconfont icon-star mr-1"></i> 奢华私人岛
               </div>
-              <div class="tag tag-teal mb-2"><i class="fas fa-calendar-check mr-1"></i> 可预订</div>
+              <div class="tag tag-green mr-4 mb-2">
+                <i class="iconfont icon-map-marker-alt mr-1"></i> 马尔代夫
+              </div>
+              <div class="tag tag-teal mb-2">
+                <i class="iconfont icon-calendar-check mr-1"></i> 可预订
+              </div>
             </div>
 
             <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
@@ -133,20 +161,20 @@
             <div class="flex flex-wrap items-center mb-6">
               <div class="flex items-center mr-6 mb-2">
                 <div class="star-rating mr-2">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+                  <i class="iconfont icon-star"></i>
+                  <i class="iconfont icon-star"></i>
+                  <i class="iconfont icon-star"></i>
+                  <i class="iconfont icon-star"></i>
+                  <i class="iconfont icon-star"></i>
                 </div>
                 <span class="text-white font-medium">9.2分 卓越体验</span>
               </div>
               <div class="flex items-center mr-6 mb-2">
-                <i class="fas fa-user-friends text-white mr-2"></i>
+                <i class="iconfont icon-user-friends text-white mr-2"></i>
                 <span class="text-white">300+ 住客点评</span>
               </div>
               <div class="flex items-center mb-2">
-                <i class="fas fa-trophy text-white mr-2"></i>
+                <i class="iconfont icon-trophy text-white mr-2"></i>
                 <span class="text-white">2024年度最佳私人岛</span>
               </div>
             </div>
@@ -157,13 +185,13 @@
 
             <div class="flex flex-wrap gap-4">
               <a href="#booking" class="btn-primary">
-                <i class="fas fa-calendar-alt mr-2"></i> 立即预订
+                <i class="iconfont icon-calendar-check mr-2"></i> 立即预订
               </a>
               <a
                 href="#details"
                 class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-6 py-3 rounded-lg font-medium transition-all"
               >
-                <i class="fas fa-info-circle mr-2"></i> 了解更多
+                <i class="iconfont icon-infocircle mr-2"></i> 了解更多
               </a>
             </div>
           </div>
@@ -203,7 +231,7 @@
                 <div
                   class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4"
                 >
-                  <i class="fas fa-umbrella-beach text-primary-blue text-xl"></i>
+                  <i class="iconfont icon-umbrella-beach text-primary-blue text-xl"></i>
                 </div>
                 <h3 class="text-xl font-semibold mb-2">无人沙洲</h3>
                 <p class="text-gray-600">
@@ -215,7 +243,7 @@
                 <div
                   class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4"
                 >
-                  <i class="fas fa-moon text-purple-600 text-xl"></i>
+                  <i class="iconfont icon-moon text-purple-600 text-xl"></i>
                 </div>
                 <h3 class="text-xl font-semibold mb-2">星空泳池</h3>
                 <p class="text-gray-600">
@@ -227,7 +255,7 @@
                 <div
                   class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4"
                 >
-                  <i class="fas fa-user-shield text-secondary-green text-xl"></i>
+                  <i class="iconfont icon-user-shield text-secondary-green text-xl"></i>
                 </div>
                 <h3 class="text-xl font-semibold mb-2">私人岛体验</h3>
                 <p class="text-gray-600">
@@ -269,7 +297,7 @@
                       href="#"
                       class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
                     >
-                      查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                      查看详情 <i class="iconfont icon-arrow-right ml-1"></i>
                     </a>
                   </div>
                 </div>
@@ -303,7 +331,7 @@
                       href="#"
                       class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
                     >
-                      查看详情 <i class="fas fa-arrow-right ml-1"></i>
+                      查看详情 <i class="iconfont icon-arrow-right ml-1"></i>
                     </a>
                   </div>
                 </div>
@@ -329,8 +357,8 @@
                     位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
                   </p>
                   <div class="flex items-center text-sm text-gray-500">
-                    <i class="fas fa-clock mr-2"></i> 早餐: 7:00-10:30 | 午餐: 12:30-15:00 | 晚餐:
-                    19:00-22:30
+                    <i class="iconfont icon-clock mr-2"></i> 早餐: 7:00-10:30 | 午餐: 12:30-15:00 |
+                    晚餐: 19:00-22:30
                   </div>
                 </div>
               </div>
@@ -349,7 +377,7 @@
                     位于洁白沙滩上的烧烤餐厅提供各种新鲜的海鲜和肉类烧烤，您可以在星空下享用美食，感受浪漫的氛围。
                   </p>
                   <div class="flex items-center text-sm text-gray-500">
-                    <i class="fas fa-clock mr-2"></i> 晚餐: 19:00-22:30 (需提前预订)
+                    <i class="iconfont icon-clock mr-2"></i> 晚餐: 19:00-22:30 (需提前预订)
                   </div>
                 </div>
               </div>
@@ -368,7 +396,7 @@
                       <div
                         class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0"
                       >
-                        <i class="fas fa-plane-departure text-primary-blue"></i>
+                        <i class="iconfont icon-plane-departure text-primary-blue"></i>
                       </div>
                       <div>
                         <h4 class="font-medium mb-1">水上飞机</h4>
@@ -382,7 +410,7 @@
                       <div
                         class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0"
                       >
-                        <i class="fas fa-plane text-secondary-green"></i>
+                        <i class="iconfont icon-plane text-secondary-green"></i>
                       </div>
                       <div>
                         <h4 class="font-medium mb-1">内飞+快艇</h4>
@@ -401,7 +429,7 @@
                   </p>
                   <div class="bg-blue-50 p-4 rounded-lg">
                     <p class="text-blue-800 text-sm">
-                      <i class="fas fa-info-circle mr-2"></i>
+                      <i class="iconfont icon-infocircle mr-2"></i>
                       为了确保您的行程顺利，请在预订时提供准确的航班信息，包括航空公司、航班号和抵达时间。
                     </p>
                   </div>
@@ -418,11 +446,11 @@
                 <div>
                   <div class="flex items-center mb-2">
                     <div class="star-rating mr-2">
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
-                      <i class="fas fa-star"></i>
+                      <i class="iconfont icon-star"></i>
+                      <i class="iconfont icon-star"></i>
+                      <i class="iconfont icon-star"></i>
+                      <i class="iconfont icon-star"></i>
+                      <i class="iconfont icon-star"></i>
                     </div>
                     <span class="text-2xl font-bold">9.2</span>
                     <span class="text-gray-500 ml-2">/ 10</span>
@@ -435,7 +463,7 @@
                     href="#"
                     class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
                   >
-                    查看全部评价 <i class="fas fa-arrow-right ml-1"></i>
+                    查看全部评价 <i class="iconfont icon-arrow-right ml-1"></i>
                   </a>
                 </div>
               </div>
@@ -455,11 +483,11 @@
                     </div>
                   </div>
                   <div class="star-rating mb-3">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
                   </div>
                   <p class="text-gray-700">
                     "这是我们度过的最完美的蜜月之旅！水上别墅的设计非常独特，私人泳池和玻璃地板让我们可以随时欣赏美丽的海底世界。管家服务非常贴心，餐厅的美食也令人难忘。强烈推荐给所有想要享受奢华度假体验的情侣！"
@@ -480,11 +508,11 @@
                     </div>
                   </div>
                   <div class="star-rating mb-3">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star-half-alt"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star-half-alt"></i>
                   </div>
                   <p class="text-gray-700">
                     "带家人来鹦鹉螺度假是我们做过的最好的决定之一。孩子们非常喜欢水上活动和无人沙洲，而我们则享受了宁静的放松时光。工作人员非常友好，特别是儿童看护服务让我们可以安心享受二人世界。唯一的小缺点是价格有点高，但考虑到提供的服务和体验，绝对值得！"
@@ -505,11 +533,11 @@
                     </div>
                   </div>
                   <div class="star-rating mb-3">
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
+                    <i class="iconfont icon-star"></i>
                   </div>
                   <p class="text-gray-700">
                     "作为一名摄影爱好者，我对鹦鹉螺的美景感到惊叹。无论是日出、日落还是星空，每一个时刻都让我按下快门。岛上的设施非常完善，工作人员也很专业。虽然是独自旅行，但我一点也不感到孤单，反而享受了难得的宁静和自我反思的时间。"
@@ -585,7 +613,7 @@
                   <div
                     class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
                   >
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="iconfont icon-chevron-down"></i>
                   </div>
                 </div>
               </div>
@@ -604,7 +632,7 @@
                   <div
                     class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
                   >
-                    <i class="fas fa-chevron-down"></i>
+                    <i class="iconfont icon-chevron-down"></i>
                   </div>
                 </div>
               </div>
@@ -612,14 +640,14 @@
 
             <!-- 预订按钮 -->
             <a href="#" class="btn-primary w-full mb-4">
-              <i class="fas fa-calendar-check mr-2"></i> 立即预订
+              <i class="iconfont icon-calendar-check mr-2"></i> 立即预订
             </a>
 
             <a
               href="#"
               class="block w-full text-center px-6 py-3 border border-primary-blue text-primary-blue font-medium rounded-lg hover:bg-primary-blue/5 transition-colors"
             >
-              <i class="fas fa-question-circle mr-2"></i> 咨询客服
+              <i class="iconfont icon-infocircle mr-2"></i> 咨询客服
             </a>
 
             <!-- 优惠信息 -->
@@ -627,15 +655,15 @@
               <h3 class="font-semibold mb-2 text-blue-800">限时优惠</h3>
               <ul class="space-y-2 text-sm text-blue-700">
                 <li class="flex items-start">
-                  <i class="fas fa-check-circle mr-2 mt-0.5"></i>
+                  <i class="iconfont icon-check-circle-fill mr-2 mt-0.5"></i>
                   <span>预订7晚及以上，享受8.5折优惠</span>
                 </li>
                 <li class="flex items-start">
-                  <i class="fas fa-check-circle mr-2 mt-0.5"></i>
+                  <i class="iconfont icon-check-circle-fill mr-2 mt-0.5"></i>
                   <span>蜜月客人可获赠香槟和鲜花</span>
                 </li>
                 <li class="flex items-start">
-                  <i class="fas fa-check-circle mr-2 mt-0.5"></i>
+                  <i class="iconfont icon-check-circle-fill mr-2 mt-0.5"></i>
                   <span>提前30天预订，免费升级房型</span>
                 </li>
               </ul>
@@ -646,15 +674,17 @@
               <h3 class="font-semibold mb-4 text-gray-700">联系我们</h3>
               <div class="space-y-3">
                 <div class="flex items-center text-gray-600">
-                  <i class="fas fa-phone-alt w-5 text-center mr-3 text-primary-blue"></i>
+                  <i
+                    class="iconfont icon-phone-alt-solid w-5 text-center mr-3 text-primary-blue"
+                  ></i>
                   <span>400-888-8888</span>
                 </div>
                 <div class="flex items-center text-gray-600">
-                  <i class="fas fa-envelope w-5 text-center mr-3 text-primary-blue"></i>
+                  <i class="iconfont icon-envelope-open w-5 text-center mr-3 text-primary-blue"></i>
                   <span>booking@nautilus-maldives.com</span>
                 </div>
                 <div class="flex items-center text-gray-600">
-                  <i class="fas fa-weixin w-5 text-center mr-3 text-primary-blue"></i>
+                  <i class="iconfont icon-weixin w-5 text-center mr-3 text-primary-blue"></i>
                   <span>nautilus_maldives</span>
                 </div>
               </div>
@@ -764,7 +794,7 @@
 
           <div class="mt-6 p-4 bg-yellow-50 rounded-lg">
             <p class="text-yellow-800 text-sm">
-              <i class="fas fa-info-circle mr-2"></i>
+              <i class="iconfont icon-infocircle mr-2"></i>
               以上价格仅供参考，实际价格可能因季节、房型、人数等因素而有所不同。预订前请联系客服获取准确报价。
             </p>
           </div>
@@ -818,7 +848,7 @@
               href="#"
               class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
             >
-              查看更多常见问题 <i class="fas fa-arrow-right ml-1"></i>
+              查看更多常见问题 <i class="iconfont icon-arrow-right ml-1"></i>
             </a>
           </div>
         </div>
@@ -896,15 +926,15 @@
             <h3 class="text-lg font-semibold mb-4">联系我们</h3>
             <ul class="space-y-2">
               <li class="flex items-center">
-                <i class="fas fa-phone-alt mr-2"></i>
+                <i class="iconfont icon-phone-alt-solid mr-2"></i>
                 <span>400-888-8888</span>
               </li>
               <li class="flex items-center">
-                <i class="fas fa-envelope mr-2"></i>
+                <i class="iconfont icon-envelope-open mr-2"></i>
                 <span>info@islandholiday.com</span>
               </li>
               <li class="flex items-center">
-                <i class="fas fa-map-marker-alt mr-2"></i>
+                <i class="iconfont icon-map-marker-alt mr-2"></i>
                 <span>北京市朝阳区建国路88号</span>
               </li>
             </ul>
@@ -913,24 +943,20 @@
 
         <div class="pt-8 border-t border-blue-800 text-center text-blue-300 text-sm">
           <p>© 2024 海岛度假. 保留所有权利.</p>
-          <p class="mt-2">页面内容均由 AI 生成，仅供参考</p>
-          <p class="mt-2">
-            <a href="https://space.coze.cn" class="text-blue-300 hover:text-white transition-colors"
-              >created by coze space</a
-            >
-          </p>
         </div>
       </div>
     </footer>
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import EmblaCarousel from 'embla-carousel'
 
 // 导航栏滚动控制
 const mainNav = ref(null)
 const handleScroll = () => {
-  if (window.scrollY > 50) {
+  // 仅当滚动高度超过一屏（视口高度）时，切换导航样式
+  if (window.scrollY > window.innerHeight) {
     mainNav.value?.classList.add('nav-scrolled')
   } else {
     mainNav.value?.classList.remove('nav-scrolled')
@@ -952,32 +978,26 @@ const closeMenu = () => {
   document.body.style.overflow = ''
 }
 
-// 轮播逻辑
-const carouselInner = ref(null)
-const carouselItems = ref([])
-const indicators = ref([])
+// Embla 轮播逻辑
+const emblaRoot = ref(null)
+const emblaInstance = ref(null)
 const currentIndex = ref(0)
-let interval = null
+let autoplayTimer = null
 
-const updateSlide = () => {
-  if (carouselInner.value) {
-    carouselInner.value.style.transform = `translateX(-${currentIndex.value * 100}%)`
-  }
-  indicators.value.forEach((el, index) => {
-    el.classList.toggle('active', index === currentIndex.value)
-  })
-}
-
-const startSlide = () => {
-  stopSlide()
-  interval = setInterval(() => {
-    currentIndex.value = (currentIndex.value + 1) % carouselItems.value.length
-    updateSlide()
+const startAutoplay = () => {
+  stopAutoplay()
+  autoplayTimer = setInterval(() => {
+    emblaInstance.value?.scrollNext()
   }, 5000)
 }
-
-const stopSlide = () => {
-  if (interval) clearInterval(interval)
+const stopAutoplay = () => {
+  if (autoplayTimer) {
+    clearInterval(autoplayTimer)
+    autoplayTimer = null
+  }
+}
+const goToSlide = (index) => {
+  emblaInstance.value?.scrollTo(index)
 }
 
 // 滚动动画
@@ -1013,40 +1033,32 @@ onMounted(() => {
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('scroll', checkFadeElements)
   window.addEventListener('load', checkFadeElements)
-  nextTick(() => {
-    // 初始化轮播
-    carouselItems.value = Array.from(document.querySelectorAll('.carousel-item'))
-    indicators.value = Array.from(document.querySelectorAll('.carousel-indicator'))
-    indicators.value.forEach((indicator, index) => {
-      indicator.addEventListener('click', () => {
-        currentIndex.value = index
-        updateSlide()
-      })
-    })
-    const carousel = document.querySelector('.carousel')
-    carousel.addEventListener('mouseenter', stopSlide)
-    carousel.addEventListener('mouseleave', startSlide)
-    startSlide()
+
+  // 初始化 Embla 轮播
+  emblaInstance.value = EmblaCarousel(emblaRoot.value, { loop: true })
+  currentIndex.value = emblaInstance.value.selectedScrollSnap()
+  emblaInstance.value.on('select', () => {
+    currentIndex.value = emblaInstance.value.selectedScrollSnap()
   })
+
+  // 悬停控制自动播放
+  emblaRoot.value.addEventListener('mouseenter', stopAutoplay)
+  emblaRoot.value.addEventListener('mouseleave', startAutoplay)
+  startAutoplay()
+
   enableSmoothScroll()
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
   window.removeEventListener('scroll', checkFadeElements)
-  stopSlide()
+  stopAutoplay()
+  emblaInstance.value?.destroy()
 })
 </script>
 
-<style scoped>
-body {
-  font-family: 'Inter', 'Noto Sans SC', sans-serif;
-  color: #334155;
-  background-color: #f8fafc;
-  overflow-x: hidden;
-}
-
-/* 主色调定义 */
+<style>
+/* 全局主色调变量：确保 Tailwind 与组件样式都能读取 */
 :root {
   --primary-blue: #0ea5e9;
   --primary-blue-dark: #0284c7;
@@ -1056,6 +1068,17 @@ body {
   --light-sand: #fef3c7;
   --dark-blue: #0c4a6e;
 }
+</style>
+
+<style scoped>
+body {
+  font-family: 'Inter', 'Noto Sans SC', sans-serif;
+  color: #334155;
+  background-color: #f8fafc;
+  overflow-x: hidden;
+}
+
+/* 主色调定义 使用全局变量，无需在 scoped 内重复 */
 
 /* 导航栏样式 */
 .nav-scrolled {
@@ -1064,6 +1087,15 @@ body {
   box-shadow:
     0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+/* 导航滚动后的文字与图标颜色切换为深色 */
+.nav-scrolled a,
+.nav-scrolled i,
+.nav-scrolled .text-white {
+  color: #334155 !important;
+}
+.nav-scrolled a:hover {
+  color: var(--primary-blue) !important;
 }
 
 /* 卡片悬停效果 */
@@ -1138,16 +1170,26 @@ body {
   transform: translateY(0);
 }
 
-/* 图片轮播样式 */
-.carousel {
+/* 主视觉遮罩渐变：从顶部60%位置开始渐变 */
+.hero-gradient {
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 60%,
+    rgba(0, 0, 0, 0.3) 80%,
+    rgba(0, 0, 0, 0.7) 100%
+  );
+}
+
+/* 图片轮播样式（Embla） */
+.embla {
   position: relative;
   overflow: hidden;
 }
-.carousel-inner {
+.embla__container {
   display: flex;
-  transition: transform 0.5s ease;
 }
-.carousel-item {
+.embla__slide {
+  flex: 0 0 100%;
   min-width: 100%;
 }
 .carousel-indicators {
