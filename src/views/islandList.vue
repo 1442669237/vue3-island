@@ -103,6 +103,7 @@ const filterIslands = () => {
     flex-direction: column;
     /* 纵向排列 */
     gap: 20px;
+    margin-bottom: 50px;
 
     .filtter-box {
         margin-top: 50px;
