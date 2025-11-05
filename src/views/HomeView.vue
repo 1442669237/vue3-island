@@ -21,9 +21,9 @@
         menuColor="#000"
       />
       <!-- 欢迎词 -->
-      <!-- <div class="split-text">
+      <div class="split-text">
         <SplitText :text="message" className="text-7xl font-bold text-center text-white" :delay="300" />
-      </div> -->
+      </div>
       <!-- 按钮 -->
       <div class="bottom-btm" @click="scrollToSecondPage">更多详情</div>
     </div>
@@ -140,6 +140,10 @@ onMounted(() => {
 
   // 岛屿列表
   getCommentIsLand()
+
+  setTimeout(() => {
+    page2.value.scrollIntoView({ behavior: 'smooth' });
+  },3000)
 });
 // 滚动监听，翻页效果
 const handleScroll = () => {
