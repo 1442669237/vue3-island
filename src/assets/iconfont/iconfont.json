@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "18977864",
+      "name": "clock",
+      "font_class": "clock",
+      "unicode": "e72c",
+      "unicode_decimal": 59180
+    },
+    {
+      "icon_id": "1433638",
+      "name": "bars",
+      "font_class": "bars",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "5634457",
+      "name": "times",
+      "font_class": "times",
+      "unicode": "f109",
+      "unicode_decimal": 61705
+    },
+    {
+      "icon_id": "1898703",
+      "name": "envelope-open",
+      "font_class": "envelope-open",
+      "unicode": "e677",
+      "unicode_decimal": 58999
+    },
+    {
       "icon_id": "562654",
       "name": "star",
       "font_class": "star",
