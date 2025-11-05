@@ -38,10 +38,6 @@
           :color-shift-on-hover="true"
         />
       </div>
-      <!-- <div class="footer">
-        <h3>鸿途智行选岛助手系统</h3>
-        <h5>© 2025 版权所有 | 数据实时更新</h5>
-      </div> -->
     </div>
   </div>
 </template>
@@ -51,8 +47,10 @@ import LiquidEther from '@/components/LiquidEther.vue'
 import SplitText from '@/components/SplitText.vue'
 import Masonry from '@/components/Masonry.vue'
 import CardNav from '@/components/CardNav.vue'
+import { getIslandList } from '@/api/index'
 
 import { ref, onMounted } from 'vue';
+import { error } from 'three';
 
 const page1 = ref(null);
 const page2 = ref(null);
@@ -100,6 +98,7 @@ const navItems = ref([
 
 onMounted(() => {
   // window.addEventListener('scroll', handleScroll);
+  getCommentIsLand()
 });
 
 // 滚动监听，翻页效果
@@ -119,11 +118,20 @@ const handleScroll = () => {
 
   lastScrollY = scrollY; // 更新上次滚动位置
 };
-
 // 滚动按钮点击
 const scrollToSecondPage = () => {
   page2.value.scrollIntoView({ behavior: 'smooth' });
 };
+// 获取推荐岛屿
+const getCommentIsLand = async() => {
+  
+  try{
+    const res = await getIslandList();
+
+  }catch(error){
+    console.log(error,'error')
+  }
+}
 
 </script>
 
