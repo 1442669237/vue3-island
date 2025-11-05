@@ -10,7 +10,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/islandDetail',
+      path: '/islandDetail/:islandId',
       name: 'islandDetail',
       component: () => import('../views/islandDetail/index.vue'),
     },

@@ -5,9 +5,9 @@
 
     <!-- 移动端菜单组件（含遮罩） -->
     <MobileMenu :isActive="isMenuActive" @close="closeMenu" />
-    
+
     <!-- 主视觉区 -->
-    <HeroSection />
+    <HeroSection :island-detail="islandDetail" />
 
     <!-- 主要内容区 -->
     <main class="container mx-auto px-4 py-16">
@@ -53,6 +53,8 @@
 </template>
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { useRoute } from 'vue-router'
+import { fetchIslandHotel, fetchIslandDine, fetchIslandById } from '@/api/islandDetail.js'
 import HeroSection from './components/HeroSection.vue'
 import TopNav from './components/TopNav.vue'
 import MobileMenu from './components/MobileMenu.vue'
@@ -70,6 +72,28 @@ import { usePageScrollEffects } from '../../composables/usePageScrollEffects.js'
 
 // 页面滚动与淡入、平滑锚点（通过组合式函数管理）
 const { navScrolled, init, cleanup } = usePageScrollEffects({ onAnchorNavigate: () => closeMenu() })
+const route = useRoute()
+let islandId = Number(route.params.islandId)
+// 获取岛屿详情
+let islandDetail = ref({})
+fetchIslandById(islandId).then((res) => {
+  console.log('岛屿详情:', res)
+  // request() 已在 utils/request.js 中将标准响应 {code, message, data} 简化为 data
+  // 为兼容非标准响应，这里统一做兼容赋值
+  islandDetail.value = res
+})
+// 获取岛屿美食详情
+let islandDine = ref([])
+fetchIslandDine(islandId).then((res) => {
+  console.log('岛屿美食详情:', res)
+  islandDine.value = res
+})
+// 获取岛屿酒店详情
+let islandHotel = ref([])
+fetchIslandHotel(islandId).then((res) => {
+  console.log('岛屿酒店详情:', res)
+  islandHotel.value = res
+})
 
 const isMenuActive = ref(false)
 
@@ -82,7 +106,6 @@ const closeMenu = () => {
   isMenuActive.value = false
   document.body.style.overflow = ''
 }
-
 
 onMounted(() => {
   init()

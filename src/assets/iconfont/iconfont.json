@@ -6,6 +6,27 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "38691915",
+      "name": "岛屿",
+      "font_class": "daoyu",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "5318209",
+      "name": "酒店",
+      "font_class": "jiudian",
+      "unicode": "e687",
+      "unicode_decimal": 59015
+    },
+    {
+      "icon_id": "44565948",
+      "name": "建筑_建筑_building-two",
+      "font_class": "jianzhu_jianzhu_building-two",
+      "unicode": "e8a6",
+      "unicode_decimal": 59558
+    },
+    {
       "icon_id": "18977864",
       "name": "clock",
       "font_class": "clock",
@@ -165,6 +186,13 @@
       "font_class": "umbrella-beach",
       "unicode": "eb4a",
       "unicode_decimal": 60234
+    },
+    {
+      "icon_id": "45979756",
+      "name": "arrow-right-copy",
+      "font_class": "arrowright-copy",
+      "unicode": "f13e",
+      "unicode_decimal": 61758
     },
     {
       "icon_id": "21232756",

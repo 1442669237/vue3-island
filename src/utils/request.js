@@ -10,7 +10,7 @@ const BUSINESS_CODE = {
 
 // 创建 axios 实例
 const http = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE || 'https://api.mall.aitrip123.com',
+  baseURL: import.meta.env.VITE_API_BASE || 'http://192.168.123.236:8081',
   timeout: 10000,
 })
 
@@ -34,16 +34,16 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response) => {
     const responseData = response.data
-    
+    let type = typeof responseData === 'object' || typeof responseData === 'array'
     // 检查是否为标准业务响应格式 { code, message, data }
-    if (responseData && typeof responseData === 'object' && 'code' in responseData) {
+    if (responseData && type && 'code' in responseData) {
       const { code, message, data } = responseData
-      
+
       // 业务成功
       if (code === BUSINESS_CODE.SUCCESS) {
         return data
       }
-      
+
       // 业务失败，抛出包含业务错误信息的错误
       const businessError = new Error(message || '业务处理失败')
       businessError.code = code
@@ -51,7 +51,7 @@ http.interceptors.response.use(
       console.warn('业务错误:', code, message)
       return Promise.reject(businessError)
     }
-    
+
     // 兼容非标准格式，直接返回原始数据
     return responseData ?? response
   },
@@ -61,9 +61,9 @@ http.interceptors.response.use(
       // 服务器返回了错误状态码
       const status = error.response.status
       const statusText = error.response.statusText
-      
+
       console.error('HTTP 错误:', status, statusText)
-      
+
       // 根据状态码进行特殊处理
       switch (status) {
         case 401:
@@ -81,7 +81,7 @@ http.interceptors.response.use(
         default:
           console.warn(`HTTP 错误: ${status} ${statusText}`)
       }
-      
+
       // 创建统一的HTTP错误对象
       const httpError = new Error(`HTTP ${status}: ${statusText}`)
       httpError.status = status
