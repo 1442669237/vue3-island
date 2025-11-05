@@ -16,10 +16,25 @@ const router = createRouter({
     },
     {
       path: '/islandList',
-      name: 'islandDlist',
-      component: () => import('../views/Islandlist.vue'),
+      name: 'islandList',
+      component: () => import('../views/IslandList.vue'),
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import('../views/About.vue'),
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    if (performance.navigation.type === 1) { // 页面刷新
+      return { top: 0 }; // 不使用 savedPosition，滚动到顶部
+    }
+    if (savedPosition) {
+      return savedPosition; // 使用保存的滚动位置
+    }
+    
+    return { top: 0 }; // 默认滚动到页面顶部
+  },
 })
 
 export default router

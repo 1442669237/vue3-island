@@ -14,3 +14,10 @@ export function submitForm(data) {
 export function fetchList(params) {
   return request({ url: '/list', method: 'get', params })
 }
+
+// 获取岛屿列表接口
+export function getIslandList(params){
+  return request({ url: '/api/island/queryIslandByConditions', method: 'get', params })
+}
+
+

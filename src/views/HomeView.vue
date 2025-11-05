@@ -1,7 +1,10 @@
 <template>
   <div>
     <!-- 页面1 -->
-    <div class="page-content bg-pic" ref="page1">
+    <div 
+      class="page-content bg-pic" 
+      :style="{ backgroundImage: 'url(' + mainPic + ')' }" 
+      ref="page1">
       <!-- 蒙层 -->
       <div class="pic-mask">
         <LiquidEther :colors="['#48FF28', '#A2FFC6', '#9EF19E']" :mouseForce="20" :cursorSize="100" :isViscous="false"
@@ -12,35 +15,39 @@
       <!-- 导航 -->
       <CardNav
         :items="navItems"
+        logo="https://ota-front-public.oss-cn-hangzhou.aliyuncs.com/wx-mini-ota/user/avatar_default.png"
+        logoAlt="鸿途智行选岛助手"
         baseColor="rgba(250, 250, 250, 0.6)"
         menuColor="#000"
       />
       <!-- 欢迎词 -->
-      <div class="split-text">
-        <SplitText :text="message" className="text-8xl font-bold text-center text-white" :delay="300" />
-      </div>
-      <!-- 动态箭头 -->
+      <!-- <div class="split-text">
+        <SplitText :text="message" className="text-7xl font-bold text-center text-white" :delay="300" />
+      </div> -->
+      <!-- 按钮 -->
       <div class="bottom-btm" @click="scrollToSecondPage">更多详情</div>
     </div>
     <div class="page-content bg-list" ref="page2">
-      <h1 class="title">精选岛屿</h1>
-      <div class="content">
+      <div class="title-box">
+        <p></p>
+        <h1 class="title">精选岛屿 <i class="iconfont text-4xl icon-umbrella-beach"></i></h1>
+        <p class="more" @click="goIslandListPage">查看全部<i class="iconfont icon-arrowright ml-[6px]"></i></p>
+      </div>
+      <div class="content" v-if="islandList.length">
         <Masonry
-          :items="items"
+          :items="islandList"
           :duration="0.6"
           :stagger="0.05"
           animate-from="bottom"
           :scale-on-hover="true"
           :hover-scale="0.95"
           :blur-to-focus="true"
-          :color-shift-on-hover="false"
+          :color-shift-on-hover="true"
         />
       </div>
-      <!-- <div class="footer">
-        <h3>鸿途智行选岛助手系统</h3>
-        <h5>© 2025 版权所有 | 数据实时更新</h5>
-      </div> -->
     </div>
+    <FooterSection/>
+    
   </div>
 </template>
 
@@ -49,32 +56,16 @@ import LiquidEther from '@/components/LiquidEther.vue'
 import SplitText from '@/components/SplitText.vue'
 import Masonry from '@/components/Masonry.vue'
 import CardNav from '@/components/CardNav.vue'
-
+import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
+import { getIslandList } from '@/api/index'
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const page1 = ref(null);
 const page2 = ref(null);
-let lastScrollY = 0;
 const message = ref('马代群岛，欢迎您！');
-const items = ref([
-  { id: '1', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 400 },
-  { id: '2', img: 'https://picsum.photos/300/600?random=2', url: 'https://picsum.photos', height: 650 },
-  { id: '3', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 350 },
-  { id: '4', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 550 },
-  { id: '5', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 400 },
-  { id: '6', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 750 },
-  { id: '7', img: 'https://picsum.photos/300/600?random=2', url: 'https://picsum.photos', height: 800 },
-  { id: '8', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 300 },
-  { id: '9', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 650 },
-  { id: '10', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 350 },
-  { id: '11', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 500 },
-  { id: '12', img: 'https://picsum.photos/300/600?random=2', url: 'https://picsum.photos', height: 400 },
-  { id: '13', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 350 },
-  { id: '14', img: 'https://picsum.photos/300/350?random=3', url: 'https://picsum.photos', height: 450 },
-  { id: '15', img: 'https://picsum.photos/300/400?random=1', url: 'https://picsum.photos', height: 400 },
-])
-const navItems = ref([
-  {
+const navItems = [{
     label: "鸿途优选",
     bgColor: "#0D0716",
     textColor: "#fff",
@@ -92,14 +83,64 @@ const navItems = ref([
       { label: "Twitter", pageUrl: "Twitter" },
       { label: "LinkedIn", pageUrl: "LinkedIn" }
     ]
-  }
-])
+}]
+const mainPiclsit = [
+  'https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5b6e3f8e406e1/1b73197c662e9f3f2c1710aaca8befa5.jpg',
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/63bd229117169/images/sf.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3020/0998d0a2d304b0caccc94978882a8c7f.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380459043147025.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/2033/images/1752597226306_AY5D.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3015/83cae4163a641cc5c56fdb5f289c370c.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/625fab9b35aed/902228ba3afe4bede34fa84c5f27db19.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380770270143340.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5c19958adf5bb/f2aabc8b6fd89fe4e500dbe6f7253ffc.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/4024/images/centaraLagoon-map2.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/DI2503081116/images/AERIAL20VIEW.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/2023/fe7f765e39ce9549364557a209071c7f.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4032/b0ed8db198c38069dbda0c29daa6d681.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3009/9061274bab450de7b55961c988cc18b5.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4009/6b5ffe028930a8b4317dc7a9f53f61c1.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5b4aae7b9effa/9b34e7f464b486033f836f07e0705b98.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3003/942dcc2fec5de41d8e476d0329fb032c.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380378192254305.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/638d487d12355/5c3717b815bfc330756d95be139203ae.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/2033/images/dusitD2Bird.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/63ad96d7afd12/94c96f549fa51fcb461f9e4d7d4151f3.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3011/45a107b930da0c4ed8122990db90fca7.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1676382877860645374.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4008/32869a3d57d1175b695053c093c2061a.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/2024/480fa0ef34385d605d2e8cf8270e2740.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380514588871009.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4005/12f66f2ce3ab447cc7cc9a7969c56ee6.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5cfc7dd1166a5/0400a017e9e4dadb66db4405210babb6.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3005/30163b66a622c309c63e51b864b7a928.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5cfc739c46edb/ce932c61d6060c778047e17cd0d83027.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5c382c2c144af/1f845f5210ef09bc2835321f4192e66a.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4006/fb0f871289b81f9121ff3972ad9f5078.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5da6d66d9ac03/129732486474ec207f313235ab7e0f78.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3017/8011e7f08d50231d033fb2b3a7fd7ef7.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4000/22f4acea9c7e5e2856d1b8d0f5baea4a.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4031/233e1a26d771e74cd9a800f8b5d2be7f.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5ea6808cbf4a1/1d02ad41aaf4887ca01d624a489ee8c8.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4011/145111cd2732e4f5ced414a62ce7be9a.png",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/2401031028/images/BWLM_VIEW_08.jpg",
+  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3019/b633af33858d19163ae3c12201d84b5c.png",
+]
+
+let lastScrollY = 0;
+let islandList = ref([])
+let mainPic = ref('')
 
 
 onMounted(() => {
   // window.addEventListener('scroll', handleScroll);
-});
+  // 主图随机
+  const randomIndex = Math.floor(Math.random() * mainPiclsit.length);
+  mainPic.value =  mainPiclsit[randomIndex];
 
+  // 岛屿列表
+  getCommentIsLand()
+});
 // 滚动监听，翻页效果
 const handleScroll = () => {
   const scrollY = window.scrollY;
@@ -117,11 +158,47 @@ const handleScroll = () => {
 
   lastScrollY = scrollY; // 更新上次滚动位置
 };
-
 // 滚动按钮点击
 const scrollToSecondPage = () => {
   page2.value.scrollIntoView({ behavior: 'smooth' });
 };
+// 获取推荐岛屿
+const getCommentIsLand = async() => {
+  
+  try{
+    const res = await getIslandList();
+    if (res?.length > 0) {
+      islandList.value = res.slice(0, 15).map((item, index, array) => {
+        // 随机从指定的高度数组中选择一个值，避免与前一个相同
+        const heights = [450, 550, 650, 700, 600];
+        
+        // 如果是第一个元素，直接选择一个随机高度
+        let randomHeight = heights[Math.floor(Math.random() * heights.length)];
+        
+        // 如果不是第一个元素，检查是否与上一个相同，如果相同重新选择
+        if (index > 0) {
+          // 检查前一个元素的高度
+          while (randomHeight === array[index - 1].height) {
+            randomHeight = heights[Math.floor(Math.random() * heights.length)];
+          }
+        }
+        
+        // 返回新对象，包含原来的属性和随机的height字段
+        return {
+          ...item,
+          img:item.aerialViewUrl,
+          height: randomHeight
+        };
+      });
+    }
+  }catch(error){
+    console.log(error,'error')
+  }
+}
+// 跳转列表页
+const goIslandListPage = () => {
+  router.push('/islandList')
+}
 
 </script>
 
@@ -136,14 +213,14 @@ const scrollToSecondPage = () => {
 }
 
 .bg-pic {
-  background-image: url('	https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1007/images/67k.jpg');
+  // background-image: url('https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1007/images/67k.jpg');
   background-size: 100% 100%;
 
   .pic-mask {
     width: 100%;
     height: 100%;
     background-color: black;
-    opacity: 0.3;
+    opacity: 0.2;
   }
 }
 
@@ -151,8 +228,24 @@ const scrollToSecondPage = () => {
   .content{
     width: 80%;
   }
-  .title{
+  .title-box{
     margin-top: 50px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .more{
+      font-size: 22px;
+      margin-right: 5px;
+      color: #111;
+      cursor: pointer;
+      font-style: italic;
+    }
+    .more:hover{
+      color: #1e88e5;
+    }
+  }
+  .title{
     margin-bottom: 30px;
     font-size: 50px;
     font-weight: bold;
@@ -188,49 +281,49 @@ const scrollToSecondPage = () => {
   bottom: 0;
   opacity: 0.9;
   transition: all 0.5s ease-in-out;
-  animation: floatUp 2s ease-out forwards;
+  animation: floatUp 1s ease-out forwards;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
   font-size: 32px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 @keyframes floatUp {
   0% {
-    transform: translateY(200px);
+    transform: translateY(100px);
     /* 起始位置*/
   }
 
   100% {
-    transform: translateY(-200px);
+    transform: translateY(-100px);
     /* 结束位置*/
   }
 }
 
 .bottom-btm:hover {
-  // background-color: #76d77e;
   border: 1px solid rgba(118, 215, 126, 1);
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
 }
 
+@media (min-width: 1200px) {
+  .bg-list{
+    height: 100vh;
+  }
+}
 
+@media (max-width: 1199px) and (min-width: 768px) {
+  .bg-list{
+    height: 150vh;
+  }
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@media (max-width: 767px) {
+  .bg-list{
+    height: 150vh;
+  }
+}
 </style>

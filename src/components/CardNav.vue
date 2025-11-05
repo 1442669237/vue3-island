@@ -176,13 +176,13 @@ const goUrl = (url: string) => {
 
 <template>
   <div
-    :class="`card-nav-container absolute left-1/2 -translate-x-1/2 w-[90%] max-w-[800px] z-[99] top-[1.2em] md:top-[2em] ${props.className}`"
+    :class="`card-nav-container absolute left-1/2 -translate-x-1/2 w-[30%] min-w-[500px] z-[99] top-[1.2em] md:top-[2em] ${props.className}`"
   >
     <nav
       ref="navRef"
       :class="[
-        'card-nav block h-[60px] p-0 rounded-xl shadow-md relative overflow-hidden will-change-[height]',
-        { open: isExpanded },
+        'card-nav block p-0 rounded-xl shadow-md relative overflow-hidden will-change-[height]',
+        { open: isExpanded }
       ]"
       :style="{ backgroundColor: props.baseColor }"
     >
@@ -217,12 +217,12 @@ const goUrl = (url: string) => {
         <div
           class="md:top-1/2 md:left-1/2 md:absolute flex items-center order-1 md:order-none md:-translate-x-1/2 md:-translate-y-1/2 logo-container"
         >
-          <img v-if="props.logo" :src="props.logo" class="h-[28px] logo" />
+          <img v-if="props.logo" :src="props.logo" class="h-[28px] logo mr-[10px]" />
+          <span class="text-[16px] leading-[16px] font-medium transition-colors">{{ props.logoAlt }}</span>
         </div>
-        <!-- <span>{{ props.logoAlt }}</span> -->
 
         <button
-          v-show="props.showBtm"
+        v-if="props.showBtm"
           type="button"
           class="hidden md:inline-flex px-4 py-2 border-0 rounded-[calc(0.75rem-0.2rem)] h-full font-medium transition-colors duration-300 cursor-pointer card-nav-cta-button"
           :style="{

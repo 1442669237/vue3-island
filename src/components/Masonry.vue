@@ -1,23 +1,26 @@
 <template>
   <div ref="containerRef" class="relative w-full h-full">
     <div
-      v-for="item in grid"
+      v-for="(item,index) in grid"
       :key="item.id"
       :data-key="item.id"
       class="absolute box-content"
       :style="{ willChange: 'transform, width, height, opacity' }"
-      @click="openUrl(item.url)"
-      @mouseenter="e => handleMouseEnter(item.id, e.currentTarget as HTMLElement)"
-      @mouseleave="e => handleMouseLeave(item.id, e.currentTarget as HTMLElement)"
+      @mouseenter="e => handleMouseEnter(item.id,index, e.currentTarget as HTMLElement)"
+      @mouseleave="e => handleMouseLeave(item.id,index, e.currentTarget as HTMLElement)"
     >
       <div
-        class="relative w-full h-full bg-cover bg-center rounded-[10px] shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] uppercase text-[10px] leading-[10px]"
+        class="relative w-full h-full bg-cover bg-center rounded-[10px] overflow-hidden shadow-[0px_10px_50px_-10px_rgba(0,0,0,0.2)] uppercase text-[10px] leading-[10px]"
         :style="{ backgroundImage: `url(${item.img})` }"
       >
         <div
-          v-if="colorShiftOnHover"
-          class="color-overlay absolute inset-0 rounded-[10px] bg-gradient-to-tr from-pink-500/50 to-sky-500/50 opacity-0 pointer-events-none"
-        />
+          v-if="colorShiftOnHover && mouseEnterIndex == index"
+          class="black-mask"
+        >
+          <a class="title">{{ item.chineseName }}</a>
+          <i class="btm" @click="goVR(item.islandId)">点击查看VR <i class="iconfont icon-arrowright"></i></i>
+          <i class="btm" @click="goDetail(item.islandId)">查看情页 <i class="iconfont icon-arrowright"></i></i>
+        </div>
       </div>
     </div>
   </div>
@@ -26,12 +29,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watchEffect, nextTick, useTemplateRef } from 'vue';
 import { gsap } from 'gsap';
+import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 interface Item {
   id: string;
   img: string;
-  url: string;
+  url?: string;
   height: number;
+  chineseName?:string;
+  islandId?:string;
 }
 
 interface MasonryProps {
@@ -56,6 +64,8 @@ const props = withDefaults(defineProps<MasonryProps>(), {
   blurToFocus: true,
   colorShiftOnHover: false
 });
+
+let mouseEnterIndex = ref(-1)
 
 const useMedia = (queries: string[], values: number[], defaultValue: number) => {
   const get = () => values[queries.findIndex(q => matchMedia(q).matches)] ?? defaultValue;
@@ -179,7 +189,8 @@ const getInitialPosition = (item: GridItem) => {
   }
 };
 
-const handleMouseEnter = (id: string, element: HTMLElement) => {
+const handleMouseEnter = (id: string,index:number, element: HTMLElement) => {
+  console.log(index,'-')
   if (props.scaleOnHover) {
     gsap.to(`[data-key="${id}"]`, {
       scale: props.hoverScale,
@@ -188,12 +199,11 @@ const handleMouseEnter = (id: string, element: HTMLElement) => {
     });
   }
   if (props.colorShiftOnHover) {
-    const overlay = element.querySelector('.color-overlay') as HTMLElement;
-    if (overlay) gsap.to(overlay, { opacity: 0.3, duration: 0.3 });
+    mouseEnterIndex.value = index
   }
 };
 
-const handleMouseLeave = (id: string, element: HTMLElement) => {
+const handleMouseLeave = (id: string,index:number,  element: HTMLElement) => {
   if (props.scaleOnHover) {
     gsap.to(`[data-key="${id}"]`, {
       scale: 1,
@@ -202,10 +212,17 @@ const handleMouseLeave = (id: string, element: HTMLElement) => {
     });
   }
   if (props.colorShiftOnHover) {
-    const overlay = element.querySelector('.color-overlay') as HTMLElement;
-    if (overlay) gsap.to(overlay, { opacity: 0, duration: 0.3 });
+    mouseEnterIndex.value = -1
   }
 };
+
+const goVR =(id:string) => {
+
+};
+
+const goDetail =(id:string) => {
+  router.push(`/islandDetail/${id}`)
+}
 
 watchEffect(() => {
   preloadImages(props.items.map(i => i.img)).then(() => {
@@ -263,3 +280,36 @@ watchEffect(() => {
   });
 });
 </script>
+<style scoped lang="less">
+.black-mask{
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.7;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 20px;
+  margin-bottom: 20px;
+  .title{
+    font-size: 20px;
+    color: #FFF;
+    font-weight: 700;
+    opacity: 1;
+    line-height: 1.5;
+    cursor: pointer;
+  }
+  .btm{
+    font-size: 16px;
+    line-height: 1.5;
+    color: #FFF;
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  .btm:hover {
+    opacity: 1;
+    text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.5);
+  }
+}
+</style>
