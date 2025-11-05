@@ -5,20 +5,40 @@
     <div ref="emblaRoot" class="embla h-full">
       <div class="embla__container h-full">
         <div class="embla__slide h-full">
-          <img src="https://s.coze.cn/image/mD4sQxNtL48/" alt="鹦鹉螺私人岛航拍图" class="w-full h-full object-cover" />
+          <img :src="islandDetail.aerialViewUrl" alt="" class="w-full h-full object-cover" />
         </div>
         <div class="embla__slide h-full">
-          <img src="https://s.coze.cn/image/uVNLr5QBWy8/" alt="水上别墅" class="w-full h-full object-cover" />
+          <img
+            src="https://s.coze.cn/image/uVNLr5QBWy8/"
+            alt="水上别墅"
+            class="w-full h-full object-cover"
+          />
         </div>
         <div class="embla__slide h-full">
-          <img src="https://s.coze.cn/image/xaBC6Ih1bQo/" alt="无人沙洲" class="w-full h-full object-cover" />
+          <img
+            src="https://s.coze.cn/image/xaBC6Ih1bQo/"
+            alt="无人沙洲"
+            class="w-full h-full object-cover"
+          />
         </div>
       </div>
       <!-- 轮播指示器 -->
       <div class="carousel-indicators">
-        <button class="carousel-indicator" :class="{ active: currentIndex === 0 }" @click="goToSlide(0)"></button>
-        <button class="carousel-indicator" :class="{ active: currentIndex === 1 }" @click="goToSlide(1)"></button>
-        <button class="carousel-indicator" :class="{ active: currentIndex === 2 }" @click="goToSlide(2)"></button>
+        <button
+          class="carousel-indicator"
+          :class="{ active: currentIndex === 0 }"
+          @click="goToSlide(0)"
+        ></button>
+        <button
+          class="carousel-indicator"
+          :class="{ active: currentIndex === 1 }"
+          @click="goToSlide(1)"
+        ></button>
+        <button
+          class="carousel-indicator"
+          :class="{ active: currentIndex === 2 }"
+          @click="goToSlide(2)"
+        ></button>
       </div>
     </div>
 
@@ -42,7 +62,7 @@
           </div>
 
           <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-            鹦鹉螺 The Nautilus Maldives
+            {{ islandDetail.chineseName }} {{ islandDetail.englishName }}
           </h1>
 
           <div class="flex flex-wrap items-center mb-6">
@@ -54,27 +74,47 @@
                 <i class="iconfont icon-star"></i>
                 <i class="iconfont icon-star"></i>
               </div>
-              <span class="text-white font-medium">9.2分 卓越体验</span>
+              <span class="text-white font-medium"
+                >{{ islandDetail.overallRating }}分 {{ islandDetail.keywords }}</span
+              >
             </div>
             <div class="flex items-center mr-6 mb-2">
-              <i class="iconfont icon-user-friends text-white mr-2"></i>
-              <span class="text-white">300+ 住客点评</span>
+              <i class="iconfont icon-jianzhu_jianzhu_building-two text-white mr-2"></i>
+              <span class="text-white">{{ islandDetail.constructionTime }}建设</span>
             </div>
             <div class="flex items-center mb-2">
-              <i class="iconfont icon-trophy text-white mr-2"></i>
-              <span class="text-white">2024年度最佳私人岛</span>
+              <i class="iconfont icon-jiudian text-white mr-2"></i>
+              <span class="text-white">{{ islandDetail.hotelLevel }}豪华酒店</span>
             </div>
           </div>
 
-          <p class="text-white text-lg md:text-xl mb-8 max-w-2xl">
-            位于马尔代夫南部的隐秘天堂，鹦鹉螺私人岛以其独特的设计理念和无与伦比的奢华体验，为追求极致度假的旅行者提供了一个远离喧嚣的世外桃源。
-          </p>
-
+          <!-- <p
+            class="text-white text-lg md:text-xl mb-8 max-w-5xl"
+            v-html="replaceNewlines(islandDetail.production)"
+          ></p> -->
+          <div class="mb-8">
+            <p
+              ref="introRef"
+              class="text-white text-lg md:text-xl max-w-5xl"
+              v-html="splitByFirstP(islandDetail.introduction)[0]"
+              :style="!isExpanded ? { maxHeight: collapsedHeight + 'px', overflow: 'hidden' } : {}"
+            ></p>
+            <button
+              v-if="isOverflowing"
+              class="mt-3 bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-4 py-2 rounded-lg font-medium transition-all"
+              @click="toggleExpand"
+            >
+              {{ isExpanded ? '收起' : '展开' }}
+            </button>
+          </div>
           <div class="flex flex-wrap gap-4">
             <a href="#booking" class="btn-primary">
               <i class="iconfont icon-calendar-check mr-2"></i> 立即预订
             </a>
-            <a href="#details" class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-6 py-3 rounded-lg font-medium transition-all">
+            <a
+              href="#details"
+              class="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white px-6 py-3 rounded-lg font-medium transition-all"
+            >
               <i class="iconfont icon-infocircle mr-2"></i> 了解更多
             </a>
           </div>
@@ -85,13 +125,48 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import EmblaCarousel from 'embla-carousel'
+const props = defineProps({
+  islandDetail: {
+    type: Object,
+    default: () => ({}),
+  },
+})
+const replaceNewlines = (text) => {
+  return text.replace(/\n/g, '<br/>')
+}
+const splitByFirstP = (htmlContent) => {
+  const firstPIndex = htmlContent.indexOf('<p>')
+
+  if (firstPIndex === -1) {
+    return [htmlContent, '']
+  }
+
+  return [htmlContent.substring(0, firstPIndex), htmlContent.substring(firstPIndex)]
+}
 
 const emblaRoot = ref(null)
 const emblaInstance = ref(null)
 const currentIndex = ref(0)
 let autoplayTimer = null
+
+// 展开/收起逻辑
+const collapsedHeight = 140 // 默认收起高度（px）
+const isExpanded = ref(false)
+const isOverflowing = ref(false)
+const introRef = ref(null)
+
+const measureOverflow = () => {
+  const el = introRef.value
+  if (!el) return
+  // 检测内容是否超过默认高度
+  isOverflowing.value = el.scrollHeight > collapsedHeight + 4
+}
+
+const toggleExpand = () => {
+  isExpanded.value = !isExpanded.value
+}
 
 const startAutoplay = () => {
   stopAutoplay()
@@ -119,12 +194,26 @@ onMounted(() => {
   emblaRoot.value.addEventListener('mouseenter', stopAutoplay)
   emblaRoot.value.addEventListener('mouseleave', startAutoplay)
   startAutoplay()
+
+  // 初次测量引言内容高度
+  nextTick(() => {
+    measureOverflow()
+    window.addEventListener('resize', measureOverflow)
+  })
 })
 
 onBeforeUnmount(() => {
   stopAutoplay()
   emblaInstance.value?.destroy()
+  window.removeEventListener('resize', measureOverflow)
 })
+
+// 监听引言内容变化，重新测量
+watch(
+  () => props.islandDetail?.introduction,
+  () => nextTick(measureOverflow),
+  { immediate: true },
+)
 </script>
 
 <style scoped>
