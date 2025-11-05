@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watchEffect, nextTick, useTemplateRef } from 'vue';
 import { gsap } from 'gsap';
+import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
 
 interface Item {
   id: string;
