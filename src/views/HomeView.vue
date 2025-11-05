@@ -3,7 +3,7 @@
     <!-- 页面1 -->
     <div 
       class="page-content bg-pic" 
-      :style="{ backgroundImage: 'url(' + mainPic + ')' }" 
+      :style="{ backgroundImage: backgroundImage }"
       ref="page1">
       <!-- 蒙层 -->
       <div class="pic-mask">
@@ -21,9 +21,9 @@
         menuColor="#000"
       />
       <!-- 欢迎词 -->
-      <!-- <div class="split-text">
+      <div class="split-text">
         <SplitText :text="message" className="text-7xl font-bold text-center text-white" :delay="300" />
-      </div> -->
+      </div>
       <!-- 按钮 -->
       <div class="bottom-btm" @click="scrollToSecondPage">更多详情</div>
     </div>
@@ -65,6 +65,8 @@ const router = useRouter()
 const page1 = ref(null);
 const page2 = ref(null);
 const message = ref('马代群岛，欢迎您！');
+const randomImage = Math.floor(Math.random() * 25) + 1;
+const backgroundImage = `url(/public/islandImages/${randomImage}.jpg)`;
 const navItems = [{
     label: "鸿途优选",
     bgColor: "#0D0716",
@@ -84,68 +86,24 @@ const navItems = [{
       { label: "LinkedIn", pageUrl: "LinkedIn" }
     ]
 }]
-const mainPiclsit = [
-  'https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5b6e3f8e406e1/1b73197c662e9f3f2c1710aaca8befa5.jpg',
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/63bd229117169/images/sf.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3020/0998d0a2d304b0caccc94978882a8c7f.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380459043147025.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/2033/images/1752597226306_AY5D.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3015/83cae4163a641cc5c56fdb5f289c370c.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/625fab9b35aed/902228ba3afe4bede34fa84c5f27db19.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380770270143340.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5c19958adf5bb/f2aabc8b6fd89fe4e500dbe6f7253ffc.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/4024/images/centaraLagoon-map2.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/DI2503081116/images/AERIAL20VIEW.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/2023/fe7f765e39ce9549364557a209071c7f.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4032/b0ed8db198c38069dbda0c29daa6d681.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3009/9061274bab450de7b55961c988cc18b5.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4009/6b5ffe028930a8b4317dc7a9f53f61c1.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5b4aae7b9effa/9b34e7f464b486033f836f07e0705b98.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3003/942dcc2fec5de41d8e476d0329fb032c.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380378192254305.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/638d487d12355/5c3717b815bfc330756d95be139203ae.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/2033/images/dusitD2Bird.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/63ad96d7afd12/94c96f549fa51fcb461f9e4d7d4151f3.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3011/45a107b930da0c4ed8122990db90fca7.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1676382877860645374.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4008/32869a3d57d1175b695053c093c2061a.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/2024/480fa0ef34385d605d2e8cf8270e2740.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/md5img/1677380514588871009.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4005/12f66f2ce3ab447cc7cc9a7969c56ee6.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5cfc7dd1166a5/0400a017e9e4dadb66db4405210babb6.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3005/30163b66a622c309c63e51b864b7a928.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5cfc739c46edb/ce932c61d6060c778047e17cd0d83027.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5c382c2c144af/1f845f5210ef09bc2835321f4192e66a.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4006/fb0f871289b81f9121ff3972ad9f5078.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5da6d66d9ac03/129732486474ec207f313235ab7e0f78.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3017/8011e7f08d50231d033fb2b3a7fd7ef7.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4000/22f4acea9c7e5e2856d1b8d0f5baea4a.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4031/233e1a26d771e74cd9a800f8b5d2be7f.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/5ea6808cbf4a1/1d02ad41aaf4887ca01d624a489ee8c8.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/4011/145111cd2732e4f5ced414a62ce7be9a.png",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/2401031028/images/BWLM_VIEW_08.jpg",
-  "https://newsl.oss-cn-hangzhou.aliyuncs.com/xiaochengxu/miscIMG/3019/b633af33858d19163ae3c12201d84b5c.png",
-]
 
 let lastScrollY = 0;
 let islandList = ref([])
-let mainPic = ref('')
 
 
 onMounted(() => {
   // window.addEventListener('scroll', handleScroll);
-  // 主图随机
-  const randomIndex = Math.floor(Math.random() * mainPiclsit.length);
-  mainPic.value =  mainPiclsit[randomIndex];
 
   // 岛屿列表
   getCommentIsLand()
+
+  setTimeout(() => {
+    page2.value.scrollIntoView({ behavior: 'smooth' });
+  },3000)
 });
 // 滚动监听，翻页效果
 const handleScroll = () => {
   const scrollY = window.scrollY;
-
-  console.log(scrollY, page1.value.offsetHeight, '---')
 
   // 向下滚动，进入第二个页面
   if (scrollY > lastScrollY) {
