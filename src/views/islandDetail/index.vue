@@ -78,8 +78,6 @@ let islandId = Number(route.params.islandId)
 let islandDetail = ref({})
 fetchIslandById(islandId).then((res) => {
   console.log('岛屿详情:', res)
-  // request() 已在 utils/request.js 中将标准响应 {code, message, data} 简化为 data
-  // 为兼容非标准响应，这里统一做兼容赋值
   islandDetail.value = res
 })
 // 获取岛屿美食详情
