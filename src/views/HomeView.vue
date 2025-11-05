@@ -46,6 +46,7 @@
         />
       </div>
     </div>
+    <FooterSection/>
     
   </div>
 </template>
@@ -55,6 +56,7 @@ import LiquidEther from '@/components/LiquidEther.vue'
 import SplitText from '@/components/SplitText.vue'
 import Masonry from '@/components/Masonry.vue'
 import CardNav from '@/components/CardNav.vue'
+import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
 import { getIslandList } from '@/api/index'
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router'
@@ -305,5 +307,23 @@ const goIslandListPage = () => {
   border: 1px solid rgba(118, 215, 126, 1);
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 1200px) {
+  .bg-list{
+    height: 100vh;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .bg-list{
+    height: 150vh;
+  }
+}
+
+@media (max-width: 767px) {
+  .bg-list{
+    height: 150vh;
+  }
 }
 </style>

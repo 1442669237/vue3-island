@@ -17,9 +17,9 @@
           v-if="colorShiftOnHover && mouseEnterIndex == index"
           class="black-mask"
         >
-          <a class="title">马尔代夫马尔</a>
-          <i class="btm">点击查看VR <i class="iconfont icon-arrowright"></i></i>
-          <i class="btm">查看情页 <i class="iconfont icon-arrowright"></i></i>
+          <a class="title">{{ item.chineseName }}</a>
+          <i class="btm" @click="goVR(item.islandId)">点击查看VR <i class="iconfont icon-arrowright"></i></i>
+          <i class="btm" @click="goDetail(item.islandId)">查看情页 <i class="iconfont icon-arrowright"></i></i>
         </div>
       </div>
     </div>
@@ -30,12 +30,16 @@
 import { ref, computed, onMounted, onUnmounted, watchEffect, nextTick, useTemplateRef } from 'vue';
 import { gsap } from 'gsap';
 import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 interface Item {
   id: string;
   img: string;
-  url: string;
+  url?: string;
   height: number;
+  chineseName?:string;
+  islandId?:string;
 }
 
 interface MasonryProps {
@@ -211,6 +215,14 @@ const handleMouseLeave = (id: string,index:number,  element: HTMLElement) => {
     mouseEnterIndex.value = -1
   }
 };
+
+const goVR =(id:string) => {
+
+};
+
+const goDetail =(id:string) => {
+  router.push(`/islandDetail/${id}`)
+}
 
 watchEffect(() => {
   preloadImages(props.items.map(i => i.img)).then(() => {

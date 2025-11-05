@@ -73,7 +73,7 @@ import { usePageScrollEffects } from '../../composables/usePageScrollEffects.js'
 // 页面滚动与淡入、平滑锚点（通过组合式函数管理）
 const { navScrolled, init, cleanup } = usePageScrollEffects({ onAnchorNavigate: () => closeMenu() })
 const route = useRoute()
-let islandId = Number(route.params.islandId)
+let islandId = route.params.islandId
 // 获取岛屿详情
 let islandDetail = ref({})
 fetchIslandById(islandId).then((res) => {
