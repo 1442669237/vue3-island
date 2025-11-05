@@ -16,22 +16,7 @@
         <!-- 左侧内容 -->
         <div class="lg:col-span-2 space-y-12">
           <!-- 海岛简介 -->
-          <div class="fade-in">
-            <h2 class="text-3xl font-bold mb-6 text-dark-blue">海岛简介</h2>
-            <div class="prose prose-lg max-w-none">
-              <p class="mb-4">
-                鹦鹉螺私人岛（The Nautilus
-                Maldives）是马尔代夫最具特色的奢华度假岛屿之一，位于芭环礁（Baa
-                Atoll）联合国教科文组织生物圈保护区内。这座岛屿以其独特的设计理念、私密的度假环境和卓越的服务体验而闻名于世。
-              </p>
-              <p class="mb-4">
-                岛屿面积虽小，却拥有26间设计独特的水上和沙滩别墅，每一间都配备了私人泳池和专属管家服务。岛上的餐厅提供由米其林星级厨师精心打造的美食，融合了马尔代夫当地风味和国际美食。
-              </p>
-              <p>
-                鹦鹉螺私人岛最引人注目的特色包括：专属的无人沙洲、星空泳池、水下餐厅以及丰富的水上活动。无论您是寻求浪漫的蜜月之旅，还是想要与家人共度难忘的假期，这里都能满足您的所有期望。
-              </p>
-            </div>
-          </div>
+          <IslandIntro />
 
           <!-- 特色标签 -->
           <FeaturesSection />
@@ -80,16 +65,12 @@ import ReviewsSection from './components/ReviewsSection.vue'
 import PricingTable from './components/PricingTable.vue'
 import FAQSection from './components/FAQSection.vue'
 import FooterSection from './components/FooterSection.vue'
+import IslandIntro from './components/IslandIntro.vue'
+import { usePageScrollEffects } from '../../composables/usePageScrollEffects.js'
 
-// 导航栏滚动控制（状态驱动）
-const navScrolled = ref(false)
-const handleScroll = () => {
-  navScrolled.value = window.scrollY > window.innerHeight
-}
+// 页面滚动与淡入、平滑锚点（通过组合式函数管理）
+const { navScrolled, init, cleanup } = usePageScrollEffects({ onAnchorNavigate: () => closeMenu() })
 
-// 移动端菜单控制
-const mobileMenu = ref(null)
-const menuOverlay = ref(null)
 const isMenuActive = ref(false)
 
 const openMenu = () => {
@@ -103,46 +84,12 @@ const closeMenu = () => {
 }
 
 
-// 滚动动画
-const checkFadeElements = () => {
-  document.querySelectorAll('.fade-in').forEach((el) => {
-    const rect = el.getBoundingClientRect()
-    const visible = rect.top < window.innerHeight - 100 && rect.bottom > 0
-    if (visible) el.classList.add('visible')
-  })
-}
-
-// 平滑滚动
-const enableSmoothScroll = () => {
-  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-    anchor.addEventListener('click', (e) => {
-      const targetId = anchor.getAttribute('href')
-      if (!targetId || targetId === '#') return
-      e.preventDefault()
-      const targetEl = document.querySelector(targetId)
-      if (targetEl) {
-        window.scrollTo({
-          top: targetEl.offsetTop - 80,
-          behavior: 'smooth',
-        })
-        closeMenu()
-      }
-    })
-  })
-}
-
 onMounted(() => {
-  // 滚动事件
-  window.addEventListener('scroll', handleScroll)
-  window.addEventListener('scroll', checkFadeElements)
-  window.addEventListener('load', checkFadeElements)
-
-  enableSmoothScroll()
+  init()
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', handleScroll)
-  window.removeEventListener('scroll', checkFadeElements)
+  cleanup()
 })
 </script>
 
