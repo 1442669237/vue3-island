@@ -25,7 +25,7 @@
       <div class="bottom-btm" @click="scrollToSecondPage">更多详情</div>
     </div>
     <div class="page-content bg-list" ref="page2">
-      <h1 class="title">精选岛屿</h1>
+      <h1 class="title">精选岛屿<i class="iconfont icon-umbrella-beach"></i></h1>
       <div class="content">
         <Masonry
           :items="items"
@@ -35,7 +35,7 @@
           :scale-on-hover="true"
           :hover-scale="0.95"
           :blur-to-focus="true"
-          :color-shift-on-hover="false"
+          :color-shift-on-hover="true"
         />
       </div>
       <!-- <div class="footer">
@@ -138,7 +138,7 @@ const scrollToSecondPage = () => {
 }
 
 .bg-pic {
-  background-image: url('	https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1007/images/67k.jpg');
+  background-image: url('https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1007/images/67k.jpg');
   background-size: 100% 100%;
 
   .pic-mask {
@@ -197,6 +197,7 @@ const scrollToSecondPage = () => {
   color: white;
   font-size: 32px;
   font-weight: 700;
+  cursor: pointer;
 }
 
 @keyframes floatUp {

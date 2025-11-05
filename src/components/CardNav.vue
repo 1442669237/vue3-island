@@ -177,7 +177,7 @@ const goUrl = (url:string) => {
     <nav
       ref="navRef"
       :class="[
-        'card-nav block h-[60px] p-0 rounded-xl shadow-md relative overflow-hidden will-change-[height]',
+        'card-nav block p-0 rounded-xl shadow-md relative overflow-hidden will-change-[height]',
         { open: isExpanded }
       ]"
       :style="{ backgroundColor: props.baseColor }"
@@ -218,7 +218,7 @@ const goUrl = (url:string) => {
         </div>
 
         <button
-        v-show="props.showBtm"
+        v-if="props.showBtm"
           type="button"
           class="hidden md:inline-flex px-4 py-2 border-0 rounded-[calc(0.75rem-0.2rem)] h-full font-medium transition-colors duration-300 cursor-pointer card-nav-cta-button"
           :style="{
