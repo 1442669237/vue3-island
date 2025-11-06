@@ -121,13 +121,13 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
-// defineProps({
-//   commentElement: {
-//     type: Object,
-//     default: () => ({}),
-//   },
-// })
-// console.log(this.commentElement)
+const { commentElement } = defineProps({
+  commentElement: {
+    type: Object,
+    default: () => ({}),
+  },
+})
+
 const canvasRef = ref(null)
 let chartInstance = null
 

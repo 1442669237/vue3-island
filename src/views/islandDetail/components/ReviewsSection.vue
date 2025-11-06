@@ -2,8 +2,7 @@
   <div class="fade-in">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">用户评价</h2>
     <div class="bg-white rounded-xl p-6 shadow-md">
-      <RadarChart :comment-element="islandDetail.commentElement" />
-
+      <RadarChart :comment-element="commentElement" />
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
         <div>
           <div class="flex items-center mb-2">
@@ -111,13 +110,32 @@
 
 <script setup>
 import RadarChart from './RadarChart.vue'
+import { ref, watch } from 'vue'
 
-defineProps({
+const commentElement = ref([])
+
+const { islandDetail } = defineProps({
   islandDetail: {
     type: Object,
     default: () => ({}),
   },
 })
+
+watch(
+  () => islandDetail,
+  (newVal) => {
+    if (newVal && newVal.commentElement) {
+      try {
+        commentElement.value = JSON.parse(newVal.commentElement)
+        console.log('解析后的数据:', commentElement.value)
+      } catch (error) {
+        console.error('JSON 解析失败:', error)
+        commentElement.value = []
+      }
+    }
+  },
+  { immediate: true, deep: true },
+)
 </script>
 
 <style scoped>

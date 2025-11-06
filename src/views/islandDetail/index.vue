@@ -31,7 +31,7 @@
           <TransportGuide />
 
           <!-- 用户评价 -->
-          <ReviewsSection />
+          <ReviewsSection :island-detail="islandDetail" />
         </div>
 
         <!-- 右侧预订栏 -->
