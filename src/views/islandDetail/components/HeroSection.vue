@@ -7,23 +7,32 @@
         <div class="embla__slide h-full">
           <img :src="islandDetail.aerialViewUrl" alt="" class="w-full h-full object-cover" />
         </div>
-        <div class="embla__slide h-full">
-          <img
-            src="https://s.coze.cn/image/uVNLr5QBWy8/"
-            alt="水上别墅"
+
+        <div class="embla__slide h-full relative" v-if="islandDetail.videos && islandDetail.videos.length>0">
+          <!-- 视频播放器 -->
+          <video 
+            ref="videoPlayer" 
+            :src="islandDetail.videos[0].videoUrl" 
+            controls 
+            @play="onPlay" 
+            @pause="onPause" 
+            @ended="onEnded" 
             class="w-full h-full object-cover"
-          />
+          ></video>
+
+          <!-- 播放按钮 -->
+          <div 
+            v-if="!isPlaying" 
+            @click="togglePlay" 
+            class="play-button absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white"
+          >
+            ▶
         </div>
-        <div class="embla__slide h-full">
-          <img
-            src="https://s.coze.cn/image/xaBC6Ih1bQo/"
-            alt="无人沙洲"
-            class="w-full h-full object-cover"
-          />
         </div>
+
       </div>
       <!-- 轮播指示器 -->
-      <div class="carousel-indicators">
+      <div class="carousel-indicators" v-if="islandDetail.videos && islandDetail.videos.length>0">
         <button
           class="carousel-indicator"
           :class="{ active: currentIndex === 0 }"
@@ -34,11 +43,6 @@
           :class="{ active: currentIndex === 1 }"
           @click="goToSlide(1)"
         ></button>
-        <button
-          class="carousel-indicator"
-          :class="{ active: currentIndex === 2 }"
-          @click="goToSlide(2)"
-        ></button>
       </div>
     </div>
 
@@ -46,7 +50,7 @@
     <div class="absolute inset-0 hero-gradient"></div>
 
     <!-- 标题和信息 -->
-    <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16">
+    <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16" v-if="!isPlaying">
       <div class="container mx-auto">
         <div class="max-w-4xl">
           <div class="flex flex-wrap items-center mb-4">
@@ -149,6 +153,8 @@ const splitByFirstP = (htmlContent) => {
 const emblaRoot = ref(null)
 const emblaInstance = ref(null)
 const currentIndex = ref(0)
+const isPlaying = ref(false)
+const videoPlayer = ref(null)
 let autoplayTimer = null
 
 // 展开/收起逻辑
@@ -182,6 +188,34 @@ const stopAutoplay = () => {
 }
 const goToSlide = (index) => {
   emblaInstance.value?.scrollTo(index)
+}
+
+// 播放暂停
+const togglePlay = () => {
+  const video = videoPlayer.value
+  if (isPlaying.value) {
+    video.pause()
+  } else {
+    video.play()
+  }
+  isPlaying.value = !isPlaying.value
+}
+// 视频播放事件
+const onPlay = () => {
+  isPlaying.value = true
+  stopAutoplay() // 停止轮播
+}
+// 视频暂停事件
+const onPause = () => {
+  isPlaying.value = false
+  startAutoplay() // 恢复轮播
+}
+
+// 视频播放结束事件
+const onEnded = () => {
+  isPlaying.value = false
+  videoPlayer.value.currentTime = 0 // 重置视频
+  startAutoplay() // 恢复轮播
 }
 
 onMounted(() => {
@@ -218,6 +252,7 @@ watch(
 
 <style scoped>
 .hero-gradient {
+  pointer-events: none;
   background: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 0) 60%,
@@ -300,5 +335,30 @@ watch(
 
 .star-rating {
   color: #f59e0b;
+}
+
+video {
+  object-fit: cover; /* 确保视频适应容器 */
+  width: 100%;
+  height: 100%;
+}
+
+.play-button {
+  font-size: 60px;
+  cursor: pointer;
+  width: 80px;
+  height: 80px;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  padding-left: 5px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 20;
+  transition: all 0.3s ease;
+}
+
+.play-button:hover {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 </style>
