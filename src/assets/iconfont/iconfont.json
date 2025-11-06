@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1393648",
+      "name": "编辑器 · 全屏",
+      "font_class": "expand",
+      "unicode": "e6ed",
+      "unicode_decimal": 59117
+    },
+    {
+      "icon_id": "5634209",
+      "name": "map-marked-alt",
+      "font_class": "map-marked-alt",
+      "unicode": "f040",
+      "unicode_decimal": 61504
+    },
+    {
       "icon_id": "38691915",
       "name": "岛屿",
       "font_class": "daoyu",

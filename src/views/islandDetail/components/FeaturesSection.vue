@@ -1,42 +1,67 @@
 <template>
   <div class="fade-in">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">特色体验</h2>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-white rounded-xl p-6 shadow-md card-hover">
-        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-          <i class="iconfont icon-umbrella-beach text-primary-blue text-xl"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">无人沙洲</h3>
-        <p class="text-gray-600">
-          专属的无人沙洲提供极致私密的海滩体验，您可以在这里享受日光浴、野餐或浪漫的晚餐，完全不受打扰。
-        </p>
-      </div>
-
-      <div class="bg-white rounded-xl p-6 shadow-md card-hover">
-        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-          <i class="iconfont icon-moon text-purple-600 text-xl"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">星空泳池</h3>
-        <p class="text-gray-600">
-          别墅的无边泳池采用特殊设计，夜晚时分，您可以仰卧在水中，欣赏马尔代夫璀璨的星空，体验独特的浪漫氛围。
-        </p>
-      </div>
-
-      <div class="bg-white rounded-xl p-6 shadow-md card-hover">
-        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4">
-          <i class="iconfont icon-user-shield text-secondary-green text-xl"></i>
-        </div>
-        <h3 class="text-xl font-semibold mb-2">私人岛体验</h3>
-        <p class="text-gray-600">
-          作为一座私人岛屿，鹦鹉螺提供了无与伦比的私密性和专属服务，让您的假期完全按照自己的节奏和喜好度过。
-        </p>
-      </div>
+    <!-- Swiper FreeMode 横向滑动，避免超过3个换行 -->
+    <div class="relative">
+      <Swiper
+        :modules="modules"
+        :free-mode="true"
+        :slides-per-view="'auto'"
+        :space-between="16"
+        :navigation="{ prevEl: '.activity-prev', nextEl: '.activity-next' }"
+        :pagination="{ el: '.activity-pagination', clickable: true }"
+        class="activity-swiper"
+      >
+        <SwiperSlide
+          v-for="item in islandActivity"
+          :key="item.id || item.activityId"
+          class="!w-72 md:!w-80"
+        >
+          <div class="bg-white rounded-xl p-6 shadow-md card-hover h-full">
+            <img
+              :src="item?.headPics?.[0]?.imageUrl || item?.imageUrl || item?.activityPic || ''"
+              :alt="item.activityCname || '特色体验'"
+              class="w-full h-40 object-cover rounded-md mb-4"
+            />
+            <h3 class="text-xl font-semibold mb-2">
+              {{ item.activityCname || item.activityEname || '体验项目' }}
+            </h3>
+            <p class="text-gray-600 line-clamp-3">
+              {{ item.activityDesc || item.desc || '' }}
+            </p>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+      <!-- 左右切换按钮 -->
+      <button class="swiper-nav-btn activity-prev" aria-label="上一项">
+        <i class="fas fa-angle-left"></i>
+      </button>
+      <button class="swiper-nav-btn activity-next" aria-label="下一项">
+        <i class="fas fa-angle-right"></i>
+      </button>
+      <!-- 轮播指示器（圆点） -->
+      <div class="activity-pagination"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-// 静态展示组件，无脚本逻辑
+import { ref } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { FreeMode, Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+
+const props = defineProps({
+  islandActivity: {
+    type: Array,
+    default: () => [],
+  },
+})
+
+const modules = [FreeMode, Navigation, Pagination]
 </script>
 
 <style scoped>
@@ -48,5 +73,42 @@
   box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+/* 调整 Swiper 容器与滑块间距 */
+.activity-swiper {
+  padding-bottom: 8px;
+}
+/* 左右切换按钮样式 */
+.swiper-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0c4a6e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+}
+.swiper-nav-btn:hover {
+  background: #fff;
+}
+.activity-prev {
+  left: -12px;
+}
+.activity-next {
+  right: -12px;
+}
+
+/* 轮播指示器居中显示 */
+.activity-pagination {
+  margin-top: 12px;
+  text-align: center;
 }
 </style>

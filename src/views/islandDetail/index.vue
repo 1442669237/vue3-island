@@ -16,10 +16,10 @@
         <!-- 左侧内容 -->
         <div class="lg:col-span-2 space-y-12">
           <!-- 海岛简介 -->
-          <IslandIntro />
+          <IslandIntro :island-detail="islandDetail" />
 
           <!-- 特色标签 -->
-          <FeaturesSection />
+          <FeaturesSection :island-activity="islandActivity" />
 
           <!-- 房型展示 -->
           <RoomsSection />
@@ -54,7 +54,12 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
-import { fetchIslandHotel, fetchIslandDine, fetchIslandById } from '@/api/islandDetail.js'
+import {
+  fetchIslandHotel,
+  fetchIslandDine,
+  fetchIslandById,
+  fetchIslandActivity,
+} from '@/api/islandDetail.js'
 import HeroSection from './components/HeroSection.vue'
 import TopNav from './components/TopNav.vue'
 import MobileMenu from './components/MobileMenu.vue'
@@ -92,6 +97,12 @@ fetchIslandHotel(islandId).then((res) => {
   console.log('岛屿酒店详情:', res)
   islandHotel.value = res
 })
+// 获取岛屿活动详情
+let islandActivity = ref([])
+fetchIslandActivity(islandId).then((res) => {
+  console.log('岛屿活动详情:', res)
+  islandActivity.value = res
+})
 
 const isMenuActive = ref(false)
 
@@ -128,15 +139,17 @@ onBeforeUnmount(() => {
 </style>
 
 <style scoped>
-body {
+/* body {
   font-family: 'Inter', 'Noto Sans SC', sans-serif;
   color: #334155;
   background-color: #f8fafc;
   overflow-x: hidden;
-}
+} */
 
 /* 主色调定义 使用全局变量，无需在 scoped 内重复 */
-
+.nautilus-page {
+  background-color: #f8fafc;
+}
 /* 导航栏样式 */
 .nav-scrolled {
   background-color: rgba(255, 255, 255, 0.95);
