@@ -1,8 +1,9 @@
 <template>
   <div class="fade-in">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">海岛简介</h2>
-    <div class="prose prose-lg max-w-none text-base">
+    <div class="prose prose-lg max-w-none text-base flex min-h-[500px]">
       <div v-html="formattedIntroduction"></div>
+      <pre class="w-[200px] h-[300px] mt-[-450px]" v-html="islandDetail.mapElement"></pre>
     </div>
     <div class="mt-8 bg-white rounded-xl p-6 shadow-md">
       <h3 class="text-xl font-semibold mb-4">基础信息</h3>
