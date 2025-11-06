@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5634518",
+      "name": "utensils",
+      "font_class": "utensils",
+      "unicode": "f142",
+      "unicode_decimal": 61762
+    },
+    {
+      "icon_id": "6806763",
+      "name": "Diving-Mask",
+      "font_class": "Diving-Mask",
+      "unicode": "eb57",
+      "unicode_decimal": 60247
+    },
+    {
+      "icon_id": "8953355",
+      "name": "water",
+      "font_class": "water",
+      "unicode": "e846",
+      "unicode_decimal": 59462
+    },
+    {
+      "icon_id": "18167221",
+      "name": "儿童,小朋友,小孩子",
+      "font_class": "child",
+      "unicode": "e8fd",
+      "unicode_decimal": 59645
+    },
+    {
       "icon_id": "577220",
       "name": "angle-left",
       "font_class": "angleleft",

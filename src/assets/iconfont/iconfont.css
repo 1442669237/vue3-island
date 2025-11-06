@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 5056674 */
-  src: url('iconfont.woff2?t=1762393895311') format('woff2'),
-       url('iconfont.woff?t=1762393895311') format('woff'),
-       url('iconfont.ttf?t=1762393895311') format('truetype');
+  src: url('iconfont.woff2?t=1762421932752') format('woff2'),
+       url('iconfont.woff?t=1762421932752') format('woff'),
+       url('iconfont.ttf?t=1762421932752') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,22 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-utensils:before {
+  content: "\f142";
+}
+
+.icon-Diving-Mask:before {
+  content: "\eb57";
+}
+
+.icon-water:before {
+  content: "\e846";
+}
+
+.icon-child:before {
+  content: "\e8fd";
 }
 
 .icon-angleleft:before {

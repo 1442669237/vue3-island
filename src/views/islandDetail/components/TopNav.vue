@@ -13,7 +13,7 @@
 
       <!-- 桌面端导航 -->
       <div class="hidden md:flex items-center space-x-8">
-        <a href="#" class="hover:text-light-sand transition-colors">首页</a>
+        <a href="/" class="hover:text-light-sand transition-colors">首页</a>
         <a href="#" class="hover:text-light-sand transition-colors">目的地</a>
         <a href="#" class="hover:text-light-sand transition-colors">酒店</a>
         <a href="#" class="hover:text-light-sand transition-colors">特惠</a>
