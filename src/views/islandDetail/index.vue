@@ -22,10 +22,10 @@
           <FeaturesSection :island-activity="islandActivity" />
 
           <!-- 房型展示 -->
-          <RoomsSection />
+          <RoomsSection :island-hotel="islandHotel" />
 
           <!-- 餐饮体验 -->
-          <DiningSection />
+          <DiningSection :island-dine="islandDine" />
 
           <!-- 交通指南 -->
           <TransportGuide />

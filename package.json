@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
+    "@headlessui/vue": "^1.7.23",
     "axios": "^1.13.1",
     "dayjs": "^1.11.19",
     "embla-carousel": "^8.6.0",
