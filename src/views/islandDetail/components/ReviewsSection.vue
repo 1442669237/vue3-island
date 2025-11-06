@@ -1,6 +1,8 @@
 <template>
   <div class="fade-in">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">用户评价</h2>
+    <FeaturedCard :comment-element="commentElement" />
+
     <div class="bg-white rounded-xl p-6 shadow-md">
       <RadarChart :comment-element="commentElement" />
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
@@ -109,7 +111,11 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
 import RadarChart from './RadarChart.vue'
+=======
+import FeaturedCard from './FeaturedCard.vue'
+>>>>>>> origin/master
 import { ref, watch } from 'vue'
 
 const commentElement = ref([])

@@ -13,14 +13,14 @@
                 <p>马尔代夫旅游 - 马尔代夫旅游指南</p>
             </div>
             <!-- 轮播图 -->
-            <div class="carousel">
+            <!-- <div class="carousel">
                 <div class="carousel-inner" :style="{ transform: `translateX(-${currentIndex * 100}%)` }">
                     <div v-for="(slide, index) in images" :key="index" class="carousel-item">
                         <img :src="slide" alt="carousel" />
                     </div>
                 </div>
 
-                <!-- 左右切换按钮 -->
+
                 <button @click="prevImage" class="carousel-button prev-button">
                     &#10094;
                 </button>
@@ -28,12 +28,12 @@
                     &#10095;
                 </button>
 
-                <!-- 指示器 -->
+
                 <div class="carousel-dots">
                     <span v-for="(image, index) in images" :key="index"
                         :class="['carousel-dot', { active: index === currentIndex }]" @click="goToImage(index)"></span>
                 </div>
-            </div>
+            </div> -->
             <!-- 推荐top1 -->
             <div class="recommend">
                 <div class="top-recommend">
