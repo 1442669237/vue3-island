@@ -94,8 +94,7 @@
                                 <h3 class="name">{{ item.chineseName }}</h3>
                                 <div class="icon">{{ item.islandScale }}</div>
                             </div>
-                            <p class="text-gray-600 mb-4 text-desc">
-                                {{ item.production }}
+                            <p class="text-gray-600 mb-4 text-desc" v-html="item.introduction">
                             </p>
                             <div class="flex items-center text-sm desc">
                                 <span>{{item.overallRating}}分 </span>
