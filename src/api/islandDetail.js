@@ -12,7 +12,9 @@ export function fetchIslandHotel(islandId) {
 export function fetchIslandDine(islandId) {
   return request({ url: `/api/island/queryIslandDineById?islandId=${islandId}`, method: 'get' })
 }
-
+export function fetchIslandActivity(islandId) {
+  return request({ url: `/api/island/queryIslandActivityById?islandId=${islandId}`, method: 'get' })
+}
 // 示例：提交表单（模拟接口）
 // export function submitForm(data) {
 //   return request({ url: '/buyer/goods/grouptour/search/v1/list', method: 'post', data })
