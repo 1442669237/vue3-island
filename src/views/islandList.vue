@@ -94,8 +94,7 @@
                                 <h3 class="name">{{ item.chineseName }}</h3>
                                 <div class="icon">{{ item.islandScale }}</div>
                             </div>
-                            <p class="text-gray-600 mb-4 text-desc">
-                                {{ item.production }}
+                            <p class="text-gray-600 mb-4 text-desc" v-html="item.introduction">
                             </p>
                             <div class="flex items-center text-sm desc">
                                 <span>{{item.overallRating}}分 </span>
@@ -169,22 +168,22 @@ let chooseIndex = ref(0)
 // 快筛项
 const filtter = [
     { name: '全部', label:0 ,icon: '' },
-    { name: '海底餐厅', label: 1 ,icon: '' },
-    // { name: '家庭岛', label: 2 ,icon: '' },
-    // { name: '水疗岛', label: 3 ,icon: '' },
-    // { name: '浮潜岛', label: 4 ,icon: '' },
-    // { name: '房礁岛', label: 4 },
-    // { name: '沙滩岛', label: 4 },
-    // { name: '独特岛', label: 4 },
-    // { name: '鲸鲨同游', label: 4 },
-    // { name: '素食友好', label: 4 },
-    // { name: '水下餐厅', label: 4 },
-    // { name: '水上滑梯', label: 4 },
-    // { name: '美食岛（非中式）', label: 4 },
-    // { name: '实惠岛', label: 4 },
-    // { name: '泄湖岛', label: 4 },
-    // { name: '小童惠选', label: 4 },
-    // { name: '大童惠选', label: 4 },
+    { name: '成人岛', label: 1 ,icon: '' },
+    { name: '家庭岛', label: 2 ,icon: '' },
+    { name: '水疗岛', label: 3 ,icon: '' },
+    { name: '浮潜岛', label: 4 ,icon: '' },
+    { name: '房礁岛', label: 5 ,icon: '' },
+    { name: '沙滩岛', label: 6 },
+    { name: '独特岛', label: 7 },
+    { name: '鲸鲨同游', label: 8 },
+    { name: '素食友好', label: 9 },
+    { name: '水上滑梯', label: 10 },
+    { name: '美食岛（非中式）', label: 11 },
+    { name: '人均1W实惠岛', label: 12 },
+    { name: '小童惠选', label: 13 },
+    { name: '大童惠选', label: 14 },
+    { name: '水下餐厅', label: 15 },
+    { name: '泻湖岛', label: 16 },
 ];
 // 热搜榜（点击全部的时候才会有）
 let recommendList = ref([])
@@ -234,25 +233,12 @@ const choose = (label,index) => {
     chooseIndex.value = index
     getCommentIsLand(label)
 }
-// 筛选项params
-const getfillterParams = (label) => {
-    let params = {}
-    switch(label){
-        case 1:
-            params = {feature:true};
-            break;
-        default:
-            params = {}
-
-    }
-    return params
-}
 // 获取岛屿列表
 const getCommentIsLand = async(label) => {
   
   try{
-    
-    const res = await getIslandList(getfillterParams(label));
+    const params = label > 0 ? { sign:label } : {}
+    const res = await getIslandList(params);
     if (res?.length > 0) {
       if(label == 0){
         recommendList.value = res.slice(0, 5);
@@ -261,6 +247,9 @@ const getCommentIsLand = async(label) => {
         recommendList.value = []
         islandList.value = res
       }
+    }else{
+        recommendList.value = []
+        islandList.value = []
     }
 
   }catch(error){

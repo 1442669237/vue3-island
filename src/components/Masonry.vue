@@ -16,10 +16,11 @@
         <div
           v-if="colorShiftOnHover && mouseEnterIndex == index"
           class="black-mask"
+          @click="goDetail(item.islandId)"
         >
           <a class="title">{{ item.chineseName }}</a>
-          <i class="btm" @click="goVR(item.islandId)">点击查看VR <i class="iconfont icon-arrowright"></i></i>
-          <i class="btm" @click="goDetail(item.islandId)">查看情页 <i class="iconfont icon-arrowright"></i></i>
+          <!-- <i class="btm" @click="goVR(item.islandId)">点击查看VR <i class="iconfont icon-arrowright"></i></i> -->
+          <i class="btm">查看情页 <i class="iconfont icon-arrowright"></i></i>
         </div>
       </div>
     </div>
