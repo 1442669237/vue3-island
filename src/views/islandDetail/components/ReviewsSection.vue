@@ -4,6 +4,7 @@
     <FeaturedCard :comment-element="commentElement" />
 
     <div class="bg-white rounded-xl p-6 shadow-md">
+      <RadarChart :comment-element="commentElement" />
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
         <div>
           <div class="flex items-center mb-2">
@@ -110,7 +111,11 @@
 </template>
 
 <script setup>
+<<<<<<< HEAD
+import RadarChart from './RadarChart.vue'
+=======
 import FeaturedCard from './FeaturedCard.vue'
+>>>>>>> origin/master
 import { ref, watch } from 'vue'
 
 const commentElement = ref([])

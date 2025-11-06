@@ -1,52 +1,125 @@
 <template>
   <div class="fade-in">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">餐饮体验</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-        <div class="relative h-48">
-          <img src="https://s.coze.cn/image/TBxp3WVGSUs/" alt="水上餐厅" class="w-full h-full object-cover" />
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">水上餐厅</h3>
-          <p class="text-gray-600 mb-4">
-            位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
-          </p>
-          <div class="flex items-center text-sm text-gray-500">
-            <i class="iconfont icon-clock mr-2"></i> 早餐: 7:00-10:30 | 午餐: 12:30-15:00 | 晚餐: 19:00-22:30
-          </div>
-        </div>
-      </div>
+    <div class="relative">
+      <Swiper 
+        :modules="modules" 
+        :free-mode="true" 
+        :slides-per-view="2" 
+        :space-between="16"
+        :navigation="{ prevEl: '.activity-prev', nextEl: '.activity-next' }"
+        :pagination="{ el: '.activity-pagination-1', clickable: true }" class="activity-swiper grid grid-cols-1 md:grid-cols-2  pb-4">
 
-      <div class="bg-white rounded-xl overflow-hidden shadow-md card-hover">
-        <div class="relative h-48">
-          <img src="https://s.coze.cn/image/tw967zrM-38/" alt="沙滩烧烤餐厅" class="w-full h-full object-cover" />
-        </div>
-        <div class="p-6">
-          <h3 class="text-xl font-semibold mb-2">沙滩烧烤餐厅</h3>
-          <p class="text-gray-600 mb-4">
-            位于洁白沙滩上的烧烤餐厅提供各种新鲜的海鲜和肉类烧烤，您可以在星空下享用美食，感受浪漫的氛围。
-          </p>
-          <div class="flex items-center text-sm text-gray-500">
-            <i class="iconfont icon-clock mr-2"></i> 晚餐: 19:00-22:30 (需提前预订)
+        <SwiperSlide class="bg-white rounded-xl overflow-hidden shadow-md card-hover"
+          v-for="(item, index) in islandDine" :key="'dinner_'+index">
+          <div class="relative h-48">                           
+            <img 
+              :src="item?.headPics?.[0].imageUrl || item?.albums?.[0].imageUrl || ''" 
+              :alt="item?.dineCname  || '餐饮体验'" 
+              class="w-full h-full object-cover" 
+            />
           </div>
-        </div>
-      </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold mb-2">{{ item?.dineCname || '' }}{{ item?.dineEname ? `(${ item?.dineEname })` : ''  }}</h3>
+            <p class="text-gray-600 mb-4">
+              {{ item?.desc || ''}}
+            </p>
+            <div class="flex items-center text-sm text-gray-500">
+              <i class="iconfont icon-star  mr-2"></i> {{ item?.feature }}
+            </div>
+            <div class="flex items-center text-sm text-gray-500 mt-2">
+              <i class="iconfont icon-clock mr-2"></i> {{ item?.mealTime }}
+            </div>
+          </div>
+        </SwiperSlide>
+      </Swiper>
+      <!-- 左右切换按钮 -->
+      <button class="swiper-nav-btn activity-prev" aria-label="上一项">
+        <i class="iconfont icon-angleleft"></i>
+      </button>
+      <button class="swiper-nav-btn activity-next" aria-label="下一项">
+        <i class="iconfont icon-angleright"></i>
+      </button>
+      <!-- 轮播指示器（圆点） -->
+      <div class="activity-pagination-1"></div>
     </div>
   </div>
 </template>
 
 <script setup>
-// 静态展示组件，无脚本逻辑
+
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { FreeMode, Navigation, Pagination } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/free-mode'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+const props = defineProps({
+  islandDine: {
+    type: Array,
+    default: () => []
+  }
+})
+const modules = [FreeMode, Navigation, Pagination]
 </script>
 
 <style scoped>
 .card-hover {
   transition: all 0.3s ease;
 }
+
 .card-hover:hover {
   transform: translateY(-5px);
   box-shadow:
     0 20px 25px -5px rgba(0, 0, 0, 0.1),
     0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* 调整 Swiper 容器与滑块间距 */
+.activity-swiper {
+  padding-bottom: 8px;
+}
+/* 左右切换按钮样式 */
+.swiper-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #0c4a6e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  z-index: 10;
+  margin-top: -20px;
+}
+.swiper-nav-btn:hover {
+  background: #0ea5e9;
+  color: #fff;
+}
+.activity-prev {
+  left: -12px;
+}
+.activity-next {
+  right: -12px;
+}
+.swiper-nav-btn.swiper-button-disabled{
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.swiper-nav-btn.swiper-button-disabled:hover{
+  background: #fff;
+  color: #0c4a6e;
+}
+
+/* 轮播指示器居中显示 */
+.activity-pagination-1 {
+  margin-top: 12px;
+  text-align: center;
 }
 </style>

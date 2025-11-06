@@ -18,7 +18,7 @@
           :key="item.id || item.activityId"
           class="!w-72 md:!w-80 cursor-pointer"
         >
-          <div class="bg-white rounded-xl p-6 shadow-md card-hover h-full">
+          <div @click="openModal(item)" class="cursor-pointer bg-white rounded-xl p-6 shadow-md card-hover h-full">
             <img
               :src="item?.headPics?.[0]?.imageUrl"
               :alt="item.activityCname || '特色体验'"
@@ -44,12 +44,86 @@
       <div class="activity-pagination"></div>
     </div>
   </div>
+
+   <TransitionRoot appear :show="isOpen" as="template">
+    <Dialog as="div" @close="closeModal" class="relative z-10">
+      
+      <div class="fixed inset-0 overflow-y-auto">
+        <div
+          class="flex min-h-full items-center justify-center p-4 text-center"
+        >
+          <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+            <DialogPanel
+              class="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all max-w-3xl"
+            >
+              <DialogTitle
+                as="h3"
+                class="text-2xl font-medium leading-6 text-gray-900"
+              >
+                {{ state.currentActivity?.activityCname }}
+              </DialogTitle>
+              <div class="mt-2">
+                <p class="text-lg text-gray-500 mb-2">{{ state.currentActivity?.activityEname }}</p>
+                <p class="text-lg text-gray-500">
+                  {{ state.currentActivity?.activityDesc }}
+                </p>
+                
+              </div>
+              <div class="relative mt-4">
+                  <Swiper
+                    :modules="modules"
+                    :free-mode="true"
+                    :slides-per-view="1"
+                    :space-between="0"   
+                    :navigation="{ prevEl: '.activity-prev-1', nextEl: '.activity-next-1' }"
+                    :pagination="{ el: '.activity-pagination-1', clickable: true }"                 
+                    class="activity-swiper"
+                >
+                  <SwiperSlide
+                    v-for="pics in state.currentActivity?.attachments || []"
+                    :key="'activity_' + pics.id"
+                    class="w-full"
+                  >
+                    <video
+                      v-if="pics?.videoUrl"
+                      :src="pics?.videoUrl"
+                      class="w-full object-cover rounded-md mb-4"
+                      controls
+                    />
+
+                    <img
+                      v-else
+                      :src=" pics?.imageUrl || ''"
+                      :alt="pics?.activityCname || '特色体验'"
+                      class="w-full object-cover rounded-md mb-4"
+                    />
+                  </SwiperSlide>
+                  <!-- 左右切换按钮 -->
+                  <button class="swiper-nav-btn activity-prev-1" aria-label="上一项">
+                    <i class="iconfont icon-angleleft"></i>
+                  </button>
+                  <button class="swiper-nav-btn activity-next-1" aria-label="下一项">
+                    <i class="iconfont icon-angleright"></i>
+                  </button>
+                  <!-- 轮播指示器（圆点） -->
+                  <div class="activity-pagination-1"></div>
+                </Swiper>
+              </div>
+              <div @click="closeModal" class="absolute top-5 right-5 cursor-pointer"><i class="iconfont icon-times ml-1"></i></div>
+            </DialogPanel>
+          
+        </div>
+      </div>
+    </Dialog>
+  </TransitionRoot>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { FreeMode, Navigation, Pagination } from 'swiper/modules'
+import {  Dialog, DialogPanel, DialogTitle, TransitionRoot } from '@headlessui/vue'
+
 import 'swiper/css'
 import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
@@ -63,6 +137,25 @@ const props = defineProps({
 })
 
 const modules = [FreeMode, Navigation, Pagination]
+
+const state = reactive({
+  currentActivity:{}
+})
+
+const isOpen = ref(false)
+function closeModal() {
+  isOpen.value = false
+  state.currentActivity = {}
+}
+function openModal(data) {
+  const newData = {
+    attachments: (data?.videos?.[0] || []).concat(data?.headPics),
+    ...data
+  }
+
+  state.currentActivity = newData
+  isOpen.value = true
+}
 </script>
 
 <style scoped>
@@ -80,7 +173,7 @@ const modules = [FreeMode, Navigation, Pagination]
   padding-bottom: 8px;
 }
 /* 左右切换按钮样式 */
-.swiper-nav-btn {
+.swiper-nav-btn{
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
@@ -108,8 +201,16 @@ const modules = [FreeMode, Navigation, Pagination]
   right: -12px;
 }
 
+.activity-prev-1 {
+  left: 8px;
+}
+.activity-next-1 {
+  right: 8px;
+}
+
 /* 轮播指示器居中显示 */
-.activity-pagination {
+.activity-pagination,
+.activity-pagination-1 {
   margin-top: 12px;
   text-align: center;
 }
