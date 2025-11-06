@@ -7,16 +7,16 @@
           <p class="mb-4">为您提供全球顶级海岛度假体验，让每一次旅行都成为难忘的回忆。</p>
           <div class="flex space-x-4">
             <a href="#" class="hover:text-[#0ea5e9] transition-colors">
-              <i class="fab fa-weixin text-xl"></i>
+              <i class="fa fa-brands fa-weixin text-xl" aria-hidden="true"></i>
             </a>
             <a href="#" class="hover:text-[#0ea5e9] transition-colors">
-              <i class="fab fa-weibo text-xl"></i>
+              <i class="fa fa-brands fa-weibo text-xl" aria-hidden="true"></i>
             </a>
             <a href="#" class="hover:text-[#0ea5e9] transition-colors">
-              <i class="fab fa-instagram text-xl"></i>
+              <i class="fa fa-brands fa-instagram text-xl" aria-hidden="true"></i>
             </a>
             <a href="#" class="hover:text-[#0ea5e9] transition-colors">
-              <i class="fab fa-facebook text-xl"></i>
+              <i class="fa fa-brands fa-facebook text-xl" aria-hidden="true"></i>
             </a>
           </div>
         </div>

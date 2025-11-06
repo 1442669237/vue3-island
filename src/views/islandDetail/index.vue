@@ -36,7 +36,7 @@
 
         <!-- 右侧预订栏 -->
         <div class="lg:col-span-1">
-          <BookingBox />
+          <BookingBox :island-detail="islandDetail" />
         </div>
       </section>
 
