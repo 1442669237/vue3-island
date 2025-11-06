@@ -8,6 +8,7 @@
         :free-mode="true"
         :slides-per-view="'auto'"
         :space-between="16"
+        :watch-overflow="true"
         :navigation="{ prevEl: '.activity-prev', nextEl: '.activity-next' }"
         :pagination="{ el: '.activity-pagination', clickable: true }"
         class="activity-swiper"
@@ -15,11 +16,11 @@
         <SwiperSlide
           v-for="item in islandActivity"
           :key="item.id || item.activityId"
-          class="!w-72 md:!w-80"
+          class="!w-72 md:!w-80 cursor-pointer"
         >
           <div class="bg-white rounded-xl p-6 shadow-md card-hover h-full">
             <img
-              :src="item?.headPics?.[0]?.imageUrl || item?.imageUrl || item?.activityPic || ''"
+              :src="item?.headPics?.[0]?.imageUrl"
               :alt="item.activityCname || '特色体验'"
               class="w-full h-40 object-cover rounded-md mb-4"
             />
@@ -34,10 +35,10 @@
       </Swiper>
       <!-- 左右切换按钮 -->
       <button class="swiper-nav-btn activity-prev" aria-label="上一项">
-        <i class="fas fa-angle-left"></i>
+        <i class="iconfont icon-angleleft"></i>
       </button>
       <button class="swiper-nav-btn activity-next" aria-label="下一项">
-        <i class="fas fa-angle-right"></i>
+        <i class="iconfont icon-angleright"></i>
       </button>
       <!-- 轮播指示器（圆点） -->
       <div class="activity-pagination"></div>
@@ -83,21 +84,22 @@ const modules = [FreeMode, Navigation, Pagination]
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 9999px;
-  background: rgba(255, 255, 255, 0.9);
-  color: #0c4a6e;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  height: 40px;
+  min-width: 40px;
+  padding: 6px;
+  background-color: #fff;
+  border: 1.5px solid #002b11;
+  color: #002b11;
   z-index: 10;
 }
 .swiper-nav-btn:hover {
-  background: #fff;
+  background-color: #ebebeb;
+  color: #143c24;
+  cursor: pointer;
 }
 .activity-prev {
   left: -12px;
@@ -110,5 +112,10 @@ const modules = [FreeMode, Navigation, Pagination]
 .activity-pagination {
   margin-top: 12px;
   text-align: center;
+}
+
+/* 当到达最左或最右、或全部可见时，Swiper 会给按钮加上 disabled 类，隐藏按钮 */
+.swiper-nav-btn.swiper-button-disabled {
+  display: none;
 }
 </style>

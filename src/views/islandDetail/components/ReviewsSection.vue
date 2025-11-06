@@ -2,6 +2,8 @@
   <div class="fade-in">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">用户评价</h2>
     <div class="bg-white rounded-xl p-6 shadow-md">
+      <RadarChart :comment-element="islandDetail.commentElement" />
+
       <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
         <div>
           <div class="flex items-center mb-2">
@@ -19,17 +21,23 @@
         </div>
 
         <div class="mt-4 md:mt-0">
-          <a href="#" class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors">
+          <a
+            href="#"
+            class="text-primary-blue font-medium hover:text-primary-blue-dark transition-colors"
+          >
             查看全部评价 <i class="iconfont icon-arrowright ml-1"></i>
           </a>
         </div>
       </div>
-
       <div class="space-y-6">
         <!-- 评价1 -->
         <div class="border-b border-gray-100 pb-6">
           <div class="flex items-center mb-3">
-            <img src="https://s.coze.cn/image/m8wrVLh_c9E/" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4" />
+            <img
+              src="https://s.coze.cn/image/m8wrVLh_c9E/"
+              alt="用户头像"
+              class="w-12 h-12 rounded-full object-cover mr-4"
+            />
             <div>
               <h4 class="font-medium">张女士</h4>
               <p class="text-gray-500 text-sm">2024年5月 度蜜月</p>
@@ -50,7 +58,11 @@
         <!-- 评价2 -->
         <div class="border-b border-gray-100 pb-6">
           <div class="flex items-center mb-3">
-            <img src="https://s.coze.cn/image/2VmjSuacRj4/" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4" />
+            <img
+              src="https://s.coze.cn/image/2VmjSuacRj4/"
+              alt="用户头像"
+              class="w-12 h-12 rounded-full object-cover mr-4"
+            />
             <div>
               <h4 class="font-medium">王先生</h4>
               <p class="text-gray-500 text-sm">2024年3月 家庭旅行</p>
@@ -71,7 +83,11 @@
         <!-- 评价3 -->
         <div>
           <div class="flex items-center mb-3">
-            <img src="https://s.coze.cn/image/88-Ymalxg8Q/" alt="用户头像" class="w-12 h-12 rounded-full object-cover mr-4" />
+            <img
+              src="https://s.coze.cn/image/88-Ymalxg8Q/"
+              alt="用户头像"
+              class="w-12 h-12 rounded-full object-cover mr-4"
+            />
             <div>
               <h4 class="font-medium">李先生</h4>
               <p class="text-gray-500 text-sm">2024年1月 独自旅行</p>
@@ -94,7 +110,14 @@
 </template>
 
 <script setup>
-// 静态展示组件，无脚本逻辑
+import RadarChart from './RadarChart.vue'
+
+defineProps({
+  islandDetail: {
+    type: Object,
+    default: () => ({}),
+  },
+})
 </script>
 
 <style scoped>

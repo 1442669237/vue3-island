@@ -7,13 +7,15 @@
       <div class="flex justify-between items-center mb-2">
         <span class="text-gray-600">淡季预算 (5-10月)</span>
         <span class="font-bold text-xl"
-          >¥73,000<span class="text-sm font-normal text-gray-500">/2人起</span></span
+          >¥{{ islandDetail.regularBudget
+          }}<span class="text-sm font-normal text-gray-500">/2人起</span></span
         >
       </div>
       <div class="flex justify-between items-center">
         <span class="text-gray-600">旺季预算 (11-4月)</span>
         <span class="font-bold text-xl"
-          >¥103,000<span class="text-sm font-normal text-gray-500">/2人起</span></span
+          >¥{{ islandDetail.peakSeasonBudget
+          }}<span class="text-sm font-normal text-gray-500">/2人起</span></span
         >
       </div>
       <p class="text-gray-500 text-sm mt-2">* 价格包含住宿、餐饮、上岛交通和部分活动</p>
@@ -134,7 +136,12 @@
 </template>
 
 <script setup>
-// 静态内容，无脚本逻辑
+defineProps({
+  islandDetail: {
+    type: Object,
+    default: () => {},
+  },
+})
 </script>
 
 <style scoped>
