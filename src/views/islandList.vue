@@ -72,120 +72,34 @@
             <p class="list-title">探索热门岛屿</p>
             <!-- 快筛 -->
             <div class="filtter-box">
-                <div @click="choose(index)" :class="['icon', chooseIndex == index && 'checked']"
-                    v-for="(item, index) in filtter" :key="index">{{ item.name }}</div>
+                <div 
+                    @click="choose(item.label,index)" :class="['icon', chooseIndex == index && 'checked']"
+                    v-for="(item, index) in filtter" 
+                    :key="index">{{ item.name }}
+                </div>
             </div>
             <!-- 月榜 -->
-            <div class="recommend-list">
+            <div class="recommend-list" v-if="recommendList.length">
                 <p class="title">本月热搜榜</p>
                 <div class="scroll-list">
-                    <div class="item card-hover">
+                    <div class="item card-hover" v-for="(item,index) in recommendList" :key="index" @click="goDetailpage(item.islandId)">
                         <div class="relative h-48">
                             <img
-                                src="https://s.coze.cn/image/TBxp3WVGSUs/"
-                                alt="水上餐厅"
+                                :src="item.aerialViewUrl"
                                 class="w-full h-full object-cover"
                             />
                         </div>
                         <div class="p-6 h-40">
-                            <h3 class="text-xl font-semibold mb-2">普吉岛</h3>
-                            <p class="text-gray-600 mb-4">
-                                位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500 text-[#1E88E5] desc">
-                                <span>4.5分 </span>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <span class="tips">(312条点评)</span>
+                            <div class="title-top-box">
+                                <h3 class="name">{{ item.chineseName }}</h3>
+                                <div class="icon">{{ item.islandScale }}</div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="item card-hover">
-                        <div class="relative h-48">
-                            <img
-                                src="https://s.coze.cn/image/TBxp3WVGSUs/"
-                                alt="水上餐厅"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div class="p-6 h-40">
-                            <h3 class="text-xl font-semibold mb-2">普吉岛</h3>
-                            <p class="text-gray-600 mb-4">
-                                位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
+                            <p class="text-gray-600 mb-4 text-desc">
+                                {{ item.production }}
                             </p>
-                            <div class="flex items-center text-sm text-gray-500 text-[#1E88E5] desc">
-                                <span>4.5分 </span>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <span class="tips">(312条点评)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item card-hover">
-                        <div class="relative h-48">
-                            <img
-                                src="https://s.coze.cn/image/TBxp3WVGSUs/"
-                                alt="水上餐厅"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div class="p-6 h-40">
-                            <h3 class="text-xl font-semibold mb-2">普吉岛</h3>
-                            <p class="text-gray-600 mb-4">
-                                位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500 text-[#1E88E5] desc">
-                                <span>4.5分 </span>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <span class="tips">(312条点评)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item card-hover">
-                        <div class="relative h-48">
-                            <img
-                                src="https://s.coze.cn/image/TBxp3WVGSUs/"
-                                alt="水上餐厅"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div class="p-6 h-40">
-                            <h3 class="text-xl font-semibold mb-2">普吉岛</h3>
-                            <p class="text-gray-600 mb-4">
-                                位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500 text-[#1E88E5] desc">
-                                <span>4.5分 </span>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <span class="tips">(312条点评)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="item card-hover">
-                        <div class="relative h-48">
-                            <img
-                                src="https://s.coze.cn/image/TBxp3WVGSUs/"
-                                alt="水上餐厅"
-                                class="w-full h-full object-cover"
-                            />
-                        </div>
-                        <div class="p-6 h-40">
-                            <h3 class="text-xl font-semibold mb-2">普吉岛</h3>
-                            <p class="text-gray-600 mb-4">
-                                位于清澈海面上的水上餐厅提供新鲜的海鲜和国际美食，您可以一边享用美食，一边欣赏美丽的海景和海底世界。
-                            </p>
-                            <div class="flex items-center text-sm text-gray-500 text-[#1E88E5] desc">
-                                <span>4.5分 </span>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <i class="iconfont icon-star"></i>
-                                <span class="tips">(312条点评)</span>
+                            <div class="flex items-center text-sm desc">
+                                <span>{{item.overallRating}}分 </span>
+                                <i v-for="n in Math.floor(item.overallRating)" :key="'full-' + n" class="iconfont icon-star"></i>
                             </div>
                         </div>
                     </div>
@@ -193,68 +107,101 @@
             </div>
 
             <!-- 列表 -->
-            <div class="island-list">
-                <p class="title">成人岛 <span>搜索结果23条</span></p>
+            <div class="island-list" v-if="islandList.length">
+                <p class="title">{{recommendList.length ? '全部岛屿' : ''}} <span>{{recommendList.length == 0 ? `搜索结果${islandList.length}条` : ''}}</span></p>
                 <div class="content">
-                    <div v-for="(island, index) in filteredIslands" :key="index" class="item card-hover">
-                        <img class="img" :src="island.image" alt="">
-                        <p class="name">
-                            <div class="star">4.5分</div>
-                            <span>{{ island.name }}</span>
-                            <span class="english">{{ island.nameEn }}</span>
+                    <div v-for="(island, index) in islandList" :key="index" class="item card-hover" @click="goDetailpage(island.islandId)">
+                        <img class="img" :src="island.aerialViewUrl" alt="">
+                        <p class="name-box">
+                            <div class="star">{{island.overallRating}}分 </div>
+                            <span class="name">{{ island.chineseName }}</span>
+                            <span class="english">{{ island.englishName }}</span>
                         </p>
-                        <p class="tags">
-                            <span v-for="(tag, idx) in island.tags" :key="idx" class="tag">
+                        <p class="tags" v-if="island?.keywords?.split(' ').length > 0">
+                            <span v-for="(tag, idx) in island.keywords.split(' ').slice(0, 4)" :key="idx" class="tag">
                                 {{ tag }}
                             </span>
                         </p>
-                        <p class="tips">
+                        <!-- <p class="tips">
                             <span><i class="iconfont icon-check-circle-fill"></i> 适合出游</span>
                             <span v-for="(tag, idx) in island.months" :key="idx" class="tip">
                                 {{ tag }}
                             </span>
+                        </p> -->
+                        <p class="other" v-if="island.transferMethod">
+                            <span><i class="iconfont icon-plane-departure text-purple-500 mr-[5px]"></i> 交通: </span>
+                            <span>{{ island.transferMethod.join("+") }}</span>
                         </p>
                         <p class="other">
-                            <span><i class="iconfont icon-plane"></i> 交通: </span>
-                            <span>水飞 + 快艇</span>
-                        </p>
-                        <p class="other">
-                            <span><i class="iconfont icon-calendar-alt-solid"></i> 翻建日前: </span>
+                            <span><i class="iconfont icon-calendar-alt-solid text-purple-500 mr-[5px]"></i> 翻建日前: </span>
                             <span>2016.11</span>
                         </p>
+                        
                         <div class="btm">详情</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <FooterSection/>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
+import { getIslandList } from '@/api/index'
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
+// 轮播图
 const images = [
     'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a9/99/0d/maldive.jpg?w=1400&h=500&s=1',
     'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/d7/ec/c1/caption.jpg?w=1400&h=500&s=1',
     'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/33/dc/98/caption.jpg?w=1400&h=500&s=1'
 ];
-
 const currentIndex = ref(0);
 const totalImages = images.length;
 let carouselInterval;
+// 头部推荐
 let mouseEnter = ref(false)
+// 快筛
 let chooseIndex = ref(0)
+// 快筛项
+const filtter = [
+    { name: '全部', label:0 ,icon: '' },
+    { name: '海底餐厅', label: 1 ,icon: '' },
+    // { name: '家庭岛', label: 2 ,icon: '' },
+    // { name: '水疗岛', label: 3 ,icon: '' },
+    // { name: '浮潜岛', label: 4 ,icon: '' },
+    // { name: '房礁岛', label: 4 },
+    // { name: '沙滩岛', label: 4 },
+    // { name: '独特岛', label: 4 },
+    // { name: '鲸鲨同游', label: 4 },
+    // { name: '素食友好', label: 4 },
+    // { name: '水下餐厅', label: 4 },
+    // { name: '水上滑梯', label: 4 },
+    // { name: '美食岛（非中式）', label: 4 },
+    // { name: '实惠岛', label: 4 },
+    // { name: '泄湖岛', label: 4 },
+    // { name: '小童惠选', label: 4 },
+    // { name: '大童惠选', label: 4 },
+];
+// 热搜榜（点击全部的时候才会有）
+let recommendList = ref([])
+// 列表
+let islandList = ref([])
+
 
 onMounted(() => {
     // 在组件挂载时启动自动轮播
     startCarousel();
+    // 初始化列表
+    getCommentIsLand(0)
 });
-
 onUnmounted(() => {
     // 在组件销毁时清除定时器
     clearInterval(carouselInterval);
 });
-
 // 自动轮播
 const startCarousel = () => {
     carouselInterval = setInterval(() => {
@@ -279,51 +226,47 @@ const handleMouseEnter = () => {
 const handleMouseLeave = () => {
     mouseEnter.value = false
 }
+// 跳转详情页
+const goDetailpage = (id) => {
+    router.push(`/islandDetail/${id}`)
+}
+const choose = (label,index) => {
+    chooseIndex.value = index
+    getCommentIsLand(label)
+}
+// 筛选项params
+const getfillterParams = (label) => {
+    let params = {}
+    switch(label){
+        case 1:
+            params = {feature:true};
+            break;
+        default:
+            params = {}
 
-
-
-// 快筛项
-const filtter = [
-    { name: '全部', label: 0 },
-    { name: '成人岛', label: 1 },
-    { name: '家庭岛', label: 2 },
-    { name: '水疗岛', label: 3 },
-    { name: '浮潜岛', label: 4 },
-    { name: '房礁岛', label: 4 },
-    { name: '沙滩岛', label: 4 },
-    { name: '独特岛', label: 4 },
-    { name: '鲸鲨同游', label: 4 },
-    { name: '素食友好', label: 4 },
-    { name: '水下餐厅', label: 4 },
-    { name: '水上滑梯', label: 4 },
-    { name: '美食岛（非中式）', label: 4 },
-    { name: '实惠岛', label: 4 },
-    { name: '泄湖岛', label: 4 },
-    { name: '小童惠选', label: 4 },
-    { name: '大童惠选', label: 4 },
-];
-
-// 岛屿数据
-const islands = [
-    { name: '巴厘岛', nameEn: 'Bali', image: 'https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1005/images/de3.jpg', tags: ['七钻（9.2）', '小型岛屿', '优选岛屿', '适合当月', '蜜月度假'], months: ['一月', '三月', '五月'] },
-    { name: '马尔代夫', nameEn: 'Maldives', image: 'https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1005/images/de3.jpg', tags: ['Exotic', 'Romantic'], months: ['七月', '八月', '九月', '十月'] },
-    { name: '夏威夷', nameEn: 'Hawaii', image: 'https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1005/images/de3.jpg', tags: ['Tropical'], months: ['一月', '三月', '五月', '十二月'] },
-    { name: '塞舌尔', nameEn: 'Seychelles', image: 'https://newsl.oss-cn-hangzhou.aliyuncs.com/haidaov2/1005/images/de3.jpg', tags: ['Exotic', 'Romantic'], months: ['一月', '三月', '五月'] },
-];
-
-const selectedFilter = ref(""); // 当前筛选条件
-const filteredIslands = ref(islands); // 筛选后的岛屿列表
-
-// 筛选岛屿
-const filterIslands = () => {
-    if (!selectedFilter.value) {
-        filteredIslands.value = islands;
-    } else {
-        filteredIslands.value = islands.filter((island) =>
-            island.tags.includes(selectedFilter.value)
-        );
     }
-};
+    return params
+}
+// 获取岛屿列表
+const getCommentIsLand = async(label) => {
+  
+  try{
+    
+    const res = await getIslandList(getfillterParams(label));
+    if (res?.length > 0) {
+      if(label == 0){
+        recommendList.value = res.slice(0, 5);
+        islandList.value = res.slice(5);
+      }else{
+        recommendList.value = []
+        islandList.value = res
+      }
+    }
+
+  }catch(error){
+    console.log(error,'error')
+  }
+}
 </script>
 
 <style scoped lang="less">
@@ -551,6 +494,7 @@ const filterIslands = () => {
             line-height: 1;
             font-size: 16px;
             margin-bottom: 15px;
+            cursor: pointer;
         }
 
         .checked {
@@ -561,8 +505,8 @@ const filterIslands = () => {
 
         .icon:hover {
             // transform: translateY(-1px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            background-color: rgba(128, 128, 128, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 255, 0.1);
+            background-color: #BFDBFE;
         }
     }
 
@@ -589,8 +533,35 @@ const filterIslands = () => {
                 // box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
                 border: 1px #ddd solid;
                 margin-right: 15px;
+                .title-top-box{
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 5px;
+                    .name{
+                        font-size: 20px;
+                        font-weight: 500;
+                        color: #111;
+                    }
+                    .icon{
+                        font-size: 14px;
+                        color: #111;
+                        line-height: 1;
+                        padding: 4px 6px;
+                        border-radius: 6px;
+                        background-color: #E9D8FD;
+                        margin-left: 10px;
+                    }
+                }
+                .text-desc{
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;  /* 限制显示三行 */
+                    -webkit-box-orient: vertical;  /* 垂直排列 */
+                    overflow: hidden;  /* 隐藏超出部分 */
+                    text-overflow: ellipsis;  /* 显示省略号 */
+                }
 
                 .desc{
+                    color: #1E88E5;
                     span{
                         margin-right: 5px;
                     }
@@ -632,7 +603,7 @@ const filterIslands = () => {
             gap: 10px;
             .item{
                 width: 32%;
-                height: 500px;
+                height: 520px;
                 background-color: white;
                 border-radius: 1rem;
                 overflow: hidden;
@@ -643,15 +614,17 @@ const filterIslands = () => {
                     height: 60%;
                     width: 100%;
                 }
-                .name{
+                .name-box{
                     margin-top: 10px;
                     margin-left: 10px;
-                    font-size: 22px;
-                    color: #111;
-                    line-height: 1;
-                    font-weight: bold;
                     display: flex;
                     align-items: center;
+                    flex-wrap: wrap;
+                    .name{
+                        font-size: 22px;  
+                        color: #111;  
+                        font-weight: bold;
+                    }
                     .star{
                         font-size: 16px;
                         color: white;
@@ -660,6 +633,7 @@ const filterIslands = () => {
                         background-color: #1E88E5;
                         border-radius: 10px;
                         margin-right: 8px;
+                        line-height: 1;
                     }
                     .english{
                         font-size: 18px;
@@ -683,18 +657,19 @@ const filterIslands = () => {
                     }
                 }
                 .tags{
-                    margin-top: 15px;
+                    margin-top: 10px;
+                    margin-bottom: 15px;
                     margin-left: 10px;
                     line-height: 1;
                     font-size: 14px;
 
                     .tag {
                         display: inline-block;
-                        background-color: #f1f1f1;
+                        background-color: #DCFCE7;
                         padding: 5px 10px;
                         border-radius: 20px;
                         margin-right: 5px;
-                        color: #555;
+                        color: #333;
                         line-height: 1;
                     }
                 }
