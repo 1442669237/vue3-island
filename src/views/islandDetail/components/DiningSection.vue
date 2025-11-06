@@ -35,10 +35,10 @@
       </Swiper>
       <!-- 左右切换按钮 -->
       <button class="swiper-nav-btn activity-prev" aria-label="上一项">
-        <i class="fas fa-angle-left"></i>
+        <i class="iconfont icon-angleleft"></i>
       </button>
       <button class="swiper-nav-btn activity-next" aria-label="下一项">
-        <i class="fas fa-angle-right"></i>
+        <i class="iconfont icon-angleright"></i>
       </button>
       <!-- 轮播指示器（圆点） -->
       <div class="activity-pagination-1"></div>

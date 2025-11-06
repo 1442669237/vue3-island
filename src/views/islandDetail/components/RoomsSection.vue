@@ -11,20 +11,20 @@
                 :free-mode="true" 
                 :slides-per-view="1" 
                 :space-between="0"
-                :navigation="{ prevEl: '.activity-prev-1', nextEl: '.activity-next-1' }"
+                :navigation="{ prevEl: '.activity-prev', nextEl: '.activity-next' }"
                 :pagination="{ clickable: true }" 
                 class="activity-swiper custom-swiper">
                 <SwiperSlide class="bg-white rounded-xl overflow-hidden shadow-md"
                   v-for="(albums, index) in item?.albums" 
-                  :key="index"
+                  :key="'innerpic_'+index"
                 >
                   <img :src="albums?.imageUrl || ''" alt="房型照片" class="w-full h-full object-contain md:object-cover" />
                 </SwiperSlide>
-                <button class="swiper-nav-btn activity-prev-1" aria-label="上一项">
-                  <i class="fas fa-angle-left"></i>
+                <button class="swiper-nav-btn activity-prev" aria-label="上一项">
+                  <i class="iconfont icon-angleleft"></i>
                 </button>
-                <button class="swiper-nav-btn activity-next-1" aria-label="下一项">
-                  <i class="fas fa-angle-right"></i>
+                <button class="swiper-nav-btn activity-next" aria-label="下一项">
+                  <i class="iconfont icon-angleright"></i>
                 </button>
               </Swiper>
               
@@ -175,10 +175,10 @@ const modules = [FreeMode, Navigation, Pagination]
   background: #0ea5e9;
   color: #fff;
 }
-.activity-prev-1 {
+.activity-prev {
   left: 8px;
 }
-.activity-next-1 {
+.activity-next {
   right: 8px;
 }
 .swiper-nav-btn.swiper-button-disabled{

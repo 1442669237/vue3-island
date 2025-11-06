@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "577220",
+      "name": "angle-left",
+      "font_class": "angleleft",
+      "unicode": "e662",
+      "unicode_decimal": 58978
+    },
+    {
+      "icon_id": "577221",
+      "name": "angle-right",
+      "font_class": "angleright",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
       "icon_id": "1393648",
       "name": "编辑器 · 全屏",
       "font_class": "expand",
