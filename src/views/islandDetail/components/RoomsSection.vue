@@ -2,9 +2,10 @@
   <div class="fade-in">
     <h2 ref="titleSection" class="text-3xl font-bold mb-6 text-dark-blue">精选房型</h2>
     <div class="space-y-8">
-      <div v-for="(item, index) in islandHotel" :key="index">
+      <div v-for="(item, index) in islandHotel" :key="'roomRecommend_'+index">
         <div v-if="index < state.hotalMaxNumber" class="bg-white rounded-xl overflow-hidden shadow-md card-hover custom-card-style">
-          <div class="grid grid-cols-1 md:grid-cols-2">
+          <div class="grid grid-cols-1 md:grid-cols-2 items-stretch">
+
             <div class="relative h-64 md:h-auto">
               <Swiper 
                 :modules="modules" 
@@ -12,9 +13,10 @@
                 :slides-per-view="1" 
                 :space-between="0"
                 :navigation="{ prevEl: '.activity-prev', nextEl: '.activity-next' }"
-                :pagination="{ clickable: true }" 
-                class="activity-swiper custom-swiper">
-                <SwiperSlide class="bg-white rounded-xl overflow-hidden shadow-md"
+                :pagination="{ clickable: true }"
+                class="activity-swiper custom-swiper h-full">
+                <SwiperSlide 
+                  class="bg-white rounded-xl overflow-hidden shadow-md"
                   v-for="(albums, index) in item?.albums" 
                   :key="'innerpic_'+index"
                 >

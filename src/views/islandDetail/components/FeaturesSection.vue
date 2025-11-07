@@ -53,6 +53,7 @@
           class="flex min-h-full items-center justify-center p-4 text-center"
         >
           <div class="fixed inset-0 bg-black/30" aria-hidden="true" />
+          
             <DialogPanel
               class="w-full transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all max-w-3xl"
             >
@@ -146,6 +147,8 @@ const isOpen = ref(false)
 function closeModal() {
   isOpen.value = false
   state.currentActivity = {}
+ 
+  
 }
 function openModal(data) {
   const newData = {
