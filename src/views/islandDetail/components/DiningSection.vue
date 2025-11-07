@@ -35,6 +35,7 @@
             </div>
           </div>
         </SwiperSlide>
+<<<<<<< HEAD
 
        
       </Swiper>
@@ -43,6 +44,14 @@
         <i class="iconfont icon-angleleft"></i>
       </button>
       <button class="swiper-nav-btn activity-next-1" aria-label="下一项">
+=======
+      </Swiper>
+      <!-- 左右切换按钮 -->
+      <button class="swiper-nav-btn activity-prev" aria-label="上一项">
+        <i class="iconfont icon-angleleft"></i>
+      </button>
+      <button class="swiper-nav-btn activity-next" aria-label="下一项">
+>>>>>>> master
         <i class="iconfont icon-angleright"></i>
       </button>
       <!-- 轮播指示器（圆点） -->
@@ -66,6 +75,7 @@ const props = defineProps({
   }
 })
 const modules = [FreeMode, Navigation, Pagination]
+<<<<<<< HEAD
 
 const getDinnerImage = (item) => {
   const finalImage = (item?.headPics || item?.albums || [])?.find(pic => {
@@ -75,6 +85,8 @@ const getDinnerImage = (item) => {
   return finalImage
 }
  
+=======
+>>>>>>> master
 </script>
 
 <style scoped>
@@ -116,10 +128,17 @@ const getDinnerImage = (item) => {
   background: #0ea5e9;
   color: #fff;
 }
+<<<<<<< HEAD
 .activity-prev-1 {
   left: -12px;
 }
 .activity-next-1 {
+=======
+.activity-prev {
+  left: -12px;
+}
+.activity-next {
+>>>>>>> master
   right: -12px;
 }
 .swiper-nav-btn.swiper-button-disabled{
