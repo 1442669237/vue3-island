@@ -7,14 +7,17 @@
         :free-mode="true" 
         :slides-per-view="2" 
         :space-between="16"
-        :navigation="{ prevEl: '.activity-prev', nextEl: '.activity-next' }"
-        :pagination="{ el: '.activity-pagination-1', clickable: true }" class="activity-swiper grid grid-cols-1 md:grid-cols-2  pb-4">
+        :watch-overflow="true"
+        :navigation="{ prevEl: '.activity-prev-1', nextEl: '.activity-next-1' }"
+        :pagination="{ el: '.activity-pagination-1', clickable: true }" class="activity-swiper grid grid-cols-1 md:grid-cols-2 pb-4">
 
         <SwiperSlide class="bg-white rounded-xl overflow-hidden shadow-md card-hover"
-          v-for="(item, index) in islandDine" :key="'dinner_'+index">
+          v-for="(item, index) in islandDine" 
+          :key="'dinnerDetail_'+item?.id"
+        >
           <div class="relative h-48">                           
             <img 
-              :src="item?.headPics?.[0].imageUrl || item?.albums?.[0].imageUrl || ''" 
+              :src="getDinnerImage(item)" 
               :alt="item?.dineCname  || '餐饮体验'" 
               class="w-full h-full object-cover" 
             />
@@ -32,12 +35,14 @@
             </div>
           </div>
         </SwiperSlide>
+
+       
       </Swiper>
-      <!-- 左右切换按钮 -->
-      <button class="swiper-nav-btn activity-prev" aria-label="上一项">
+       <!-- 左右切换按钮 -->
+      <button class="swiper-nav-btn activity-prev-1" aria-label="上一项">
         <i class="iconfont icon-angleleft"></i>
       </button>
-      <button class="swiper-nav-btn activity-next" aria-label="下一项">
+      <button class="swiper-nav-btn activity-next-1" aria-label="下一项">
         <i class="iconfont icon-angleright"></i>
       </button>
       <!-- 轮播指示器（圆点） -->
@@ -61,6 +66,15 @@ const props = defineProps({
   }
 })
 const modules = [FreeMode, Navigation, Pagination]
+
+const getDinnerImage = (item) => {
+  const finalImage = (item?.headPics || item?.albums || [])?.find(pic => {
+    return pic.subId === item?.id
+  })?.imageUrl
+
+  return finalImage
+}
+ 
 </script>
 
 <style scoped>
@@ -102,10 +116,10 @@ const modules = [FreeMode, Navigation, Pagination]
   background: #0ea5e9;
   color: #fff;
 }
-.activity-prev {
+.activity-prev-1 {
   left: -12px;
 }
-.activity-next {
+.activity-next-1 {
   right: -12px;
 }
 .swiper-nav-btn.swiper-button-disabled{
