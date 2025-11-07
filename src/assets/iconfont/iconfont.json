@@ -6,8 +6,6 @@
   "description": "",
   "glyphs": [
     {
-<<<<<<< HEAD
-=======
       "icon_id": "5634518",
       "name": "utensils",
       "font_class": "utensils",
@@ -36,7 +34,6 @@
       "unicode_decimal": 59645
     },
     {
->>>>>>> origin/master
       "icon_id": "577220",
       "name": "angle-left",
       "font_class": "angleleft",

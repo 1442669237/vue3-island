@@ -3,103 +3,31 @@
     <!-- container -->
     <div class="container">
       <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        <!-- ======================= 浮潜 ======================= -->
-        <div class="card card-snorkeling animate-fade-in" style="animation-delay: 0.1s">
-          <div class="icon-container" style="background-color: rgba(30, 136, 229, 0.1)">
-            <i class="iconfont icon-Diving-Mask text-2xl" style="color: #1e88e5"></i>
+        <div
+          v-for="(card, idx) in normalizedCards"
+          :key="idx"
+          class="card animate-fade-in"
+          :class="'card-' + card.type.class"
+          :style="{ animationDelay: `${0.1 * ((idx % 6) + 1)}s` }"
+        >
+          <div class="icon-container" :style="{ backgroundColor: card.type.bg }">
+            <i
+              class="iconfont text-2xl"
+              :class="card.type.icon"
+              :style="{ color: card.type.color }"
+            ></i>
           </div>
-          <h3 class="text-xl font-bold mb-2">浮潜</h3>
-          <div
-            class="score-badge"
-            style="background-color: rgba(30, 136, 229, 0.1); color: #1e88e5"
-          >
-            {{ getScore('浮潜') }}
-          </div>
-          <p class="mt-4 text-gray-600">
-            浮潜评分 {{ getScore('浮潜') }} ，适合初级体验者。海域条件一般，适合初次尝试浮潜的游客。
-          </p>
-        </div>
+          <h3 class="text-xl font-bold mb-2 flex items-center">
+            <div>{{ card.title }}</div>
+            <div
+              class="score-badge"
+              :style="{ backgroundColor: card.type.bg, color: card.type.color }"
+            >
+              {{ card.score }}
+            </div>
+          </h3>
 
-        <!-- ======================= 沙滩 ======================= -->
-        <div class="card card-beach animate-fade-in" style="animation-delay: 0.2s">
-          <div class="icon-container" style="background-color: rgba(255, 193, 7, 0.1)">
-            <i class="iconfont icon-umbrella-beach text-2xl" style="color: #ffc107"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-2">沙滩</h3>
-          <div class="score-badge" style="background-color: rgba(255, 193, 7, 0.1); color: #ffc107">
-            {{ getScore('沙滩') }}
-          </div>
-          <p class="mt-4 text-gray-600">
-            沙滩评分
-            {{ getScore('沙滩') }}
-            ，优质沙滩体验。洁白细腻的沙滩，清澈的海水，提供极佳的海滩度假体验。
-          </p>
-        </div>
-
-        <!-- ======================= 亲子 ======================= -->
-        <div class="card card-family animate-fade-in" style="animation-delay: 0.3s">
-          <div class="icon-container" style="background-color: rgba(76, 175, 80, 0.1)">
-            <i class="iconfont icon-child text-2xl" style="color: #4caf50"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-2">亲子</h3>
-          <div class="score-badge" style="background-color: rgba(76, 175, 80, 0.1); color: #4caf50">
-            {{ getScore('亲子') }}
-          </div>
-          <p class="mt-4 text-gray-600">
-            亲子评分
-            {{ getScore('亲子') }} ，适合家庭游玩。完善的儿童设施，丰富的亲子活动，安全舒适的环境。
-          </p>
-        </div>
-
-        <!-- ======================= 蜜月 ======================= -->
-        <div class="card card-honeymoon animate-fade-in" style="animation-delay: 0.4s">
-          <div class="icon-container" style="background-color: rgba(156, 39, 176, 0.1)">
-            <i class="fas fa-heart text-2xl" style="color: #9c27b0"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-2">蜜月</h3>
-          <div
-            class="score-badge"
-            style="background-color: rgba(156, 39, 176, 0.1); color: #9c27b0"
-          >
-            {{ getScore('蜜月') }}
-          </div>
-          <p class="mt-4 text-gray-600">
-            蜜月评分
-            {{ getScore('蜜月') }}
-            ，浪漫氛围佳。私密的环境，浪漫的设施和服务，是蜜月旅行的理想选择。
-          </p>
-        </div>
-
-        <!-- ======================= 泻湖 ======================= -->
-        <div class="card card-lagoon animate-fade-in" style="animation-delay: 0.5s">
-          <div class="icon-container" style="background-color: rgba(0, 188, 212, 0.1)">
-            <i class="iconfont icon-water text-2xl" style="color: #00bcd4"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-2">泻湖</h3>
-          <div class="score-badge" style="background-color: rgba(0, 188, 212, 0.1); color: #00bcd4">
-            {{ getScore('泻湖') }}
-          </div>
-          <p class="mt-4 text-gray-600">
-            泻湖评分
-            {{ getScore('泻湖') }}
-            ，清澈水域景观。平静如镜的湖水，丰富的水上活动，美景令人心旷神怡。
-          </p>
-        </div>
-
-        <!-- ======================= 餐饮 ======================= -->
-        <div class="card card-dining animate-fade-in" style="animation-delay: 0.6s">
-          <div class="icon-container" style="background-color: rgba(255, 152, 0, 0.1)">
-            <i class="iconfont icon-utensils text-2xl" style="color: #ff9800"></i>
-          </div>
-          <h3 class="text-xl font-bold mb-2">餐饮</h3>
-          <div class="score-badge" style="background-color: rgba(255, 152, 0, 0.1); color: #ff9800">
-            {{ getScore('餐饮') }}
-          </div>
-          <p class="mt-4 text-gray-600">
-            餐饮评分
-            {{ getScore('餐饮') }}
-            ，美食体验良好。多样化的美食选择，优质的用餐环境，令人满意的餐饮服务。
-          </p>
+          <p class="mt-4 text-gray-600">{{ card.desc }}</p>
         </div>
       </section>
     </div>
@@ -107,7 +35,8 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { computed, onMounted } from 'vue'
+
 const { commentElement } = defineProps({
   commentElement: {
     type: Array,
@@ -115,24 +44,135 @@ const { commentElement } = defineProps({
   },
 })
 
-const scoreMap = ref({})
+// 类型与图标、颜色映射（使用项目内 iconfont）
+const typeMap = {
+  snorkeling: {
+    name: '浮潜',
+    class: 'snorkeling',
+    icon: 'icon-Diving-Mask',
+    color: '#1e88e5',
+    bg: 'rgba(30, 136, 229, 0.1)',
+    defaultDesc: '浮潜评分 {score} ，适合初级体验者。海域条件一般，适合初次尝试浮潜的游客。',
+  },
+  beach: {
+    name: '沙滩',
+    class: 'beach',
+    icon: 'icon-umbrella-beach',
+    color: '#ffc107',
+    bg: 'rgba(255, 193, 7, 0.1)',
+    defaultDesc:
+      '沙滩评分 {score} ，优质沙滩体验。洁白细腻的沙滩，清澈的海水，提供极佳的海滩度假体验。',
+  },
+  family: {
+    name: '亲子',
+    class: 'family',
+    icon: 'icon-child',
+    color: '#4caf50',
+    bg: 'rgba(76, 175, 80, 0.1)',
+    defaultDesc:
+      '亲子评分 {score} ，适合家庭游玩。完善的儿童设施，丰富的亲子活动，安全舒适的环境。',
+  },
+  honeymoon: {
+    name: '蜜月',
+    class: 'honeymoon',
+    icon: 'icon-moon', // 替换原 Font Awesome 心形为项目内图标
+    color: '#9c27b0',
+    bg: 'rgba(156, 39, 176, 0.1)',
+    defaultDesc:
+      '蜜月评分 {score} ，浪漫氛围佳。私密的环境，浪漫的设施和服务，是蜜月旅行的理想选择。',
+  },
+  lagoon: {
+    name: '泻湖',
+    class: 'lagoon',
+    icon: 'icon-water',
+    color: '#00bcd4',
+    bg: 'rgba(0, 188, 212, 0.1)',
+    defaultDesc:
+      '泻湖评分 {score} ，清澈水域景观。平静如镜的湖水，丰富的水上活动，美景令人心旷神怡。',
+  },
+  dining: {
+    name: '餐饮',
+    class: 'dining',
+    icon: 'icon-utensils',
+    color: '#ff9800',
+    bg: 'rgba(255, 152, 0, 0.1)',
+    defaultDesc:
+      '餐饮评分 {score} ，美食体验良好。多样化的美食选择，优质的用餐环境，令人满意的餐饮服务。',
+  },
+  default: {
+    name: '特色',
+    class: 'feature',
+    icon: 'icon-infocircle',
+    color: '#3b82f6',
+    bg: 'rgba(59, 130, 246, 0.1)',
+    defaultDesc: '特色评分 {score} 。',
+  },
+}
 
-try {
-  const arr = commentElement
-  const obj = {}
-  arr.forEach((item) => {
+function normalizeType(label) {
+  const s = String(label || '').toLowerCase()
+  if (/(浮潜|潜水|snorkel|diving)/.test(s)) return 'snorkeling'
+  if (/(沙滩|海滩|beach)/.test(s)) return 'beach'
+  if (/(亲子|家庭|family|儿童|小孩)/.test(s)) return 'family'
+  if (/(蜜月|情侣|浪漫|honeymoon|moon)/.test(s)) return 'honeymoon'
+  if (/(泻湖|环礁湖|lagoon|湖|水域)/.test(s)) return 'lagoon'
+  if (/(餐饮|美食|餐厅|用餐|dining|饮食)/.test(s)) return 'dining'
+  return 'default'
+}
+
+function formatScore(v) {
+  if (typeof v === 'number') return `${v}/10`
+  if (typeof v === 'string') {
+    const m = v.match(/(\d+(?:\.\d+)?)/)
+    return m ? `${m[1]}/10` : '--'
+  }
+  return '--'
+}
+
+function buildDesc(title, score, typeKey, rawValue) {
+  if (typeof rawValue === 'string') {
+    const looksLikeRating = /^\s*\d+(?:\.\d+)?\s*(?:\/10|分)?\s*$/.test(rawValue)
+    const hasWords = /[\u4e00-\u9fa5a-zA-Z]/.test(rawValue)
+    if (hasWords && !looksLikeRating && rawValue.length >= 10) {
+      // 当后端直接给了长文本描述时，优先展示该描述
+      return rawValue
+    }
+  }
+  const t = typeMap[typeKey] || typeMap.default
+  const scoreText = score !== '--' ? score : '暂无'
+  return (t.defaultDesc || `${title}评分 {score} 。`).replace('{score}', scoreText)
+}
+
+const normalizedCards = computed(() => {
+  const raw = Array.isArray(commentElement)
+    ? commentElement
+    : Array.isArray(commentElement?.data)
+      ? commentElement.data
+      : []
+
+  const cards = []
+  raw.forEach((item) => {
+    if (!item || typeof item !== 'object') return
     const key = Object.keys(item)[0]
-    obj[key] = item[key]
+    const value = item[key]
+    const typeKey = normalizeType(key)
+    const type = typeMap[typeKey] || typeMap.default
+    const title = key || type.name
+    const score = formatScore(value)
+    const desc = buildDesc(title, score, typeKey, value)
+    cards.push({ title, score, desc, type })
   })
-  scoreMap.value = obj
-} catch (e) {
-  console.error('JSON 解析失败：', e)
-}
 
-function getScore(title) {
-  const v = scoreMap.value[title]
-  return typeof v === 'number' ? `${v}/10` : '--'
-}
+  // 如果后端当前无数据，使用默认类别占位以保留布局与样式
+  if (!cards.length) {
+    ;['snorkeling', 'beach', 'family', 'honeymoon', 'lagoon', 'dining'].forEach((tk) => {
+      const t = typeMap[tk]
+      cards.push({ title: t.name, score: '--', desc: buildDesc(t.name, '--', tk), type: t })
+    })
+  }
+  return cards
+})
+
 onMounted(() => {
   const cards = document.querySelectorAll('.card')
   cards.forEach((card) => {
@@ -216,11 +256,11 @@ onMounted(() => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.25rem 0.75rem;
+  padding: 0.1rem 0.75rem;
   border-radius: 9999px;
   font-weight: 600;
   font-size: 0.875rem;
-  margin-top: 0.5rem;
+  margin-left: 0.5rem;
 }
 
 .animate-fade-in {

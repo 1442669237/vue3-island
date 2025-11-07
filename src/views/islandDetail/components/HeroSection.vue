@@ -8,31 +8,33 @@
           <img :src="islandDetail.aerialViewUrl" alt="" class="w-full h-full object-cover" />
         </div>
 
-        <div class="embla__slide h-full relative" v-if="islandDetail.videos && islandDetail.videos.length>0">
+        <div
+          class="embla__slide h-full relative"
+          v-if="islandDetail.videos && islandDetail.videos.length > 0"
+        >
           <!-- 视频播放器 -->
-          <video 
-            ref="videoPlayer" 
-            :src="islandDetail.videos[0].videoUrl" 
-            controls 
-            @play="onPlay" 
-            @pause="onPause" 
-            @ended="onEnded" 
+          <video
+            ref="videoPlayer"
+            :src="islandDetail.videos[0].videoUrl"
+            controls
+            @play="onPlay"
+            @pause="onPause"
+            @ended="onEnded"
             class="w-full h-full object-cover"
           ></video>
 
           <!-- 播放按钮 -->
-          <div 
-            v-if="!isPlaying" 
-            @click="togglePlay" 
+          <div
+            v-if="!isPlaying"
+            @click="togglePlay"
             class="play-button absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white"
           >
             ▶
+          </div>
         </div>
-        </div>
-
       </div>
       <!-- 轮播指示器 -->
-      <div class="carousel-indicators" v-if="islandDetail.videos && islandDetail.videos.length>0">
+      <div class="carousel-indicators" v-if="islandDetail.videos && islandDetail.videos.length > 0">
         <button
           class="carousel-indicator"
           :class="{ active: currentIndex === 0 }"
@@ -53,7 +55,7 @@
     <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16" v-if="!isPlaying">
       <div class="container mx-auto">
         <div class="max-w-4xl">
-          <div class="flex flex-wrap items-center mb-4">
+          <!-- <div class="flex flex-wrap items-center mb-4">
             <div class="tag tag-blue mr-4 mb-2">
               <i class="iconfont icon-star mr-1"></i> 奢华私人岛
             </div>
@@ -63,10 +65,11 @@
             <div class="tag tag-teal mb-2">
               <i class="iconfont icon-calendar-check mr-1"></i> 可预订
             </div>
-          </div>
+          </div> -->
 
           <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
-            {{ islandDetail.chineseName }} {{ islandDetail.englishName }}
+            {{ islandDetail.chineseName }}
+            <span class="text-2xl">{{ islandDetail.englishName }}</span>
           </h1>
 
           <div class="flex flex-wrap items-center mb-6">

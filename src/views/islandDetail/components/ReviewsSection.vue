@@ -111,11 +111,7 @@
 </template>
 
 <script setup>
-<<<<<<< HEAD
-import RadarChart from './RadarChart.vue'
-=======
 import FeaturedCard from './FeaturedCard.vue'
->>>>>>> origin/master
 import { ref, watch } from 'vue'
 
 const commentElement = ref([])
