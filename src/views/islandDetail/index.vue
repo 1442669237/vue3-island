@@ -1,10 +1,10 @@
 <template>
   <div class="nautilus-page">
     <!-- 导航栏组件 -->
-    <TopNav :navScrolled="navScrolled" @openMenu="openMenu" />
+    <TopNav :navScrolled="navScrolled" @openMenu="openMenu" :type="2" />
 
     <!-- 移动端菜单组件（含遮罩） -->
-    <MobileMenu :isActive="isMenuActive" @close="closeMenu" />
+    <MobileMenu :isActive="isMenuActive" @close="closeMenu" :type="2" />
 
     <!-- 主视觉区 -->
     <HeroSection :island-detail="islandDetail" />
@@ -61,8 +61,8 @@ import {
   fetchIslandActivity,
 } from '@/api/islandDetail.js'
 import HeroSection from './components/HeroSection.vue'
-import TopNav from './components/TopNav.vue'
-import MobileMenu from './components/MobileMenu.vue'
+import TopNav from '../../components/TopNav.vue'
+import MobileMenu from '../../components/MobileMenu.vue'
 import BookingBox from './components/BookingBox.vue'
 import RoomsSection from './components/RoomsSection.vue'
 import FeaturesSection from './components/FeaturesSection.vue'

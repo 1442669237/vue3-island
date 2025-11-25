@@ -7,37 +7,30 @@
         <label class="block text-sm font-medium text-gray-700 mb-2">目的地</label>
         <select
           :value="destination"
-          @change="e => emit('update:destination', e.target.value)"
+          @change="(e) => emit('update:destination', e.target.value)"
           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
-          <option value="印度尼西亚">印度尼西亚</option>
-          <option value="马尔代夫">马尔代夫</option>
-          <option value="大堡礁">大堡礁</option>
-          <option value="红海">红海</option>
-          <option value="加拉帕戈斯群岛">加拉帕戈斯群岛</option>
-          <option value="斐济">斐济</option>
-          <option value="泰国">泰国</option>
-          <option value="埃及">埃及</option>
+          <option v-for="d in destinations" :key="d" :value="d">{{ d.cName }}</option>
         </select>
       </div>
 
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">出行日期</label>
         <div class="relative">
-          <i class="fa-solid fa-calendar absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          <i
+            class="fa-solid fa-calendar absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+          ></i>
           <select
             :value="date"
-            @change="e => emit('update:date', e.target.value)"
+            @change="(e) => emit('update:date', e.target.value)"
             class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none"
           >
             <option value="出行日期">出行日期</option>
-            <option value="本月">本月</option>
-            <option value="下月">下月</option>
-            <option value="未来3个月">未来3个月</option>
-            <option value="未来6个月">未来6个月</option>
-            <option value="全年">全年</option>
+            <option v-for="d in dates" :key="d" :value="d">{{ d }}</option>
           </select>
-          <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          <i
+            class="fa-solid fa-chevron-down absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+          ></i>
         </div>
       </div>
 
@@ -47,10 +40,12 @@
             type="checkbox"
             id="available-only"
             :checked="availableOnly"
-            @change="e => emit('update:availableOnly', e.target.checked)"
+            @change="(e) => emit('update:availableOnly', e.target.checked)"
             class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <label for="available-only" class="ml-2 block text-sm text-gray-700">仅看有余位船期</label>
+          <label for="available-only" class="ml-2 block text-sm text-gray-700"
+            >仅看有余位船期</label
+          >
         </div>
 
         <div class="flex items-center">
@@ -58,7 +53,7 @@
             type="checkbox"
             id="special-only"
             :checked="specialOnly"
-            @change="e => emit('update:specialOnly', e.target.checked)"
+            @change="(e) => emit('update:specialOnly', e.target.checked)"
             class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
           <label for="special-only" class="ml-2 block text-sm text-gray-700">仅看特价船期</label>
@@ -88,6 +83,8 @@ const props = defineProps({
   date: { type: String, default: '' },
   availableOnly: { type: Boolean, default: false },
   specialOnly: { type: Boolean, default: false },
+  destinations: { type: Array, default: () => [] },
+  dates: { type: Object, default: () => ({}) },
 })
 
 const emit = defineEmits([

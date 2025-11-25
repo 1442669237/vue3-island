@@ -8,11 +8,13 @@
       </button>
     </div>
     <div class="flex flex-col space-y-4">
-      <a href="#" class="text-gray-700 hover:text-primary-blue transition-colors py-2 border-b border-gray-100">首页</a>
-      <a href="#" class="text-gray-700 hover:text-primary-blue transition-colors py-2 border-b border-gray-100">目的地</a>
-      <a href="#" class="text-gray-700 hover:text-primary-blue transition-colors py-2 border-b border-gray-100">酒店</a>
-      <a href="#" class="text-gray-700 hover:text-primary-blue transition-colors py-2 border-b border-gray-100">特惠</a>
-      <a href="#" class="text-gray-700 hover:text-primary-blue transition-colors py-2 border-b border-gray-100">攻略</a>
+      <a
+        v-for="item in navItems"
+        :key="item.type"
+        :href="item.href"
+        class="text-gray-700 hover:text-primary-blue transition-colors py-2 border-b border-gray-100"
+        >{{ item.name }}</a
+      >
     </div>
   </div>
 
@@ -21,7 +23,19 @@
 </template>
 
 <script setup>
-const props = defineProps({ isActive: { type: Boolean, default: false } })
+import { ref } from 'vue'
+const props = defineProps({
+  isActive: { type: Boolean, default: false },
+  type: { type: Number, default: null },
+})
+let navItems = [
+  { name: '首页', href: '/', type: 1 },
+  { name: '海岛度假', href: '#island', type: 2 },
+  { name: '精选船宿', href: '#boat', type: 3 },
+  { name: '酒店', href: '#hotel', type: 4 },
+  { name: '攻略', href: '#guide', type: 5 },
+]
+let currentType = ref(1)
 </script>
 
 <style scoped>

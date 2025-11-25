@@ -7,17 +7,19 @@
     <div class="container mx-auto text-white px-4 flex items-center justify-between">
       <div class="flex items-center">
         <a href="#" class="text-2xl font-bold">
-          <i class="iconfont icon-palm-tree mr-2"></i>海岛度假
+          <i class="iconfont icon-palm-tree mr-2"></i>{{ title }}
         </a>
       </div>
 
       <!-- 桌面端导航 -->
       <div class="hidden md:flex items-center space-x-8">
-        <a href="/" class="hover:text-light-sand transition-colors">首页</a>
-        <a href="#" class="hover:text-light-sand transition-colors">目的地</a>
-        <a href="#" class="hover:text-light-sand transition-colors">酒店</a>
-        <a href="#" class="hover:text-light-sand transition-colors">特惠</a>
-        <a href="#" class="hover:text-light-sand transition-colors">攻略</a>
+        <a
+          v-for="item in navItems"
+          :key="item.name"
+          :href="item.href"
+          class="hover:text-light-sand transition-colors"
+          >{{ item.name }}</a
+        >
       </div>
 
       <div class="hidden md:flex items-center space-x-4">
@@ -38,7 +40,20 @@
 </template>
 
 <script setup>
-const props = defineProps({ navScrolled: { type: Boolean, default: false } })
+import { ref } from 'vue'
+const props = defineProps({
+  navScrolled: { type: Boolean, default: false },
+  title: { type: String, default: '海岛度假' },
+  type: { type: Number, default: null },
+})
+let navItems = [
+  { name: '首页', href: '/', type: 1 },
+  { name: '海岛度假', href: '#island', type: 2 },
+  { name: '精选船宿', href: '#boat', type: 3 },
+  { name: '酒店', href: '#hotel', type: 4 },
+  { name: '攻略', href: '#guide', type: 5 },
+]
+let currentType = ref(1)
 </script>
 
 <style scoped>
