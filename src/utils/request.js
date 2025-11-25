@@ -10,7 +10,7 @@ const BUSINESS_CODE = {
 
 // 创建 axios 实例
 const http = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE || 'http://192.168.123.236:8081',
+  baseURL: import.meta.env.VITE_API_BASE || 'http://192.168.0.139:8082/',
   timeout: 10000,
 })
 
