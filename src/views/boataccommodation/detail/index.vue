@@ -1,11 +1,7 @@
 <template>
   <div class="w-full bg-gray-50 flex flex-col items-center" v-if="boatDetail">
     <!-- 头部轮播图 -->
-    <Carousel 
-      :shipName="'Solitude Gaia'"
-      :shipDescription="'一艘40米长的船宿，位于帕劳，最多容纳18位客人。'"
-      :shipDetails="'行程亮点：潜水、历史沉船、色彩斑斓的珊瑚园等。'"
-      :images="imageData"/>
+    <Carousel :data="boatDetail"/>
 
     <main class="container mx-auto px-4 py-16">
       <!-- 信息展示区 -->
@@ -19,7 +15,7 @@
           <!-- 行程详情 -->
           <TripDetails />
           <!-- 装备租赁 -->
-          <EquipmentRental />
+          <EquipmentRental :data="boatDetail"/>
         </div>
 
         <!-- 右侧预订栏 -->
@@ -28,7 +24,7 @@
         </div>
       </section>
       <!-- 船只亮点 、 安全服务 -->
-      <ShipHighlightsAndSafety/>
+      <ShipHighlightsAndSafety :data="boatDetail"/>
 
       <!-- 免责声明 -->
       <Disclaimer/>

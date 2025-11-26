@@ -2,6 +2,7 @@
   <div class="relative w-[100vw] h-[100vh]">
     <!-- 轮播图 -->
     <swiper
+      v-if="data?.images"
       :centeredSlides="true"
       :autoplay="{ delay: 5000, disableOnInteraction: false }"
       :pagination="{ clickable: true }"
@@ -9,7 +10,7 @@
       :modules="[Autoplay, Pagination, Navigation]"
       class="w-full h-full"
     >
-      <swiper-slide v-for="(image, index) in images" :key="index">
+      <swiper-slide v-for="(image, index) in data.images" :key="index">
         <img :src="image" class="w-[100vw] h-[100vh] object-cover" />
       </swiper-slide>
     </swiper>
@@ -19,11 +20,11 @@
     <!-- 船宿信息：固定显示 -->
     <div class="absolute bottom-0 left-0 text-white w-full z-10 p-20" style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.8) 100%)">
       <h2 class="flex items-end">
-        <p class="text-8xl font-semibold">{{ shipName }}</p>
+        <p class="text-8xl font-semibold">{{ data.title }}</p>
         <p class="text-5xl ml-8 mb-2">帕劳</p>
       </h2>
       
-      <p class="text-xl mt-4">{{ shipDetails }}</p>
+      <p class="text-xl mt-4">行程亮点：潜水、历史沉船、色彩斑斓的珊瑚园等。</p>
       <p class="text-xl mt-4">¥23,115 /人 起</p>
     </div>
   </div>
@@ -36,25 +37,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-// 从父组件传递的船宿信息
 const props = defineProps({
-  shipName: {
-    type: String,
-    required: true
+  data: {
+    type: Object,
+    default: () => ({}),
   },
-  shipDescription: {
-    type: String,
-    required: true
-  },
-  shipDetails: {
-    type: String,
-    required: true
-  },
-  images: {
-    type: Array,
-    required: true,
-    default: () => []
-  }
 });
 </script>
 <style>

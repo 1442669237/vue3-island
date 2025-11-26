@@ -21,7 +21,7 @@
 
     <!-- 预订表单 -->
     <div class="space-y-4 mb-8">
-      <div>
+      <!-- <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">发出日期</label>
         <div class="relative">
           <input
@@ -29,9 +29,9 @@
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
           />
         </div>
-      </div>
+      </div> -->
 
-      <div>
+      <!-- <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">返回日期</label>
         <div class="relative">
           <input
@@ -39,9 +39,9 @@
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all"
           />
         </div>
-      </div>
+      </div> -->
 
-      <div>
+      <!-- <div>
         <label class="block text-sm font-medium text-gray-700 mb-1">客人数量</label>
         <div class="relative">
           <select
@@ -59,10 +59,10 @@
             <i class="iconfont icon-chevron-down"></i>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <div>
-        <label class="block text-sm font-medium text-gray-700 mb-1">国家选择</label>
+        <label class="block text-sm font-medium text-gray-700 mb-1">选择出行日期</label>
         <div class="relative">
           <select
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-blue focus:border-primary-blue transition-all appearance-none"
@@ -94,7 +94,7 @@
       class="block w-full text-center px-6 py-3 border border-primary-blue text-primary-blue font-medium rounded-lg hover:bg-primary-blue/5 transition-colors cursor-pointer"
       @click="handleCustomMethod(true)"
     >
-      <i class="iconfont icon-infocircle mr-2"></i> 咨询客服
+      立即查询
     </a>
 
     <!-- 优惠信息 -->
