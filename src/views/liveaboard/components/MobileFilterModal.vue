@@ -14,22 +14,22 @@
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">目的地</label>
         <select
-          :value="destination"
-          @change="(e) => $emit('update:destination', e.target.value)"
+          :value="countryId"
+          @change="(e) => $emit('update:countryId', Number(e.target.value))"
           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
-          <option v-for="d in destinations" :key="d" :value="d">{{ d.cName }}</option>
+          <option v-for="d in destinations" :key="d.id" :value="d.id">{{ d.cName }}</option>
         </select>
       </div>
 
       <div class="mb-6">
         <label class="block text-sm font-medium text-gray-700 mb-2">出行日期</label>
         <select
-          :value="date"
-          @change="(e) => $emit('update:date', e.target.value)"
+          :value="month"
+          @change="(e) => $emit('update:month', e.target.value)"
           class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
         >
-          <option value="出行日期">出行日期</option>
+          <option value="">出行日期</option>
           <option v-for="d in dates" :key="d" :value="d">{{ d }}</option>
         </select>
       </div>
@@ -38,12 +38,12 @@
         <div class="flex items-center">
           <input
             type="checkbox"
-            id="mobile-available-only"
-            :checked="availableOnly"
-            @change="(e) => $emit('update:availableOnly', e.target.checked)"
+            id="mobile-hasquotas"
+            :checked="!!hasquotas"
+            @change="(e) => $emit('update:hasquotas', e.target.checked ? 1 : 0)"
             class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <label for="mobile-available-only" class="ml-2 block text-sm text-gray-700"
+          <label for="mobile-hasquotas" class="ml-2 block text-sm text-gray-700"
             >仅看有余位船期</label
           >
         </div>
@@ -51,14 +51,12 @@
         <div class="flex items-center">
           <input
             type="checkbox"
-            id="mobile-special-only"
-            :checked="specialOnly"
-            @change="(e) => $emit('update:specialOnly', e.target.checked)"
+            id="mobile-isCheap"
+            :checked="!!isCheap"
+            @change="(e) => $emit('update:isCheap', e.target.checked ? 1 : 0)"
             class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
           />
-          <label for="mobile-special-only" class="ml-2 block text-sm text-gray-700"
-            >仅看特价船期</label
-          >
+          <label for="mobile-isCheap" class="ml-2 block text-sm text-gray-700">仅看特价船期</label>
         </div>
       </div>
 
@@ -83,11 +81,11 @@
 <script setup>
 const props = defineProps({
   open: { type: Boolean, default: false },
-  destination: { type: String, default: '' },
-  date: { type: String, default: '' },
-  availableOnly: { type: Boolean, default: false },
-  specialOnly: { type: Boolean, default: false },
+  countryId: { type: [Number, String], default: '' },
+  month: { type: String, default: '' },
+  hasquotas: { type: Number, default: 0 },
+  isCheap: { type: Number, default: 0 },
   destinations: { type: Array, default: () => [] },
-  dates: { type: Array, default: () => [] },
+  dates: { type: Object, default: () => ({}) },
 })
 </script>

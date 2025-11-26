@@ -48,8 +48,8 @@ const props = defineProps({
 })
 let navItems = [
   { name: '首页', href: '/', type: 1 },
-  { name: '海岛度假', href: '#island', type: 2 },
-  { name: '精选船宿', href: '#boat', type: 3 },
+  { name: '海岛度假', href: '/islandList', type: 2 },
+  { name: '精选船宿', href: '/liveaboard', type: 3 },
   { name: '酒店', href: '#hotel', type: 4 },
   { name: '攻略', href: '#guide', type: 5 },
 ]

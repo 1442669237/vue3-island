@@ -9,11 +9,11 @@ export function fetchCountries() {
   return request({ url: `/api/shipHotel/getAllCountry`, method: 'get' })
 }
 // 查询符合条件路线
-export function fetchRoutes(condition) {
+export function fetchRoutes(params) {
   return request({
-    url: `/api/shipHotel/fetchBoatTourByCondition`,
-    method: 'post',
-    data: condition,
+    url: `/api/shipHotel/queryPage`,
+    method: 'get',
+    params,
   })
 }
 // 获取行程详情
