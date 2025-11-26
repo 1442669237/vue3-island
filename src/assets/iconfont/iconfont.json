@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "680977",
+      "name": "多人",
+      "font_class": "duoren",
+      "unicode": "e71d",
+      "unicode_decimal": 59165
+    },
+    {
+      "icon_id": "7813070",
+      "name": "空调",
+      "font_class": "kongtiao",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "18654592",
+      "name": "花洒",
+      "font_class": "huasa",
+      "unicode": "e6e5",
+      "unicode_decimal": 59109
+    },
+    {
+      "icon_id": "5187393",
+      "name": "床",
+      "font_class": "chuang",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
       "icon_id": "5634518",
       "name": "utensils",
       "font_class": "utensils",

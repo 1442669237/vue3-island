@@ -73,7 +73,7 @@ const navItems = [{
     textColor: "#fff",
     links: [
       { label: "优选岛屿", pageUrl: "/islandList" },
-      { label: "优选酒店", pageUrl: "About Careers" }
+      { label: "优选船宿", pageUrl: "About Careers" }
     ]
   },
   {
