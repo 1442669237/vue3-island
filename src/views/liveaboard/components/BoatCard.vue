@@ -97,5 +97,4 @@ const props = defineProps({
   boat: { type: Object, required: true },
   delay: { type: Number, default: 0 },
 })
-console.log(props.boat)
 </script>

@@ -16,6 +16,13 @@ export function fetchRoutes(params) {
     params,
   })
 }
+// 获取热门船
+export function fetchHotBoats() {
+  return request({
+    url: `/api/shipHotel/getHotBoats`,
+    method: 'get',
+  })
+}
 // 获取行程详情
 export function fetchTripDetails(condition) {
   return request({

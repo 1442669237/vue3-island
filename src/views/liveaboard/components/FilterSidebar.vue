@@ -95,4 +95,5 @@ const emit = defineEmits([
   'apply',
   'reset',
 ])
+console.log(props)
 </script>

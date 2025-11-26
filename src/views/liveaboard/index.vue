@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50 text-gray-800 flex flex-col font-inter">
-    <TopNav :navScrolled="navScrolled" @openMenu="openMenu" title="酷潜船宿精选" :type="3" />
+    <TopNav :navScrolled="navScrolled" @openMenu="openMenu" title="鸿途智行精选" :type="3" />
     <!-- 移动端菜单组件（含遮罩） -->
     <MobileMenu :isActive="isMenuActive" title="酷潜船宿精选" :type="3" @close="closeMenu" />
 
@@ -34,7 +34,20 @@
             @close="closeMobileFilter"
           />
 
-          <BoatList :boats="filteredBoats" @reset="resetFilters" />
+          <BoatList :boats="boats" :loading="isLoading" @reset="resetFilters" />
+          <div v-if="isLoading || isLoadingMore" class="flex justify-center py-6">
+            <span
+              class="inline-block h-6 w-6 rounded-full border-2 border-blue-600 border-t-transparent animate-spin"
+            ></span>
+            <span class="ml-3 text-gray-500 text-sm">加载中...</span>
+          </div>
+          <div
+            v-else-if="!hasNext && boats.length > 0"
+            class="py-6 text-center text-gray-400 text-sm"
+          >
+            没有更多了
+          </div>
+          <div ref="infiniteSentinel" class="h-1"></div>
         </div>
 
         <PopularDestinationsAside />
@@ -42,6 +55,13 @@
     </main>
 
     <LiveaboardFooter />
+    <button
+      v-if="backTopVisible"
+      @click="scrollToTop"
+      class="fixed right-4 bottom-24 z-50 bg-blue-600 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-lg hover:bg-blue-700"
+    >
+      <i class="iconfont icon-arrowright rotate-[270deg]"></i>
+    </button>
   </div>
 </template>
 
@@ -67,6 +87,11 @@ const destinations = ref([])
 const dates = ref([])
 const page = ref(1)
 const hasNext = ref(true)
+const isLoading = ref(false)
+const isLoadingMore = ref(false)
+const infiniteSentinel = ref(null)
+let io
+const backTopVisible = ref(false)
 // 筛选状态 (Desktop)
 const filters = reactive({
   month: '',
@@ -84,21 +109,6 @@ const mobileFilters = reactive({
   isCheap: 0,
 })
 
-const filteredBoats = computed(() => {
-  let result = boats.value
-  const term = filters.search.toLowerCase().trim()
-  if (term) {
-    result = result.filter(
-      (b) =>
-        String(b.name).toLowerCase().includes(term) ||
-        String(b.country).toLowerCase().includes(term) ||
-        (Array.isArray(b.schedules) &&
-          b.schedules.some((s) => String(s.trip).toLowerCase().includes(term))),
-    )
-  }
-  return result
-})
-
 // 方法
 const resetFilters = () => {
   filters.month = ''
@@ -106,6 +116,7 @@ const resetFilters = () => {
   filters.hasquotas = 0
   filters.isCheap = 0
   filters.search = ''
+  page.value = 1
   loadRoutes()
 }
 
@@ -128,6 +139,7 @@ const applyMobileFilters = () => {
   filters.hasquotas = mobileFilters.hasquotas
   filters.isCheap = mobileFilters.isCheap
   closeMobileFilter()
+  page.value = 1
   loadRoutes()
 }
 
@@ -141,6 +153,7 @@ const resetMobileFilters = () => {
 
 // 用于桌面端的 "应用筛选"
 const applyFilters = () => {
+  page.value = 1
   loadRoutes()
 }
 const isMenuActive = ref(false)
@@ -155,6 +168,7 @@ const closeMenu = () => {
 }
 const handleScroll = () => {
   navScrolled.value = window.scrollY > 400
+  backTopVisible.value = window.scrollY > window.innerHeight
 }
 
 onMounted(() => {
@@ -167,10 +181,12 @@ onMounted(() => {
     dates.value = res ?? {}
   })
   loadRoutes()
+  initInfiniteScroll()
 })
 
 onBeforeUnmount(() => {
   window.removeEventListener('scroll', handleScroll)
+  if (io) io.disconnect()
 })
 
 function makeQueryFromFilters(f) {
@@ -183,12 +199,49 @@ function makeQueryFromFilters(f) {
   }
 }
 
-function loadRoutes() {
+function loadRoutes(append = false) {
   const query = makeQueryFromFilters(filters)
-  fetchRoutes(query).then((res) => {
-    hasNext.value = res.hasNext
-    boats.value = Array.isArray(res.records) ? res.records : []
-  })
+  if (append) {
+    isLoadingMore.value = true
+  } else {
+    isLoading.value = true
+  }
+  fetchRoutes(query)
+    .then((res) => {
+      hasNext.value = !!res?.hasNext
+      const records = Array.isArray(res?.records) ? res.records : []
+      boats.value = append ? [...boats.value, ...records] : records
+    })
+    .finally(() => {
+      isLoading.value = false
+      isLoadingMore.value = false
+    })
+}
+
+function loadMore() {
+  if (!hasNext.value || isLoadingMore.value || isLoading.value) return
+  page.value += 1
+  loadRoutes(true)
+}
+
+function initInfiniteScroll() {
+  if (io) io.disconnect()
+  io = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0]
+      if (entry && entry.isIntersecting) {
+        loadMore()
+      }
+    },
+    { root: null, threshold: 0.1 },
+  )
+  if (infiniteSentinel.value) {
+    io.observe(infiniteSentinel.value)
+  }
+}
+
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>
 
