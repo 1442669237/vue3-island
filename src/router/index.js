@@ -20,7 +20,7 @@ const router = createRouter({
       component: () => import('../views/islandList.vue'),
     },
     {
-      path: '/boataccommodation/Detail',
+      path: '/boataccommodation/Detail/:id',
       name: 'boataccommodationDetail',
       component: () => import('../views/boataccommodation/detail/index.vue'),
     },
