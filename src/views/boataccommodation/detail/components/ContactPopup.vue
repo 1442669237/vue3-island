@@ -8,7 +8,7 @@
         <h2 class="text-2xl font-semibold mb-6 text-dark-blue">联系我们</h2>
 
         <div class="relative w-[400px] h-[400px] border-[14px] border-blue-400 rounded-[50px] mt-6 flex items-center justify-center">
-            <img src="https://ota-front-public.oss-cn-hangzhou.aliyuncs.com/web-app/hotel/orderDetail/ewmnew.jpeg" alt="QR Code" class="w-[300px] h-[300px] mb-4 bg-[red]" />
+            <img src="https://ota-front-public.oss-cn-hangzhou.aliyuncs.com/web-app/hotel/orderDetail/ewmnew.jpeg" alt="QR Code" class="w-[300px] h-[300px] mb-4" />
             <div class="w-[200px] h-[16px] bg-[white] absolute top-[-15px]"></div>
             <div class="w-[200px] h-[16px] bg-[white] absolute bottom-[-15px]"></div>
             <div class="w-[16px] h-[200px] bg-[white] absolute left-[-15px]"></div>

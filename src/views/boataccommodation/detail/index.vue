@@ -61,7 +61,7 @@ const imageData = [
 ];
 const customPopisVisible = ref(false)
 const handlePopupVisibility = (value) => {
-  customPopisVisible.value = value 
+  customPopisVisible.value = value
 }
 </script>
 

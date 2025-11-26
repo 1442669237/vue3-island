@@ -31,7 +31,7 @@
                 <i class="iconfont icon-chevron-down text-gray-500"></i>
               </div>
               <!-- 立即预订 -->
-              <button class="bg-blue-500 h-[40px] text-white py-2 px-4 rounded" @click="handleCustomMethod(true)">立即预订</button>
+              <button class="bg-blue-500 h-[40px] text-white py-2 px-4 rounded" @click="handleCustomMethod(true)">立即咨询</button>
             </div>
           </div>
           <!-- 详细信息 -->
