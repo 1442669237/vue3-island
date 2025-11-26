@@ -2,6 +2,7 @@
   <div class="relative w-[100vw] h-[100vh]">
     <!-- 轮播图 -->
     <swiper
+      v-if="data?.images"
       :centeredSlides="true"
       :autoplay="{ delay: 5000, disableOnInteraction: false }"
       :pagination="{ clickable: true }"
@@ -9,7 +10,7 @@
       :modules="[Autoplay, Pagination, Navigation]"
       class="w-full h-full"
     >
-      <swiper-slide v-for="(image, index) in images" :key="index">
+      <swiper-slide v-for="(image, index) in data.images" :key="index">
         <img :src="image" class="w-[100vw] h-[100vh] object-cover" />
       </swiper-slide>
     </swiper>
@@ -36,13 +37,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 
-// 从父组件传递的船宿信息
 const props = defineProps({
-  images: {
-    type: Array,
-    required: true,
-    default: () => []
-  },
   data: {
     type: Object,
     default: () => ({}),
