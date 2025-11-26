@@ -2,9 +2,7 @@
   <div class="mt-2">
     <h2 class="text-3xl font-bold mb-6 text-dark-blue">船只介绍</h2>
     <div class="prose prose-lg max-w-none text-base flex">
-      <p class="text-[#333] text-lg leading-normal">
-        Solitude Gaia 是一艘 40 米/130 英尺长的船宿，位于帕劳，能够容纳 18 位客人，设有 9 个客舱。每个客舱配备独立卫浴，提供冷热水淋浴、标准冲水系统的马桶，并配有手动喷头、空调、电视、洗护用品等设施。船宿服务包括每日清洁、每三天更换床单。餐饮服务提供当地食材烹制，可根据需求提供不含肉食的选项。数码专区专为摄影师设计，设有相机清洗站、编辑台和充电站等设施。
-      </p>
+      <p class="text-[#333] text-lg leading-normal" v-html="data.about"></p>
     </div>
     <div class="mt-8 bg-white rounded-xl p-6 shadow-md">
       <h3 class="text-2xl font-semibold mb-4">基础信息</h3> 
@@ -112,10 +110,9 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
 
 const props = defineProps({
-  islandDetail: {
+  data: {
     type: Object,
     default: () => ({}),
   },
