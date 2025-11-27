@@ -20,14 +20,14 @@ const router = createRouter({
       component: () => import('../views/islandList.vue'),
     },
     {
-      path: '/boataccommodation/Detail/:id',
-      name: 'boataccommodationDetail',
-      component: () => import('../views/boataccommodation/detail/index.vue'),
+      path: '/liveaboardDetail/:boatId',
+      name: 'liveaboardDetail',
+      component: () => import('../views/liveaboard/boatDetail/index.vue'),
     },
     {
       path: '/liveaboard',
       name: 'liveaboard',
-      component: () => import('../views/liveaboard/index.vue'),
+      component: () => import('../views/liveaboard/boatList/index.vue'),
     },
     {
       path: '/about',

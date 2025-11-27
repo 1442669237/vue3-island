@@ -68,6 +68,7 @@
 
         <div class="flex justify-between items-center mt-auto">
           <button
+            @click="handleClickDetail(boat)"
             class="w-full lg:w-auto lg:flex-grow lg:mr-4 px-6 py-3 bg-blue-600 text-white font-medium rounded-md hover:bg-blue-700 transition-colors text-center"
           >
             查看详情
@@ -93,8 +94,14 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const props = defineProps({
   boat: { type: Object, required: true },
   delay: { type: Number, default: 0 },
 })
+
+const handleClickDetail = (boat) => {
+  router.push({ path: '/liveaboardDetail/' + boat.boatId })
+}
 </script>

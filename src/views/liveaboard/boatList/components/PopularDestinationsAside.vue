@@ -27,6 +27,7 @@
         <h3 class="font-bold text-blue-800 mb-2">需要帮助？</h3>
         <p class="text-blue-700 text-sm mb-4">我们的潜水专家可以为您提供个性化的船宿建议</p>
         <button
+          @click="handlePopupVisibility(true)"
           class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center"
         >
           <i class="fa-solid fa-comment mr-2 text-sm"></i>
@@ -34,13 +35,25 @@
         </button>
       </div>
     </div>
+    <!-- 联系弹窗 -->
+    <ContactPopup
+      :isVisible="customPopisVisible"
+      @update:customPopisVisible="handlePopupVisibility"
+    />
   </aside>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
 import { fetchHotBoats } from '@/api/liveboard'
+import ContactPopup from '@/components/ContactPopup.vue'
 
 const hotBoats = ref([])
+const customPopisVisible = ref(false)
+
+// 联系弹窗状态
+const handlePopupVisibility = (visible) => {
+  customPopisVisible.value = visible
+}
 
 onMounted(async () => {
   const res = await fetchHotBoats()

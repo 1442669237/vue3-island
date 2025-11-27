@@ -62,6 +62,11 @@
     >
       <i class="iconfont icon-arrowright rotate-[270deg]"></i>
     </button>
+    <!-- 联系弹窗 -->
+    <ContactPopup
+      :isVisible="customPopisVisible"
+      @update:customPopisVisible="handlePopupVisibility"
+    />
   </div>
 </template>
 
@@ -92,6 +97,7 @@ const isLoadingMore = ref(false)
 const infiniteSentinel = ref(null)
 let io
 const backTopVisible = ref(false)
+
 // 筛选状态 (Desktop)
 const filters = reactive({
   month: '',

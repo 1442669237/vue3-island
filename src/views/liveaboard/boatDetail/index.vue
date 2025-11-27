@@ -56,7 +56,7 @@ import ContactPopup from './components/ContactPopup.vue'
 import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
 
 const route = useRoute()
-const boatId = route.params.id
+const boatId = route.params.boatId
 const boatDetail = ref(null) // 船详情
 
 const imageData = [
