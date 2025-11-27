@@ -24,10 +24,6 @@ export function fetchHotBoats() {
   })
 }
 // 获取行程详情
-export function fetchTripDetails(condition) {
-  return request({
-    url: `/api/shipHotel/fetchTours`,
-    method: 'post',
-    data: condition,
-  })
+export function getBoatDetailById(params) {
+  return request({ url: '/api/shipHotel/getBoatTours', method: 'get', params })
 }

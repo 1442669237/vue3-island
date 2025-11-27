@@ -1,7 +1,7 @@
 <template>
   <div class="w-full bg-gray-50 flex flex-col items-center" v-if="boatDetail">
     <!-- 头部轮播图 -->
-    <Carousel :data="boatDetail"/>
+    <Carousel :data="boatDetail" />
 
     <main class="container mx-auto px-4 py-16">
       <!-- 信息展示区 -->
@@ -9,13 +9,13 @@
         <!-- 左侧内容 -->
         <div class="lg:col-span-2 space-y-12">
           <!-- 船只介绍、行程概要 -->
-          <ShipInfo :data="boatDetail"/>
+          <ShipInfo :data="boatDetail" />
           <!-- 价格框 -->
-          <PriceCard  :handleCustomMethod="handlePopupVisibility"/>
+          <PriceCard :handleCustomMethod="handlePopupVisibility" />
           <!-- 行程详情 -->
           <TripDetails />
           <!-- 装备租赁 -->
-          <EquipmentRental :data="boatDetail"/>
+          <EquipmentRental :data="boatDetail" />
         </div>
 
         <!-- 右侧预订栏 -->
@@ -24,23 +24,25 @@
         </div>
       </section>
       <!-- 船只亮点 、 安全服务 -->
-      <ShipHighlightsAndSafety :data="boatDetail"/>
+      <ShipHighlightsAndSafety :data="boatDetail" />
 
       <!-- 免责声明 -->
-      <Disclaimer/>
+      <Disclaimer />
 
       <!-- 联系弹窗 -->
-      <ContactPopup :isVisible="customPopisVisible" @update:customPopisVisible="handlePopupVisibility"/>
-      
+      <ContactPopup
+        :isVisible="customPopisVisible"
+        @update:customPopisVisible="handlePopupVisibility"
+      />
     </main>
-    <FooterSection/>
+    <FooterSection />
   </div>
 </template>
 
 <script setup>
-import { ref,onMounted } from 'vue'
-import { useRoute } from 'vue-router';
-import { getBoatDetailById } from '@/api/boataccommodationDetail'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { getBoatDetailById } from '@/api/liveboard'
 
 import Carousel from './components/Carousel.vue'
 import ShipInfo from './components/ShipInfo.vue'
@@ -53,28 +55,28 @@ import ShipHighlightsAndSafety from './components/ShipHighlightsAndSafety.vue'
 import ContactPopup from './components/ContactPopup.vue'
 import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
 
-const route = useRoute();
-const boatId = route.params.id;
+const route = useRoute()
+const boatId = route.params.id
 const boatDetail = ref(null) // 船详情
 
 const imageData = [
-    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a9/99/0d/maldive.jpg?w=1400&h=500&s=1',
-    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/d7/ec/c1/caption.jpg?w=1400&h=500&s=1',
-    'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/33/dc/98/caption.jpg?w=1400&h=500&s=1'
-];
+  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/a9/99/0d/maldive.jpg?w=1400&h=500&s=1',
+  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/d7/ec/c1/caption.jpg?w=1400&h=500&s=1',
+  'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1b/33/dc/98/caption.jpg?w=1400&h=500&s=1',
+]
 const customPopisVisible = ref(false)
 const handlePopupVisibility = (value) => {
   customPopisVisible.value = value
 }
 
-onMounted(async ()=> {
-  try{
-    const res = await getBoatDetailById({boatId});
-    if(res){
+onMounted(async () => {
+  try {
+    const res = await getBoatDetailById({ boatId })
+    if (res) {
       boatDetail.value = res
     }
-  }catch(error){
-    console.log(error,'error')
+  } catch (error) {
+    console.log(error, 'error')
   }
 })
 </script>
