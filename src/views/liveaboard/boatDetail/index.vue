@@ -52,7 +52,7 @@ import EquipmentRental from './components/EquipmentRental.vue'
 import Booking from './components/Booking.vue'
 import Disclaimer from './components/Disclaimer.vue'
 import ShipHighlightsAndSafety from './components/ShipHighlightsAndSafety.vue'
-import ContactPopup from './components/ContactPopup.vue'
+import ContactPopup from '@/components/ContactPopup.vue'
 import FooterSection from '@/views/islandDetail/components/FooterSection.vue'
 
 const route = useRoute()

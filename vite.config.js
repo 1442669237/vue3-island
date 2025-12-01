@@ -14,8 +14,8 @@ export default defineConfig({
   },
   server: {
     // 允许所有的外部IP地址访问
-    // host: '0.0.0.0',
-    // port: 5173, // 可根据需要修改端口
+    host: '0.0.0.0',
+    port: 5173, // 可根据需要修改端口
     // open: true, // 可选，打开浏览器
     // proxy: {
     //   '/api': {

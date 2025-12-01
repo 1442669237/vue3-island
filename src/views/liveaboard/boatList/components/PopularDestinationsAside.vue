@@ -4,7 +4,10 @@
       <h2 class="text-lg font-bold text-gray-800 mb-6">热门目的地</h2>
 
       <div class="space-y-4 mb-6" v-for="boat in hotBoats.slice(0, 3)" :key="boat.id">
-        <div class="rounded-lg overflow-hidden cursor-pointer group">
+        <div
+          class="rounded-lg overflow-hidden cursor-pointer group"
+          @click="handleClickDetail(boat)"
+        >
           <div class="relative h-40 overflow-hidden">
             <img
               :src="boat.imgUrl"
@@ -46,9 +49,10 @@
 import { onMounted, ref } from 'vue'
 import { fetchHotBoats } from '@/api/liveboard'
 import ContactPopup from '@/components/ContactPopup.vue'
-
+import { useRouter } from 'vue-router'
 const hotBoats = ref([])
 const customPopisVisible = ref(false)
+const router = useRouter()
 
 // 联系弹窗状态
 const handlePopupVisibility = (visible) => {
@@ -60,4 +64,9 @@ onMounted(async () => {
   console.log(res)
   hotBoats.value = res || []
 })
+
+// 点击详情跳转
+const handleClickDetail = (boat) => {
+  router.push({ path: '/liveaboardDetail/' + boat.boatId })
+}
 </script>
